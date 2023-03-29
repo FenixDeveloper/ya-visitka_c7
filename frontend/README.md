@@ -7,7 +7,7 @@
 ## Команда
 
 - [Дима (тим-лид)](https://github.com/chyVacheck) 
-- [Настя](https://github.com/Akvela) 
+- [Анастасия Богданова](https://github.com/Akvela) 
 - [Вакуленко Иван](https://github.com/isvakulenko) 
 - [Ренат Ибрагимов](https://github.com/smthofvalue) 
 - [Антон Тимохин ](https://github.com/AtimoO) 

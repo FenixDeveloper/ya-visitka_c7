@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '../../router/router';
 import AppStyles from './App.module.css';
+import Footer from '../Footer/Footer';
 
 const App: FC = () => {
   return (
@@ -12,6 +13,8 @@ const App: FC = () => {
 
       </main>
       <footer>Футер</footer>
+      <RouterProvider router={router} />
+      <Footer />
     </>
   );
 }

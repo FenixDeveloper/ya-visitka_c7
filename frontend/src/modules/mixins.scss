@@ -1,0 +1,7 @@
+@mixin text($size, $weigh, $height) {
+  font: {
+    size: $size;
+    weight: $weight;
+    height: $height;
+  }
+}

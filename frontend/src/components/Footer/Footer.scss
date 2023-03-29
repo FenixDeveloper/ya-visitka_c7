@@ -1,0 +1,30 @@
+@import '../../index.scss';
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(16, 12, 52, 0.3);
+
+  @media screen and (max-width: 780px) {
+    padding: 24px 32px;
+  }
+
+  @media screen and (max-width: 330px) {
+    padding: 24px;
+  }
+
+  &__copyright {
+    @include text(16px, 400, 24px);
+    color: rgba(16, 12, 52, 0.5);
+    margin: 0;
+  }
+
+  &__author {
+    @include text(16px, 400, 24px);
+    color: rgba(16, 12, 52, 0.5);
+    margin: 0;
+  }
+}
