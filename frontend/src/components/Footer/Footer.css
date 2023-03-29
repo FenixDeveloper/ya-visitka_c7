@@ -17,7 +17,6 @@
   }
 }
 .footer__copyright {
-  font-family: "IBM Plex Sans", Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -25,7 +24,6 @@
   margin: 0;
 }
 .footer__author {
-  font-family: "IBM Plex Sans", Arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
