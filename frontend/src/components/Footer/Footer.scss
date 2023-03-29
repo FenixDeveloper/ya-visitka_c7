@@ -1,5 +1,4 @@
-@import '../../modules/variables.scss';
-@import '../../modules/mixins.scss';
+@import '../../index.scss';
 
 .footer {
   display: flex;
@@ -18,12 +17,14 @@
   }
 
   &__copyright {
-    @include footer-text;
+    @include text(16px, 400, 24px);
+    color: rgba(16, 12, 52, 0.5);
     margin: 0;
   }
 
   &__author {
-    @include footer-text;
+    @include text(16px, 400, 24px);
+    color: rgba(16, 12, 52, 0.5);
     margin: 0;
   }
 }
