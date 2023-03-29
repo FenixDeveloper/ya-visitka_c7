@@ -1,0 +1,34 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(16, 12, 52, 0.3);
+}
+@media screen and (max-width: 780px) {
+  .footer {
+    padding: 24px 32px;
+  }
+}
+@media screen and (max-width: 330px) {
+  .footer {
+    padding: 24px;
+  }
+}
+.footer__copyright {
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(16, 12, 52, 0.5);
+  margin: 0;
+}
+.footer__author {
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(16, 12, 52, 0.5);
+  margin: 0;
+}

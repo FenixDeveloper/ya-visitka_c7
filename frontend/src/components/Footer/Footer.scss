@@ -1,0 +1,29 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(16, 12, 52, 0.3);
+
+  @media screen and (max-width: 780px) {
+    padding: 24px 32px;
+  }
+
+  @media screen and (max-width: 330px) {
+    padding: 24px;
+  }
+
+  &__copyright {
+    @include footer-text;
+    margin: 0;
+  }
+
+  &__author {
+    @include footer-text;
+    margin: 0;
+  }
+}

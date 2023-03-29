@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
-import AppStyles from './App.module.css';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '../../router/router';
+import Footer from '../Footer/Footer';
 
 const App: FC = () => {
   return (
     <>
-      <main>
-
-      </main>
+      <RouterProvider router={router} />
+      <Footer />
     </>
   );
 }
