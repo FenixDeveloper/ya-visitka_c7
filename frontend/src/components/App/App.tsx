@@ -12,8 +12,6 @@ const App: FC = () => {
         <RouterProvider router={router} />
 
       </main>
-      <footer>Футер</footer>
-      <RouterProvider router={router} />
       <Footer />
     </>
   );
