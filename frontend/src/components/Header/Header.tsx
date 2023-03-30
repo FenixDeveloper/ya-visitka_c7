@@ -9,10 +9,10 @@ interface UserData {
 
 const Header: FC<UserData> = ({ user }) => {
   return (
-    <div className={styles.container}>
+    <header className={styles.container}>
       <img className={styles.container__title} src={logo} alt="VISITKI-logo" />
       <Login user={user} />
-    </div>
+    </header>
   );
 };
 export default Header;
