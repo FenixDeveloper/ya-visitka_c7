@@ -7,14 +7,14 @@
   width: 100%;
 
   &__title {
-    padding: 43.5px 0 43.5px 40px;
+    margin: 43.5px 0 43.5px 40px;
 
     @media screen and (max-width: 768px) {
-      padding: 35px 0 35px 32px;
+      margin: 35px 0 35px 32px;
     }
 
     @media screen and (max-width: 576px) {
-      padding: 27.5px 0 27.5px 24px;
+      margin: 27.5px 0 27.5px 24px;
     }
   }
 }
