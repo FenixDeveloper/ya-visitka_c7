@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import defaulAvatar from "../../assets/icons/defaultAvatar.svg";
 import styles from "./Login.module.scss";
 
 interface User {
@@ -36,21 +37,7 @@ const Login: FC<User> = ({ user }) => {
               alt="Аватарка"
             />
           ) : (
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="16"
-                cy="16"
-                r="16"
-                fill="#100C34"
-                fill-opacity="0.15"
-              />
-            </svg>
+            <img src={defaulAvatar} alt="default-avatar" />
           )}
 
           <p className={styles.login__text}>{user.name}</p>
