@@ -12,5 +12,4 @@
 - [Ренат Ибрагимов](https://github.com/smthofvalue) 
 - [Антон Тимохин ](https://github.com/AtimoO) 
 - [Антон Адуйский](https://github.com/AntonAduisky) 
-- [Артём Руденко](https://github.com/Artrudjob) 
-- [Кирилл Черепанов](https://github.com/insomniac-bear) 
+- [Артём Руденко](https://github.com/Artrudjob)
