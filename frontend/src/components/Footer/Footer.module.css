@@ -17,16 +17,18 @@
   }
 }
 .footer__copyright {
-  font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
-  color: rgba(16, 12, 52, 0.5);
+  font-weight: 400;
+  font-height: 24px;
+  color: #100c34;
+  opacity: 0.5;
   margin: 0;
 }
 .footer__author {
-  font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
-  color: rgba(16, 12, 52, 0.5);
+  font-weight: 400;
+  font-height: 24px;
+  color: #100c34;
+  opacity: 0.5;
   margin: 0;
-}
+}/*# sourceMappingURL=Footer.module.css.map */

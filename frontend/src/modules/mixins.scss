@@ -1,4 +1,4 @@
-@mixin text($size, $weigh, $height) {
+@mixin text($size, $weight, $height) {
   font: {
     size: $size;
     weight: $weight;
