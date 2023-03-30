@@ -1,3 +1,4 @@
+@import '../../modules/variables.scss';
 @import '../../modules/mixins.scss';
 
 .footer {
@@ -18,13 +19,15 @@
 
   &__copyright {
     @include text(16px, 400, 24px);
-    color: rgba(16, 12, 52, 0.5);
+    color: $text-dark;
+    opacity: .5;
     margin: 0;
   }
 
   &__author {
     @include text(16px, 400, 24px);
-    color: rgba(16, 12, 52, 0.5);
+    color: $text-dark;
+    opacity: .5;
     margin: 0;
   }
 }

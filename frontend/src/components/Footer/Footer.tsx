@@ -1,12 +1,12 @@
-import './Footer.css';
+import styles from './Footer.module.scss';
 
 function Footer() {
   return (
-    <footer className="footer">
-      <p className="footer__copyright">
+    <footer className={styles.footer}>
+      <p className={styles.footer__copyright}>
         © Визитки
       </p>
-      <p className="footer__author">
+      <p className={styles.footer__author}>
         Яндекс Практикум
       </p>
     </footer>
