@@ -10,7 +10,7 @@ $h1_tablet_line-height: 40px;
 
 $h1_mobile_font-size: 32px;
 $h1_mobile_font-weight: 500;
-$h1_mobile_line-height: 60px;
+$h1_mobile_line-height: 40px;
 
 $h2_desktop_font-size: 24px;
 $h2_desktop_font-weight: 400;
@@ -23,6 +23,10 @@ $h3_desktop_line-height: 18px;
 $h4_desktop_font-size: 20px;
 $h4_desktop_font-weight: 400;
 $h4_desktop_line-height: 28px;
+
+$text_font-size: 16px;
+$text_font-weight: 400;
+$text_line-height: 24px;
 
 @mixin h1_desktop() {
   font: {
@@ -76,4 +80,13 @@ $h4_desktop_line-height: 28px;
   }
 
   line-height: $h4_desktop_line-height;
+}
+
+@mixin text() {
+  font: {
+    size: $text_font-size;
+    weight: $text_font-weight;
+  }
+
+  line-height: $text_line-height;
 }
