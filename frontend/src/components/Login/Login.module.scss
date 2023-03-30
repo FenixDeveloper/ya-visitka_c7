@@ -1,17 +1,25 @@
 @import "../../modules/variables.scss";
+@import "../../modules/mixins.scss";
 
 .container {
-  max-width: 296px;
+  position: relative;
+  height: 100%;
+  width: 328px;
+
+  @media screen and (max-width: 768px) {
+    width: 312px;
+  }
+}
+
+.popup {
   position: absolute;
   right: 0;
   top: 0;
-
   border-radius: 0 0 10px 10px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.08);
 
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 400;
+  @include text(16px, 400, 20px);
+
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -19,8 +27,8 @@
   background-color: $white;
   z-index: 1;
 
-  &__popup {
-    padding: 40px 24px 32px;
+  &__wrapper {
+    padding: 40px 40px 32px;
 
     @media screen and (max-width: 768px) {
       padding: 32px;
@@ -31,8 +39,8 @@
     }
   }
 
-  &__closed {
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0);
+  &_open_closed {
+    box-shadow: none;
   }
 }
 
@@ -72,6 +80,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 248px;
 }
 
 .link {
@@ -89,17 +98,13 @@
     color: #100c34;
     transition: background-color 0.15s ease-in;
     text-decoration: none;
+    cursor: pointer;
+    @include text(16px, 400, 20px);
+    border: none;
+    font-family: "IBM Plex Sans";
 
     &:hover {
       background-color: #f9f9f9;
     }
   }
-
-  // &:last-child:after {
-  //   background-color: rgb(84,84,84,.7);
-  //   content: "";
-  //   height: 1px;
-  //   position: absolute;
-  //   width: 100%;
-  // }
 }

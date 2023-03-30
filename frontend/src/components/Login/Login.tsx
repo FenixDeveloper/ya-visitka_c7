@@ -1,6 +1,7 @@
 import React, { FC } from "react";
-import defaulAvatar from "../../assets/icons/defaultAvatar.svg";
+import defaulAvatar from "../../assets/icons/default-avatar.svg";
 import styles from "./Login.module.scss";
+import { NavLink } from "react-router-dom";
 
 interface User {
   user: {
@@ -11,6 +12,7 @@ interface User {
 
 const Login: FC<User> = ({ user }) => {
   const [active, setActive] = React.useState<boolean>(false);
+  const closePopupStyle = !active ? styles.popup_open_closed : "";
 
   const handlerClickPopup = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -25,37 +27,32 @@ const Login: FC<User> = ({ user }) => {
   }, []);
 
   return (
-    <div
-      className={`${styles.container} ${!active && styles.container__closed}`}
-    >
-      <div className={styles.container__popup}>
-        <div className={styles.login} onClick={() => setActive(!active)}>
-          {user.avatar ? (
+    <div className={styles.container}>
+      <div className={`${styles.popup} ${closePopupStyle}`}>
+        <div className={styles.popup__wrapper}>
+          <div className={styles.login} onClick={() => setActive(!active)}>
             <img
               className={styles.login__image}
-              src={user.avatar}
-              alt="Аватарка"
+              src={user?.avatar || defaulAvatar}
+              alt={`аватар-${user.name}`}
             />
-          ) : (
-            <img src={defaulAvatar} alt="default-avatar" />
+            <p className={styles.login__text}>{user.name}</p>
+          </div>
+          {active && (
+            <ul className={styles.links}>
+              <li className={styles.link}>
+                <NavLink to="#1" className={styles.link__item}>
+                  Профиль
+                </NavLink>
+              </li>
+              <li className={styles.link}>
+                <button type="button" className={styles.link__item}>
+                  Выйти
+                </button>
+              </li>
+            </ul>
           )}
-
-          <p className={styles.login__text}>{user.name}</p>
         </div>
-        {active && (
-          <ul className={styles.links}>
-            <li className={styles.link}>
-              <a href="#1" className={styles.link__item}>
-                Профиль
-              </a>
-            </li>
-            <li className={styles.link}>
-              <a href="#1" className={styles.link__item}>
-                Выйти
-              </a>
-            </li>
-          </ul>
-        )}
       </div>
     </div>
   );
