@@ -1,0 +1,79 @@
+@import './fonts/fonts.scss';
+
+$h1_desktop_font-size: 60px;
+$h1_desktop_font-weight: 500;
+$h1_desktop_line-height: 60px;
+
+$h1_tablet_font-size: 40px;
+$h1_tablet_font-weight: 500;
+$h1_tablet_line-height: 40px;
+
+$h1_mobile_font-size: 32px;
+$h1_mobile_font-weight: 500;
+$h1_mobile_line-height: 60px;
+
+$h2_desktop_font-size: 24px;
+$h2_desktop_font-weight: 400;
+$h2_desktop_line-height: 32px;
+
+$h3_desktop_font-size: 14px;
+$h3_desktop_font-weight: 700;
+$h3_desktop_line-height: 18px;
+
+$h4_desktop_font-size: 20px;
+$h4_desktop_font-weight: 400;
+$h4_desktop_line-height: 28px;
+
+@mixin h1_desktop() {
+  font: {
+    size: $h1_desktop_font-size;
+    weight: $h1_desktop_font-weight;
+  }
+
+  line-height: $h1_desktop_line-height;
+}
+
+@mixin h1_tablet() {
+  font: {
+    size: $h1_tablet_font-size;
+    weight: $h1_tablet_font-weight;
+  }
+
+  line-height: $h1_tablet_line-height;
+}
+
+@mixin h1_mobile() {
+  font: {
+    size: $h1_mobile_font-size;
+    weight: $h1_mobile_font-weight;
+  }
+
+  line-height: $h1_mobile_line-height;
+}
+
+@mixin h2_desktop() {
+  font: {
+    size: $h2_desktop_font-size;
+    weight: $h2_desktop_font-weight;
+  }
+
+  line-height: $h2_desktop_line-height;
+}
+
+@mixin h3_desktop() {
+  font: {
+    size: $h3_desktop_font-size;
+    weight: $h3_desktop_font-weight;
+  }
+
+  line-height: $h3_desktop_line-height;
+}
+
+@mixin h4_desktop() {
+  font: {
+    size: $h4_desktop_font-size;
+    weight: $h4_desktop_font-weight;
+  }
+
+  line-height: $h4_desktop_line-height;
+}
