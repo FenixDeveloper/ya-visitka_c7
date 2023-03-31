@@ -1,0 +1,59 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module",
+        "project": "./tsconfig.eslint.json"
+    },
+    "parser": "@typescript-eslint/parser",
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "extends": [
+        "airbnb",
+        "plugin:react-hooks/recommended",
+        "airbnb-typescript"
+    ],
+    "rules": {
+        "linebreak-style": "off",
+        "max-len": [
+            "warn",
+            {
+                "code": 140,
+                "ignoreComments": true,
+                "ignoreStrings": true,
+                "ignoreTemplateLiterals": true
+            }
+        ],
+        "no-underscore-dangle": "off",
+        "import/extensions": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "index",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "object",
+                    "type"
+                ],
+                "newlines-between": "always"
+            }
+        ],
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            {
+                "disallowTypeAnnotations": false
+            }
+        ],
+        "@typescript-eslint/no-shadow": "off"
+    }
+}
