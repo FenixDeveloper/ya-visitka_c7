@@ -15,6 +15,7 @@ const yandexStrategy = new passport.Strategy({
   callbackURL: yandex.CALLBACK_URL
 }, function (accessToken: any, refreshToken: any, profile: any, done: any) {
   const email = profile._json.default_email;
+  const name = profile._json.first_name;
   User.findOne({ email }).then(user => {
     console.log(user)
 
