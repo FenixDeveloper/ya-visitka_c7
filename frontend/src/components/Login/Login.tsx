@@ -27,7 +27,7 @@ const Login: FC<User> = ({ user }) => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <div className={`${styles.popup} ${closePopupStyle}`}>
         <div className={styles.popup__wrapper}>
           <div className={styles.login} onClick={() => setActive(!active)}>
@@ -43,14 +43,14 @@ const Login: FC<User> = ({ user }) => {
               <NavLink to="#1" className={styles.link}>
                 Профиль
               </NavLink>
-              <button type="button" className={`${styles.link} ${styles.link__btn}`}>
+              <button type="button" className={styles.btn}>
                 Выйти
               </button>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 export default Login;
