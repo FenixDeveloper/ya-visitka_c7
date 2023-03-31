@@ -1,4 +1,3 @@
-
 import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
@@ -27,6 +26,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+mongoose.connect(DB_URL);
 const app = express();
 
 app.get('/auth/yandex', passport.authenticate('yandex'));
@@ -44,57 +44,57 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
 
-main().catch((err) => console.log(err));
+// main().catch((err) => console.log(err));
 
-async function main() {
-  await mongoose.connect(DB_URL);
+// async function main() {
+//   await mongoose.connect(DB_URL);
 
-  const user = new User({
-    name: "Тест2",
-    email: "test@test.ru",
-    cohort: "web +16",
-    profile: {
-      name: "Тест",
-      photo: "http://some-photo.ru",
-      city: { name: "Тестоград", geocode: [134.854, -25.828] },
-      birthday: new Date(2022, 11, 25),
-      quote: "Цитата",
-      telegram: "@telega",
-      github: "githubber",
-      template: "Тема оформления",
-    },
-    info: {
-      hobby: { text: "Крутое хобби", image: "http://some-hobby-photo.ru" },
-      status: { text: "Семейный статус", image: null },
-      job: { text: "Работа", image: null },
-      edu: { text: "Обучение", image: null },
-    },
-  });
+//   const user = new User({
+//     name: "Тест2",
+//     email: "karkachevich@yandex.ru",
+//     cohort: "web +16",
+//     profile: {
+//       name: "Тест",
+//       photo: "http://some-photo.ru",
+//       city: { name: "Тестоград", geocode: [134.854, -25.828] },
+//       birthday: new Date(2022, 11, 25),
+//       quote: "Цитата",
+//       telegram: "@telega",
+//       github: "githubber",
+//       template: "Тема оформления",
+//     },
+//     info: {
+//       hobby: { text: "Крутое хобби", image: "http://some-hobby-photo.ru" },
+//       status: { text: "Семейный статус", image: null },
+//       job: { text: "Работа", image: null },
+//       edu: { text: "Обучение", image: null },
+//     },
+//   });
 
-  const reaction = new Reaction({
-    from: {
-      _id: user._id,
-      name: user.profile?.name,
-      email: user.email,
-    },
-    target: user.info?.hobby?.text,
-    text: "Комментарий",
-  });
+//   const reaction = new Reaction({
+//     from: {
+//       _id: user._id,
+//       name: user.profile?.name,
+//       email: user.email,
+//     },
+//     target: user.info?.hobby?.text,
+//     text: "Комментарий",
+//   });
 
-  const emoteReaction = new EmotionReaction({
-    from: {
-      _id: user._id,
-      name: user.profile?.name,
-      email: user.email,
-    },
-    target: user.info?.hobby?.text,
-    emotion: "emote",
-  });
+//   const emoteReaction = new EmotionReaction({
+//     from: {
+//       _id: user._id,
+//       name: user.profile?.name,
+//       email: user.email,
+//     },
+//     target: user.info?.hobby?.text,
+//     emotion: "emote",
+//   });
 
-  // await reaction.save();
-  // await emoteReaction.save();
-
-  user.reactions.push(reaction, emoteReaction);
-  // await user.save();
-  console.log(user);
-}
+//   // await reaction.save();
+//   // await emoteReaction.save();
+//   //User.create(user)
+//   user.reactions.push(reaction, emoteReaction);
+//   // await user.save();
+//   //console.log(user);
+// }

@@ -1,3 +1,5 @@
+import User from "../models/User";
+
 const passport = require('passport-yandex');
 
 const yandex = {
@@ -13,18 +15,14 @@ const yandexStrategy = new passport.Strategy({
   callbackURL: yandex.CALLBACK_URL
 }, function (accessToken: any, refreshToken: any, profile: any, done: any) {
   const email = profile._json.default_email;
-  console.log(email, accessToken);
+  User.findOne({ email }).then(user => {
+    console.log(user)
+
+  });
 
 });
 
 export default yandexStrategy;
-// function(accessToken, refreshToken, profile, done) {
-//   User.find({ email: profile.email }, function (err, user) {
-
-//     return done(err, user);
-//   });
-// }
-
 
 
 
