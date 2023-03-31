@@ -1,5 +1,5 @@
 @use '../../modules/variables.scss';
-@use '../../index.scss';
+@use '../../modules/mixins.scss';
 
 .button {
     padding: 0;
@@ -10,30 +10,44 @@
     border: none;
     border-radius: 4px;
     text-align: center;
-    background: linear-gradient(269.17deg, variables.$blue 30.28%, variables.$neon-pink 63.24%);
-    color: variables.$text-superlight;
+    background: variables.$button-default;
+    color: variables.$text-button;
     cursor: pointer;
+    font-weight: 500;
+    &:hover {
+        &:not([disabled]) {
+            background: variables.$button-hover;
+        }
+      }
+    &:active {
+        &:not([disabled]) {
+            background: variables.$button-active;
+        }
+    }
 }
 
 .small {
     height: 44px;
     width: 260px;
-    @include index.text();
+    font-size: 16px;
+    line-height: 20px;
 }
 
 .medium {
     height: 60px;
     width: 272px;
-    @include index.h4_desktop();
+    font-size: 20px;
+    line-height: 28px;
 }
 
 .large {
     height: 68px;
     width: 439px;
-    @include index.h4_desktop();
+    font-size: 20px;
+    line-height: 28px;
 }
 
 .disabled {
-    background: #BFBFBF;
+    background: variables.$button-disabled;
     cursor: default;
 }
