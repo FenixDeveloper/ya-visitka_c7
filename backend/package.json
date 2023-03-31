@@ -41,7 +41,9 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
+    "express-winston": "^4.2.0",
     "helmet": "^6.0.1",
-    "mongoose": "^7.0.3"
+    "mongoose": "^7.0.3",
+    "winston": "^3.8.2"
   }
 }
