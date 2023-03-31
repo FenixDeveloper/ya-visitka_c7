@@ -1,17 +1,16 @@
 import React, { FC } from "react";
-import { Route, Routes } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import { testUser } from "../../utils/constants";
+import { router } from "../../router/router";
 
 const App: FC = () => {
   return (
     <>
       <Header user={testUser} />
       <main>
-        <Routes>
-          <Route path="/" element="" />
-        </Routes>
+        <RouterProvider router={router} />
       </main>
       <Footer />
     </>
