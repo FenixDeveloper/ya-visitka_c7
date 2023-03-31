@@ -1,20 +1,21 @@
-import React, { FC } from 'react';
-import { RouterProvider } from 'react-router-dom';
-import { router } from '../../router/router';
-import AppStyles from './App.module.css';
-import Footer from '../Footer/Footer';
+import React, { FC } from "react";
+import { Route, Routes } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import { testUser } from "../../utils/constants";
 
 const App: FC = () => {
   return (
     <>
-      <header>Хедер</header>
+      <Header user={testUser} />
       <main>
-        <RouterProvider router={router} />
-
+        <Routes>
+          <Route path="/" element="" />
+        </Routes>
       </main>
       <Footer />
     </>
   );
-}
+};
 
 export default App;
