@@ -28,6 +28,14 @@ $text_font-size: 16px;
 $text_font-weight: 400;
 $text_line-height: 24px;
 
+$text_button_login_font-size: 20px;
+$text_button_login_font-weight: 500;
+$text_button_login_line-height: 28px;
+
+$text_button_upload_font-size: 16px;
+$text_button_upload_font-weight: 500;
+$text_button_upload_line-height: 20px;
+
 @mixin h1_desktop() {
   font: {
     size: $h1_desktop_font-size;
@@ -89,4 +97,22 @@ $text_line-height: 24px;
   }
 
   line-height: $text_line-height;
+}
+
+@mixin text_button_login() {
+  font: {
+    size: $text_button_login_font-size;
+    weight: $text_button_login_font-weight;
+  }
+
+  line-height: $text_button_login_line-height;
+}
+
+@mixin text_button_upload() {
+  font: {
+    size: $text_button_upload_font-size;
+    weight: $text_button_upload_font-weight;
+  }
+
+  line-height: $text_button_upload_line-height;
 }
