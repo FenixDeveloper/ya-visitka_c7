@@ -1,4 +1,13 @@
-@import './fonts/fonts.scss';
+@import "./fonts/fonts.scss";
+
+body {
+  font-family: "IBM Plex Sans";
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-width: 320px;
+  width: 100%;
+}
 
 $h1_desktop_font-size: 60px;
 $h1_desktop_font-weight: 500;
