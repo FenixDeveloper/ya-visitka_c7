@@ -85,26 +85,25 @@
 
 .link {
   display: flex;
+  align-items: center;
 
-  &__item {
-    display: flex;
-    align-items: center;
+  width: 248px;
+  height: 36px;
+  background-color: $white;
+  border-radius: 4px;
+  padding-left: 36px;
+  color: #100c34;
+  transition: background-color 0.15s ease-in;
+  text-decoration: none;
 
-    width: 248px;
-    height: 36px;
-    background-color: $white;
-    border-radius: 4px;
-    padding-left: 36px;
-    color: #100c34;
-    transition: background-color 0.15s ease-in;
-    text-decoration: none;
+  &:hover {
+    background-color: #f9f9f9;
+  }
+
+  &__btn {
     cursor: pointer;
     @include text(16px, 400, 20px);
     border: none;
     font-family: "IBM Plex Sans";
-
-    &:hover {
-      background-color: #f9f9f9;
-    }
   }
 }

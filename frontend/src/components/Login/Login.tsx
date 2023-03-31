@@ -39,18 +39,14 @@ const Login: FC<User> = ({ user }) => {
             <p className={styles.login__text}>{user.name}</p>
           </div>
           {active && (
-            <ul className={styles.links}>
-              <li className={styles.link}>
-                <NavLink to="#1" className={styles.link__item}>
-                  Профиль
-                </NavLink>
-              </li>
-              <li className={styles.link}>
-                <button type="button" className={styles.link__item}>
-                  Выйти
-                </button>
-              </li>
-            </ul>
+            <div className={styles.links}>
+              <NavLink to="#1" className={styles.link}>
+                Профиль
+              </NavLink>
+              <button type="button" className={`${styles.link} ${styles.link__btn}`}>
+                Выйти
+              </button>
+            </div>
           )}
         </div>
       </div>
