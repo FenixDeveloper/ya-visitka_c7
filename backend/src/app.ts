@@ -4,7 +4,7 @@ import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
 import { PORT, DB_URL } from "./config/config";
 import User from "./models/User";
-import { Reaction, EmotionReaction } from "./models/Reaction";
+import { Text, Emotion } from "./models/Reaction";
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -29,12 +29,11 @@ async function main() {
   await mongoose.connect(DB_URL);
 
   const user = new User({
-    name: "Тест2",
     email: "test@test.ru",
     cohort: "web +16",
     profile: {
       name: "Тест",
-      photo: "http://some-photo.ru",
+      photo: "https://www.test.com/photo.png",
       city: { name: "Тестоград", geocode: [134.854, -25.828] },
       birthday: new Date(2022, 11, 25),
       quote: "Цитата",
@@ -43,37 +42,62 @@ async function main() {
       template: "Тема оформления",
     },
     info: {
-      hobby: { text: "Крутое хобби", image: "http://some-hobby-photo.ru" },
-      status: { text: "Семейный статус", image: null },
-      job: { text: "Работа", image: null },
-      edu: { text: "Обучение", image: null },
+      hobby: { text: "Крутое хобби", image: "https://www.test.com/photo.png" },
+      status: {
+        text: "Семейный статус",
+        image: "https://www.test.com/photo.png",
+      },
+      job: { text: "Работа", image: "https://www.test.com/photo.png" },
+      edu: { text: "Обучение", image: "https://www.test.com/photo.png" },
     },
   });
 
-  const reaction = new Reaction({
-    from: {
-      _id: user._id,
-      name: user.profile?.name,
-      email: user.email,
+  const user2 = new User({
+    email: "test2@test.ru",
+    cohort: "web +16",
+    profile: {
+      name: "Тест2",
+      photo: "https://www.test.com/photo.png",
+      city: { name: "Тестоград", geocode: [134.854, -25.828] },
+      birthday: new Date(2022, 11, 25),
+      quote: "Цитата",
+      telegram: "@telega",
+      github: "githubber",
+      template: "Тема оформления",
     },
-    target: user.info?.hobby?.text,
-    text: "Комментарий",
+    info: {
+      hobby: { text: "Крутое хобби", image: "https://www.test.com/photo.png" },
+      status: {
+        text: "Семейный статус",
+        image: "https://www.test.com/photo.png",
+      },
+      job: { text: "Работа", image: "https://www.test.com/photo.png" },
+      edu: { text: "Обучение", image: "https://www.test.com/photo.png" },
+    },
   });
 
-  const emoteReaction = new EmotionReaction({
+  const emotionReaction = new Emotion({
     from: {
-      _id: user._id,
-      name: user.profile?.name,
-      email: user.email,
+      _id: user2._id,
+      name: user2.profile.name,
+      email: user2.profile.name,
     },
-    target: user.info?.hobby?.text,
+    target: "hobby",
     emotion: "emote",
   });
 
-  // await reaction.save();
-  // await emoteReaction.save();
+  const textReaction = new Text({
+    from: {
+      _id: user2._id,
+      name: user2.profile.name,
+      email: user2.profile.name,
+    },
+    target: "hobby",
+    text: "Комментарий",
+  });
 
-  user.reactions.push(reaction, emoteReaction);
-  // await user.save();
-  console.log(user);
+  user.reactions.push(emotionReaction, textReaction);
+
+  await user.save();
+  await user2.save();
 }

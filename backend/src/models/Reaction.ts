@@ -1,25 +1,48 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-const options = { discriminatorKey: "kind" };
+const { Schema } = mongoose;
 
-const reactionSchema = new mongoose.Schema(
+interface IStudent {
+  _id: ObjectId;
+  name: string;
+  email: string;
+}
+
+const studentSchema = new Schema<IStudent>(
   {
-    from: {
-      _id: mongoose.SchemaTypes.ObjectId,
-      name: String,
-      email: String,
+    name: {
+      type: String,
     },
-    target: String,
-    text: String,
+    email: {
+      type: String,
+    },
   },
-  options
+  { _id: false }
+);
+
+export const reactionSchema = new Schema(
+  {
+    from: studentSchema,
+    target: { type: String },
+  },
+  { discriminatorKey: "type" }
 );
 //todo: fix any
-const Reaction: any = mongoose.model("Reaction", reactionSchema);
+const reaction: any = mongoose.model("reaction", reactionSchema);
 
-const EmotionReaction = Reaction.discriminator(
-  "EmotionReaction",
-  new mongoose.Schema({ emotion: String }, options)
-);
+const TextSchema = new Schema({
+  text: {
+    type: String,
+    maxlength: 200,
+  },
+});
 
-export { Reaction, EmotionReaction };
+const EmotionSchema = new Schema({
+  emotion: {
+    type: String,
+    maxlength: 200,
+  },
+});
+
+export const Text = reaction.discriminator("text", TextSchema);
+export const Emotion = reaction.discriminator("emotion", EmotionSchema);

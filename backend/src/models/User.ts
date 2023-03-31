@@ -1,50 +1,184 @@
-import mongoose from "mongoose";
+import { model, Schema, Model, Document } from "mongoose";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import isEmail from "validator/lib/isEmail";
+import NotFoundError from "../errors/not_found_error";
+import ErrorMessages from "../helpers/error-messages";
+import { cohortRegEx, imageOrTempIdRegex } from "../constants/constants";
+import { reactionSchema } from "./Reaction";
 
-const userSchema = new mongoose.Schema({
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  email: String,
-  cohort: String,
-  profile: {
-    name: String,
-    photo: String,
-    city: {
-      name: String,
-      geocode: [Number],
+interface IBlock {
+  text?: string;
+  image?: string | null;
+}
+
+interface IInfo {
+  hobby: IBlock;
+  status: IBlock;
+  job: IBlock;
+  edu: IBlock;
+}
+
+interface ICity {
+  name: string;
+  geocode: number[];
+}
+
+interface IProfile {
+  name: string;
+  photo: string;
+  city: ICity | null;
+  birthday: string | null;
+  quote: string;
+  telegram: string | null;
+  github: string | null;
+  template: string | null;
+}
+
+interface IUser {
+  createdAt: number;
+  updatedAt: number;
+  email: string;
+  cohort: string;
+  timestamps: boolean;
+  profile: IProfile;
+  info: IInfo;
+
+  reactions: [
+    {
+      from: {
+        name: string;
+        email: string;
+      };
+      target: string | null;
+      text?: string;
+      emotion?: string;
+    }
+  ];
+}
+
+interface IUserModel extends Model<IUser> {
+  findUserByEmai: (
+    // eslint-disable-next-line no-unused-vars
+    email: string
+  ) => Promise<Document<unknown, any, IUser>>;
+}
+
+const blockSchema = new Schema<IBlock>(
+  {
+    text: {
+      type: String,
+      maxlength: 1500,
     },
-    birthday: Date,
-    quote: String,
-    telegram: String,
-    github: String,
-    template: String,
-  },
-  info: {
-    hobby: {
-      text: String,
-      image: String,
-    },
-    status: {
-      text: String,
-      image: String,
-    },
-    job: {
-      text: String,
-      image: String,
-    },
-    edu: {
-      text: String,
-      image: String,
+    image: {
+      type: String,
+      validate: {
+        validator(v: string) {
+          return imageOrTempIdRegex.test(v);
+        },
+      },
     },
   },
-  reactions: {
-    type: [mongoose.SchemaTypes.ObjectId],
+  { _id: false }
+);
+
+const infoSchema = new Schema<IInfo>(
+  {
+    hobby: blockSchema,
+    status: blockSchema,
+    job: blockSchema,
+    edu: blockSchema,
   },
+  { _id: false }
+);
+
+const citySchema = new Schema<ICity>(
+  {
+    name: {
+      type: String,
+    },
+    geocode: {
+      type: [Number],
+    },
+  },
+  { _id: false }
+);
+
+const profileSchema = new Schema<IProfile>(
+  {
+    name: {
+      type: String,
+    },
+    photo: {
+      type: String,
+      validate: {
+        validator(v: string) {
+          return imageOrTempIdRegex.test(v);
+        },
+      },
+    },
+    city: citySchema,
+    birthday: {
+      type: String,
+    },
+    quote: {
+      type: String,
+      maxlength: 200,
+    },
+    telegram: {
+      type: String,
+    },
+    github: {
+      type: String,
+    },
+    template: {
+      type: String,
+    },
+  },
+  { _id: false }
+);
+
+const userSchema = new Schema<IUser, IUserModel>(
+  {
+    createdAt: {
+      type: Number,
+    },
+    updatedAt: {
+      type: Number,
+    },
+    email: {
+      type: String,
+      // unique: true,
+      validate: {
+        validator(v: string) {
+          return isEmail(v);
+        },
+      },
+    },
+    cohort: {
+      type: String,
+      // match: cohortRegEx,
+    },
+    profile: profileSchema,
+    info: infoSchema,
+    reactions: {
+      type: [reactionSchema],
+      default: [],
+    },
+  },
+  {
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+  }
+);
+
+userSchema.static("findUserByEmail", function findUserByEmail(email: string) {
+  return this.findOne({ email }).then((user) => {
+    if (!user) {
+      throw new NotFoundError(ErrorMessages.NotFound);
+    }
+    return user;
+  });
 });
 
-export default mongoose.model("User", userSchema);
+userSchema.index({ email: 1 }, { unique: true });
+
+export default model<IUser, IUserModel>("user", userSchema);
