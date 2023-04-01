@@ -8,6 +8,8 @@ import User from "./models/User";
 import { Reaction, EmotionReaction } from "./models/Reaction";
 import yandexStrategy from './auth/yandex.strategy';
 
+const app = express();
+
 passport.use(yandexStrategy);
 
 passport.serializeUser(function(user, done) {
@@ -27,14 +29,16 @@ const limiter = rateLimit({
 });
 
 mongoose.connect(DB_URL);
-const app = express();
+
+
 
 app.get('/auth/yandex', passport.authenticate('yandex'));
 app.get('/auth/yandex/callback',
-  passport.authenticate('yandex', { failureRedirect: '/login' }),
+  passport.authenticate('yandex', { successRedirect: '/profile' }),
   function(req, res) {
     res.redirect('/');
-  })
+  }
+  )
 
 app.use(limiter);
 app.use(helmet());
