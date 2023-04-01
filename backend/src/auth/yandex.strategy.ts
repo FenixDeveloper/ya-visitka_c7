@@ -16,6 +16,7 @@ const yandexStrategy = new passport.Strategy({
   clientSecret: yandex.CLIENT_SECRET,
   callbackURL: yandex.CALLBACK_URL
 }, async (accessToken: any, refreshToken: any, profile: any, done: any) => {
+
   const email = profile._json.default_email;
   const name = profile._json.first_name;
   const student = await User.findOne({ email });
