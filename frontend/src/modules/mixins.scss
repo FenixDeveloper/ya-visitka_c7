@@ -62,3 +62,38 @@
 
   line-height: $text_line-height;
 }
+@mixin text_button_login() {
+  font: {
+    size: $text_button_login_font-size;
+    weight: $text_button_login_font-weight;
+  }
+
+  line-height: $text_button_login_line-height;
+}
+
+@mixin text_button_upload() {
+  font: {
+    size: $text_button_upload_font-size;
+    weight: $text_button_upload_font-weight;
+  }
+
+  line-height: $text_button_upload_line-height;
+}
+
+@mixin text_feedback() {
+  font: {
+    size: $text_feedback_font-size;
+    weight: $text_feedback_font-weight;
+  }
+
+  line-height: $text_feedback_line-height;
+}
+
+@mixin text_icon_count() {
+  font: {
+    size: $text_icon_count_font-size;
+    weight: $text_icon_count_font-weight;
+  }
+
+  line-height: $text_icon_count_line-height;
+}
