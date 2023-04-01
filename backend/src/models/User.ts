@@ -1,10 +1,12 @@
-import { model, Schema, Model, Document } from "mongoose";
+import {
+  model, Schema, Model, Document,
+} from 'mongoose';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import isEmail from "validator/lib/isEmail";
-import NotFoundError from "../errors/not_found_error";
-import ErrorMessages from "../helpers/error-messages";
-import { cohortRegEx, imageOrTempIdRegex } from "../constants/constants";
-import { reactionSchema } from "./Reaction";
+import isEmail from 'validator/lib/isEmail';
+import NotFoundError from '../errors/not_found_error';
+import ErrorMessages from '../helpers/error-messages';
+import { imageOrTempIdRegex } from '../constants/constants';
+import { reactionSchema } from './Reaction';
 
 interface IBlock {
   text?: string;
@@ -42,7 +44,6 @@ interface IUser {
   timestamps: boolean;
   profile: IProfile;
   info: IInfo;
-
   reactions: [
     {
       from: {
@@ -54,13 +55,6 @@ interface IUser {
       emotion?: string;
     }
   ];
-}
-
-interface IUserModel extends Model<IUser> {
-  findUserByEmai: (
-    // eslint-disable-next-line no-unused-vars
-    email: string
-  ) => Promise<Document<unknown, any, IUser>>;
 }
 
 interface IUserModel extends Model<IUser> {
@@ -86,7 +80,7 @@ const blockSchema = new Schema<IBlock>(
       },
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const infoSchema = new Schema<IInfo>(
@@ -96,7 +90,7 @@ const infoSchema = new Schema<IInfo>(
     job: blockSchema,
     edu: blockSchema,
   },
-  { _id: false }
+  { _id: false },
 );
 
 const citySchema = new Schema<ICity>(
@@ -108,7 +102,7 @@ const citySchema = new Schema<ICity>(
       type: [Number],
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const profileSchema = new Schema<IProfile>(
@@ -142,7 +136,7 @@ const profileSchema = new Schema<IProfile>(
       type: String,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const userSchema = new Schema<IUser, IUserModel>(
@@ -175,10 +169,10 @@ const userSchema = new Schema<IUser, IUserModel>(
   },
   {
     timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
-  }
+  },
 );
 
-userSchema.static("findUserByEmail", function findUserByEmail(email: string) {
+userSchema.static('findUserByEmail', function findUserByEmail(email: string) {
   return this.findOne({ email }).then((user) => {
     if (!user) {
       throw new NotFoundError(ErrorMessages.NotFound);
@@ -187,13 +181,13 @@ userSchema.static("findUserByEmail", function findUserByEmail(email: string) {
   });
 });
 
-userSchema.static("agregateAndSort", function agregateAndSort() {
+userSchema.static('agregateAndSort', function agregateAndSort() {
   return this.aggregate([
-    { $unwind: "$reactions" },
-    { $sort: { "reactions._id": 1 } },
+    { $unwind: '$reactions' },
+    { $sort: { 'reactions._id': 1 } },
   ]).exec();
 });
 
 userSchema.index({ email: 1 }, { unique: true });
 
-export default model<IUser, IUserModel>("User", userSchema);
+export default model<IUser, IUserModel>('User', userSchema);
