@@ -21,11 +21,17 @@ export const LoginPage: FC = () => {
         <h1 className={LoginPageStyles.loginPage__title}>
             С кем я учусь?
         </h1>
-        <div className={LoginPageStyles.loginPage__buttonBox}>
-          <Button size={windowWidth <= 576 ? 'medium' : 'large'} htmlType='button' onClick={() => {}}>
-            <p className={LoginPageStyles.loginPage__buttonText}>Войти с Яндекс ID</p>
+        <a className={LoginPageStyles.loginPage__buttonBox}
+          href='https://oauth.yandex.ru/authorize?response_type=code & client_id=<6588f39ea0274d599d3c60fb10c53556>'
+        >
+          <Button size={windowWidth <= 576 ? 'medium' : 'large'} 
+            htmlType='button'
+          >
+            <p className={LoginPageStyles.loginPage__buttonText}>
+              Войти с Яндекс ID
+            </p>
           </Button>
-        </div>
+        </a>
       </section>
     );
   }
