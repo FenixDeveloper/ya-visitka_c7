@@ -1,0 +1,44 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.loginPage {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__title {
+		margin: 199px auto 72px auto;
+		padding: 0;
+		font-family: "IBM Plex Sans";
+		font-size: $h1_tablet_font-size;
+		font-weight: $h3_desktop_font-weight;
+		line-height: 52px;
+	}
+
+	&__buttonBox {
+		margin-bottom: 454px;
+	}
+
+	&__buttonText {
+		font-family: "IBM Plex Sans";
+	}
+
+	@media screen and (max-width: 768px) {
+		&__title {
+			margin-top: 215px;
+		}
+	}
+
+	@media screen and (max-width: 576px) {
+		&__title {
+			font-size: $h1_mobile_font-size;
+			margin-top: 100px;
+			margin-bottom: 32px;
+		}
+
+		&__buttonBox {
+			margin-bottom: 181px;
+		}
+	}
+}
