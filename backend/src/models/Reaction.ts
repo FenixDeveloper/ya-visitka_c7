@@ -16,6 +16,7 @@ const studentSchema = new Schema<IStudent>(
     email: {
       type: String,
     },
+    _id: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
   },
   { _id: false }
 );
@@ -28,7 +29,7 @@ export const reactionSchema = new Schema(
   { discriminatorKey: "type" }
 );
 //todo: fix any
-const reaction: any = mongoose.model("reaction", reactionSchema);
+const reaction: any = mongoose.model("Reaction", reactionSchema);
 
 const TextSchema = new Schema({
   text: {
@@ -44,5 +45,5 @@ const EmotionSchema = new Schema({
   },
 });
 
-export const Text = reaction.discriminator("text", TextSchema);
-export const Emotion = reaction.discriminator("emotion", EmotionSchema);
+export const Text = reaction.discriminator("Text", TextSchema);
+export const Emotion = reaction.discriminator("Emotion", EmotionSchema);

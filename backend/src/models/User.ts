@@ -63,6 +63,14 @@ interface IUserModel extends Model<IUser> {
   ) => Promise<Document<unknown, any, IUser>>;
 }
 
+interface IUserModel extends Model<IUser> {
+  findUserByEmai: (
+    // eslint-disable-next-line no-unused-vars
+    email: string
+  ) => Promise<Document<unknown, any, IUser>>;
+  agregateAndSort: () => Promise<Document<unknown, any, IUser>>;
+}
+
 const blockSchema = new Schema<IBlock>(
   {
     text: {
@@ -147,7 +155,7 @@ const userSchema = new Schema<IUser, IUserModel>(
     },
     email: {
       type: String,
-      // unique: true,
+      unique: true,
       validate: {
         validator(v: string) {
           return isEmail(v);
@@ -179,6 +187,13 @@ userSchema.static("findUserByEmail", function findUserByEmail(email: string) {
   });
 });
 
+userSchema.static("agregateAndSort", function agregateAndSort() {
+  return this.aggregate([
+    { $unwind: "$reactions" },
+    { $sort: { "reactions._id": 1 } },
+  ]).exec();
+});
+
 userSchema.index({ email: 1 }, { unique: true });
 
-export default model<IUser, IUserModel>("user", userSchema);
+export default model<IUser, IUserModel>("User", userSchema);

@@ -23,8 +23,6 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
 
-main().catch((err) => console.log(err));
-
 async function main() {
   await mongoose.connect(DB_URL);
 
@@ -101,3 +99,5 @@ async function main() {
   await user.save();
   await user2.save();
 }
+
+main().catch((err) => console.log(err));
