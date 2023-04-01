@@ -25,7 +25,7 @@ app.listen(PORT, () => {
 
 async function main() {
   await mongoose.connect(DB_URL);
-
+  //Юзер для проверки
   const user = new User({
     email: "test@test.ru",
     cohort: "web +16",
