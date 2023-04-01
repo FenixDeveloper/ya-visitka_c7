@@ -2,11 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
-<<<<<<< HEAD
 import mongoSanitize from 'express-mongo-sanitize';
-=======
 import { requestLogger, errorLogger } from './middlwares/logger';
->>>>>>> d8e9daafd4dba911e3fae63023cce050cd55f958
 import { PORT, DB_URL } from './config/config';
 
 const limiter = rateLimit({
