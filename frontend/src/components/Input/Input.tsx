@@ -1,7 +1,7 @@
-import React, { FunctionComponent, ChangeEvent } from 'react';
+import React, { FunctionComponent } from 'react';
 import styles from './Input.module.scss';
 import { defaultArr, getListYears, months } from '../../utils/constants';
-import DatePicker, { registerLocale } from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "../../assets/react-datepicker.css";
 import { ProfileContext } from '../../services/profileContext';
 
