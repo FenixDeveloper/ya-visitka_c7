@@ -1,1 +1,6 @@
 @import './fonts/fonts.scss';
+@import './modules/variables.scss';
+
+* {
+  font-family: $font-family;
+}

@@ -4,10 +4,6 @@
 .select {
   position: relative;
   width: 100%;
-
-  &__input {
-    display: none;
-  }
 }
 
 .button {
@@ -71,6 +67,7 @@
   box-shadow: 0px 0px 4px rgba(78, 59, 255, 0.25);
   border: 1px solid $text-dark;
   box-sizing: border-box;
+  z-index: 3;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -117,12 +114,6 @@
     opacity: 0;
   }
 
-  &[type=date] {
-    background:url("../../assets/icons/calendar.svg") $white no-repeat 97% 50%;
-    font-family: $font-family;
-    color: $text-dark;
-  }
-
   &[type=file] {
     color: transparent;
     background-color: transparent;
@@ -131,6 +122,12 @@
     &::-webkit-file-upload-button {
       visibility: hidden;
     }
+  }
+
+  &__label {
+    @include text();
+    color: $text-dark;
+    padding-bottom: 2px;
   }
 }
 
@@ -164,6 +161,7 @@
     color: $placeholder;
     font-family: $font-family;
   }
+
   &::-moz-placeholder {
     color: $placeholder;
     font-family: $font-family;
@@ -177,5 +175,40 @@
   &::placeholder {
     color: $placeholder;
     font-family: $font-family;
+  }
+}
+
+.datePicker {
+  display: flex;
+  margin: 0;
+  width: 100%;
+  justify-content: space-evenly;
+
+  &__select {
+    border: none;
+    outline: none;
+    @include h3_desktop();
+    font-weight: $h2_desktop_font-weight;
+    font-family: $font-family;
+    min-width: 68px;
+    background-color: #F8F8F8; //Уникальное значение
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: $text-light;
+      border-radius: 3px;
+      border: 3px solid $white;
+    }
   }
 }
