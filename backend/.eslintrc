@@ -30,6 +30,7 @@
     ]
   },
   "rules": {
+    "linebreak-style": "off",
     "no-underscore-dangle": "off",
     "import/extensions": [
       "error",

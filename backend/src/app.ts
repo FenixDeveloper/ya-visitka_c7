@@ -2,6 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
+import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import User from './models/User';
 import { Text, Emotion } from './models/Reaction';
@@ -15,6 +17,12 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+app.use(
+  mongoSanitize({
+    replaceWith: '_',
+  }),
+);
 
 app.use(limiter);
 app.use(helmet());
