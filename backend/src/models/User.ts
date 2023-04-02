@@ -3,7 +3,7 @@ import {
 } from 'mongoose';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import isEmail from 'validator/lib/isEmail';
-import NotFoundError from '../errors/not_found_error';
+import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
 import { imageOrTempIdRegex } from '../constants/constants';
 import { reactionSchema } from './Reaction';
@@ -58,9 +58,9 @@ interface IUser {
 }
 
 interface IUserModel extends Model<IUser> {
-  findUserByEmai: (
+  findUserByEmail: (
     // eslint-disable-next-line no-unused-vars
-    email: string
+    email: string,
   ) => Promise<Document<unknown, any, IUser>>;
   agregateAndSort: () => Promise<Document<unknown, any, IUser>>;
 }
@@ -119,6 +119,8 @@ const profileSchema = new Schema<IProfile>(
       },
     },
     city: citySchema,
+    // В дальнейшем у birthday может поменяться на type: Schema.Types.Date
+    // (обратить внимание после интеграции с фронтом)
     birthday: {
       type: String,
     },
@@ -150,6 +152,7 @@ const userSchema = new Schema<IUser, IUserModel>(
     email: {
       type: String,
       unique: true,
+      required: true,
       validate: {
         validator(v: string) {
           return isEmail(v);

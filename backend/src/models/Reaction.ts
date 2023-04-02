@@ -24,7 +24,10 @@ const studentSchema = new Schema<IStudent>(
 export const reactionSchema = new Schema(
   {
     from: studentSchema,
-    target: { type: String },
+    target: {
+      type: String,
+      enum: ['hobby', 'status', 'job', 'edu', 'quote', null],
+    },
   },
   { discriminatorKey: 'type' },
 );
