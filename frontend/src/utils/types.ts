@@ -1,3 +1,8 @@
+export type TUser = {
+  email: string;
+  cohort?: string;
+};
+
 export interface IProfile {
   profile: {
     name: string;

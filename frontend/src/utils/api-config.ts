@@ -1,5 +1,5 @@
-import { BASE_URL } from './constants';
-import { IProfile } from './types';
+import { BASE_URL, BASE_URL_AUTH, GITHUB_URL } from './constants';
+import { IProfile, TUser } from './types';
 
 class Api {
   private _baseUrl: string;
@@ -12,10 +12,48 @@ class Api {
   _parseResponse = (res: Response) =>
     res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
 
+  // TOKENS
+  // Получение токена из кода подтверждения
+  getToken(body: { code: string; client_id: string; client_secret: string }) {
+    // const codeBase64 = btoa(`${body.client_id}:${body.client_secret}`);
+    return fetch(`${BASE_URL_AUTH}/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        // authorization: `Basic ${codeBase64}`,
+      },
+      body: JSON.stringify({
+        grant_type: 'authorization_code',
+        code: body.code,
+        client_id: body.client_id,
+        client_secret: body.client_secret,
+      }),
+    }).then((res) => this._parseResponse(res));
+  }
+
   // USERS
+  // Получения данных о пользователе
+  getUser(token: string) {
+    return fetch(`${this._baseUrl}/user`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: token,
+      },
+    })
+      .then((res) => this._parseResponse(res))
+      .then((data) => {
+        if (!data) {
+          return Promise.reject(data);
+        }
+        const accessToken = data.split('Bearer ')[1];
+        localStorage.setItem('accessToken', accessToken);
+        return accessToken;
+      });
+  }
 
   // Отправка данных пользователя - POST - {{baseUrl}}/users
-  postUsers(accessToken: string, body: { email: string; cohort: string }) {
+  postUsers(accessToken: string, body: TUser) {
     return fetch(`${this._baseUrl}/users`, {
       method: 'POST',
       headers: {
@@ -28,17 +66,20 @@ class Api {
 
   // Запрос пользователей - GET - {{baseUrl}}/users?offset=<integer>&limit=20&search=<string>
   getUsers(accessToken: string, offset: number, limit: number, search: string) {
-    return fetch(`${this._baseUrl}/users?offset=${offset}&limit=${limit}&search=${search}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        authorization: accessToken,
-      },
-    }).then((res) => this._parseResponse(res));
+    return fetch(
+      `${this._baseUrl}/users?offset=${offset}&limit=${limit}&search=${search}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: accessToken,
+        },
+      }
+    ).then((res) => this._parseResponse(res));
   }
 
   // Создание/замена данных пользователя - PUT - {{baseUrl}}/users/:id
-  putUsers(accessToken: string, body: { email: string; cohort: string }, id: string) {
+  putUsers(accessToken: string, body: TUser, id: string) {
     return fetch(`${this._baseUrl}/users/${id}`, {
       method: 'PUT',
       headers: {
@@ -50,16 +91,23 @@ class Api {
   }
 
   // COMMENTS
-
   // Запрос комментариев - GET - {{baseUrl}}/comments?offset=<integer>&limit=20&search=<string>
-  getComments(accessToken: string, offset: number, limit: number, search: string) {
-    return fetch(`${this._baseUrl}/comments?offset=${offset}&limit=${limit}&search=${search}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        authorization: accessToken,
-      },
-    }).then((res) => this._parseResponse(res));
+  getComments(
+    accessToken: string,
+    offset: number,
+    limit: number,
+    search: string
+  ) {
+    return fetch(
+      `${this._baseUrl}/comments?offset=${offset}&limit=${limit}&search=${search}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: accessToken,
+        },
+      }
+    ).then((res) => this._parseResponse(res));
   }
 
   // Удаление данных комментариев по id - DELETE - {{baseUrl}}/comments/:id
@@ -74,16 +122,23 @@ class Api {
   }
 
   // PROFILE
-
   // Запрос профиля - GET - {{baseUrl}}/profiles?offset=<integer>&limit=20&cohort=<string>
-  getProfile(accessToken: string, offset: number, limit: number, search: string) {
-    return fetch(`${this._baseUrl}/profiles?offset=${offset}&limit=${limit}&search=${search}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        authorization: accessToken,
-      },
-    }).then((res) => this._parseResponse(res));
+  getProfile(
+    accessToken: string,
+    offset: number,
+    limit: number,
+    search: string
+  ) {
+    return fetch(
+      `${this._baseUrl}/profiles?offset=${offset}&limit=${limit}&search=${search}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: accessToken,
+        },
+      }
+    ).then((res) => this._parseResponse(res));
   }
 
   // Запрос профиля - GET - {{baseUrl}}/profiles/:id
@@ -110,16 +165,23 @@ class Api {
   }
 
   // REACTIONS
-
   // Запрос реакций - GET - {{baseUrl}}/profiles/:id/reactions?offset=<integer>&limit=20
-  getReactions(accessToken: string, offset: number, limit: number, search: string) {
-    return fetch(`${this._baseUrl}/profiles?offset=${offset}&limit=${limit}&search=${search}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        authorization: accessToken,
-      },
-    }).then((res) => this._parseResponse(res));
+  getReactions(
+    accessToken: string,
+    offset: number,
+    limit: number,
+    search: string
+  ) {
+    return fetch(
+      `${this._baseUrl}/profiles?offset=${offset}&limit=${limit}&search=${search}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: accessToken,
+        },
+      }
+    ).then((res) => this._parseResponse(res));
   }
 
   // Отправка реакций - POST - {{baseUrl}}/profiles/:id/reactions
@@ -134,8 +196,7 @@ class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  // ОПЕРАЦИИ С ТОКЕНОМ И ВЫХОД ИЗ ПРОФИЛЯ???:
-
+  // ОПЕРАЦИИ С ТОКЕНОМ И ВЫХОД ИЗ ПРОФИЛЯ
   // Запрос для обновления токена
   postRefreshToken(refreshToken: string) {
     return fetch(`${this._baseUrl}/auth/token`, {
@@ -150,15 +211,16 @@ class Api {
   }
 
   // Запрос на выход из системы
-  postLogout(refreshToken: string) {
-    return fetch(`${this._baseUrl}/auth/logout`, {
-      method: 'POST',
+  logout() {
+    localStorage.removeItem('refreshToken');
+  }
+
+  checkExistUserGitHub(nickname: string) {
+    return fetch(`${GITHUB_URL}/users/${nickname}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        token: refreshToken,
-      }),
     }).then((res) => this._parseResponse(res));
   }
 }
