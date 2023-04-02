@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
+import mongoSanitize from 'express-mongo-sanitize';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 
@@ -14,6 +15,12 @@ const limiter = rateLimit({
 
 const app = express();
 mongoose.connect(DB_URL);
+
+app.use(
+  mongoSanitize({
+    replaceWith: '_',
+  }),
+);
 
 app.use(limiter);
 app.use(helmet());
