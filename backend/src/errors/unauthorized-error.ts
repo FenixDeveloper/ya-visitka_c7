@@ -1,12 +1,12 @@
 import StatusCodes from '../helpers/status-codes';
 
-class NotFoundError extends Error {
+class UnauthorizedError extends Error {
   statusCode: number;
 
   constructor(message: string) {
     super(message);
-    this.statusCode = StatusCodes.NOT_FOUND;
+    this.statusCode = StatusCodes.UNAUTHORIZED;
   }
 }
 
-export default NotFoundError;
+export default UnauthorizedError;
