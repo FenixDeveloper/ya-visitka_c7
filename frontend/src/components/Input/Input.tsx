@@ -13,9 +13,10 @@ type TInput = {
   placeholder?: string;
   onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   value?: string;
+  errorMessage?: string;
 }
 
-export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, arrValues = defaultArr, placeholder, onChange, value }) => {
+export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, arrValues = defaultArr, placeholder, onChange, value, errorMessage }) => {
   const [valueSelect, setValueSelect] = React.useState(value? value : arrValues[0]);
   const [isVisible, setIsVisible] = React.useState(false);
   const [startDate, setStartDate] = React.useState(new Date(1990, 0, 7));
@@ -36,6 +37,10 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
     setStartDate(date!);
     setInputs({ ...inputs, date: date! });
   }
+
+  const changeValueSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValueSelect(e.target.value);
+  };
   
   if (type === 'select') {
     return (
@@ -48,7 +53,9 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
               <li className={styles.list__item} onClick={() => changeSelectedOption(item)} key={index}>{item}</li>
             ))}
           </ul>}
+          <input className={styles.select__input} type='text' name={name} value={valueSelect} onChange={changeValueSelect} />
         </div>
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
 
@@ -57,6 +64,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <input className={styles.input} type={type} name={name} value={value} onChange={onChange} />
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
 
@@ -65,6 +73,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <textarea className={styles.textarea} value={value} onChange={onChange} name={name} placeholder={placeholder ? placeholder : 'Не более 300 символов'} />
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
 
@@ -74,7 +83,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
         {label && <label className={styles.input__label}>{label}</label>}
         <DatePicker 
           selected={startDate} 
-          onChange={(date) => changeSelectedDate(date!)}
+          onChange={(date: Date) => changeSelectedDate(date!)}
           dateFormat='dd.MM.yyyy'
           maxDate={new Date()}
           popperPlacement="bottom-end"
@@ -97,6 +106,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
             </div>
           )}
         />
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
     
@@ -105,6 +115,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <input className={styles.input} type={type} value={value} onChange={onChange} name={name} placeholder={placeholder ? placeholder : ''}/>
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
   }

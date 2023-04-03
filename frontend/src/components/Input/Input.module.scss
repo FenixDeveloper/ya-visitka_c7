@@ -4,6 +4,10 @@
 .select {
   position: relative;
   width: 100%;
+
+  &__input {
+    display: none;
+  }
 }
 
 .button {
@@ -128,6 +132,11 @@
     @include text();
     color: $text-dark;
     padding-bottom: 2px;
+  }
+
+  &__error {
+    @include text();
+    color: $error;
   }
 }
 
