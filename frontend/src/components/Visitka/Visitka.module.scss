@@ -1,0 +1,83 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 325px;
+  cursor: pointer;
+}
+
+.photo {
+  margin-bottom: 11px;
+}
+
+.photo:hover {
+  outline: 2px $neon-pink solid;
+}
+
+.chatButton {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+  border: none;
+}
+
+.chatIcon {
+  height: 25.33px;
+  width: 25.33px;
+}
+
+.count {
+  position: absolute;
+  right: -5px;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  height: 19px;
+  border-radius: 40%;
+  background-color: $text-dark;
+  color: $text-superlight;
+  @include text_icon_count;
+  margin: 0;
+}
+
+.countOver99 {
+  right: -10px;
+  min-width: 28px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  column-gap: 5px;
+}
+
+.name {
+  margin: 0;
+  color: $text-dark;
+}
+
+.city {
+  margin: 0;
+  @include text;
+  color: $text-light;
+}
+
+.name:hover {
+  color: $neon-pink;
+}
+
+.messageCounter {
+  margin: 0;
+  @include text;
+}
