@@ -2,8 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
+import router from './routes/upload-files';
 import mongoSanitize from 'express-mongo-sanitize';
 import { requestLogger, errorLogger } from './middlwares/logger';
+
 import { PORT, DB_URL } from './config/config';
 // Ниже импорты для использования в захардкорженных данных (стр.45)
 // import User from './models/User';
@@ -29,6 +31,8 @@ app.use(helmet());
 app.use(express.json());
 
 app.use(requestLogger);
+
+app.use(router);
 /**
  * Далее должны быть мидлвары по обработке рутов
 */
