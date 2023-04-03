@@ -1,5 +1,5 @@
-@import '../../modules/variables.scss';
-@import '../../modules/mixins.scss';
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
 
 .footer {
   display: flex;
@@ -18,15 +18,15 @@
   }
 
   &__copyright {
-    @include text();
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     opacity: .5;
     margin: 0;
   }
 
   &__author {
-    @include text();
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     opacity: .5;
     margin: 0;
   }

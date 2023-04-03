@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { useRouteError } from 'react-router-dom';
-import ErrorPageStyles from './ErrorPage.module.css';
+import PageNotFoundStyles from './PageNotFound.module.css';
 
-export const ErrorPage: FC = () => {
+export const PageNotFound: FC = () => {
   const error = useRouteError();
   console.error(error);
 

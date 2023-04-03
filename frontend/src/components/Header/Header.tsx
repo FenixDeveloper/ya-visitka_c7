@@ -2,10 +2,7 @@ import React, { FC } from 'react';
 import Login from '../Login/Login';
 import styles from './Header.module.scss';
 import logo from '../../assets/icons/title-logo.svg';
-
-interface UserData {
-  user: { name: string; avatar?: string };
-}
+import { UserData } from '../../services/types/data';
 
 const Header: FC<UserData> = ({ user }) => {
   return (
@@ -15,4 +12,5 @@ const Header: FC<UserData> = ({ user }) => {
     </header>
   );
 };
+
 export default Header;

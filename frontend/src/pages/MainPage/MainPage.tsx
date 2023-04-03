@@ -5,7 +5,7 @@ export const MainPage: FC = () => {
   return (
     <>
       <h1>
-            Главная страница
+        Главная страница
       </h1>
     </>
   );
