@@ -1,12 +1,12 @@
-import { FC } from "react";
+import React, { FC } from 'react';
 import AdminUsersPageStyles from './AdminUsersPage.module.css';
 
 export const AdminUsersPage: FC = () => {
-    return (
-      <>
-        <h1>
+  return (
+    <>
+      <h1>
           Административная страница: управление когортами
-        </h1>
-      </>
-    );
-  }
+      </h1>
+    </>
+  );
+}

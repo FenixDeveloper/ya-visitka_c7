@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import defaulAvatar from "../../assets/icons/default-avatar.svg";
-import styles from "./Login.module.scss";
-import { NavLink } from "react-router-dom";
+import React, { FC } from 'react';
+import defaulAvatar from '../../assets/icons/default-avatar.svg';
+import styles from './Login.module.scss';
+import { NavLink } from 'react-router-dom';
 
 interface User {
   user: {
@@ -12,18 +12,18 @@ interface User {
 
 const Login: FC<User> = ({ user }) => {
   const [active, setActive] = React.useState<boolean>(false);
-  const closePopupStyle = !active ? styles.popup_open_closed : "";
+  const closePopupStyle = !active ? styles.popup_open_closed : '';
 
   const handlerClickPopup = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       setActive(false);
     }
   };
 
   React.useEffect(() => {
-    document.addEventListener("keydown", handlerClickPopup);
+    document.addEventListener('keydown', handlerClickPopup);
 
-    return () => document.removeEventListener("keydown", handlerClickPopup);
+    return () => document.removeEventListener('keydown', handlerClickPopup);
   }, []);
 
   return (
