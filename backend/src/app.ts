@@ -5,7 +5,7 @@ import 'isomorphic-fetch';
 import { rateLimit } from 'express-rate-limit';
 import { PORT, DB_URL } from './config/config';
 import { login } from './controllers/oauth';
-
+import { Router } from 'express';
 // import { Reaction, EmotionReaction } from './models/Reaction';
 
 
@@ -20,7 +20,7 @@ const yandex = {
 
 
 const app = express();
-
+const router = Router();
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -29,18 +29,24 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.use(limiter);
+app.use(helmet());
+app.use(express.json());
+
 mongoose.connect(DB_URL);
 
 app.get('/auth/yandex', async (req, res) => {
   await res.redirect(`${yandex.OATH_URL}&client_id=${yandex.CLIENT_ID}`);
 });
 
-app.get('/auth/yandex/callback', login);
 
-app.use(limiter);
-app.use(helmet());
-app.use(express.json());
+app.use(
+  router.post('/auth', login)
+)
+
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+//app.get('/auth/yandex/callback', login);

@@ -15,7 +15,7 @@ const curatorList = ['curator_1@yandex.ru', 'curator_2@yandex.ru'];
 
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  const code = req.query.code as string;
+  const { code } = req.body  //req.query.code as string;
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',
     headers: {
@@ -34,6 +34,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     headers: { Authorization: `OAuth${access_token}` },
   });
   const userProfile = await userResponse.json();
+
+
   User.findOne({email: userProfile.default_email})
   .then((user) => {
     let token;
