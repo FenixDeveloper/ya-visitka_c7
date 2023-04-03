@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
+import { errors } from 'celebrate';
+import errorMiddleware from './middlwares/error-middleware';
 import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
 
@@ -38,6 +40,8 @@ app.use(router);
 */
 
 app.use(errorLogger);
+app.use(errors());
+app.use(errorMiddleware);
 /**
  * Далее должны быть мидлвары обработки ошибок валидации
  * и централизованного обработчика ошибок

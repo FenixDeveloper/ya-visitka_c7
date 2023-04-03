@@ -3,7 +3,7 @@ import ErrorMessages from '../helpers/error-messages';
 import StatusCodes from '../helpers/status-codes';
 import { ICustomError } from '../types/custom-error';
 
-const errorHandler = (err: ICustomError, req: Request, res: Response, next: NextFunction) => {
+const errorMiddleware = (err: ICustomError, req: Request, res: Response, next: NextFunction) => {
   const {
     statusCode = StatusCodes.INTERNAL_SERVER_ERROR,
     message = ErrorMessages.InternalServerError,
@@ -15,4 +15,4 @@ const errorHandler = (err: ICustomError, req: Request, res: Response, next: Next
   return next();
 };
 
-export default errorHandler;
+export default errorMiddleware;
