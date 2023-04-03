@@ -2,8 +2,8 @@ import express from 'express';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
 import { rateLimit } from 'express-rate-limit';
-import router from './routes/upload-files';
 import mongoSanitize from 'express-mongo-sanitize';
+import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
 
 import { PORT, DB_URL } from './config/config';
