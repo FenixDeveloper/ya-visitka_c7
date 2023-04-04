@@ -54,7 +54,6 @@
     "@typescript-eslint/parser": "^5.57.1",
     "eslint": "^8.37.0",
     "eslint-plugin-react": "^7.32.2",
-    "node-sass": "^7.0.3",
     "prettier": "2.8.7"
   }
 }
