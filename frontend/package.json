@@ -35,6 +35,8 @@
       "react-app/jest"
     ]
   },
+  "lint": "eslint .",
+  "lint:fix": "eslint --fix",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -48,6 +50,11 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^7.0.3"
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "eslint": "^8.37.0",
+    "eslint-plugin-react": "^7.32.2",
+    "node-sass": "^7.0.3",
+    "prettier": "2.8.7"
   }
 }

@@ -1,5 +1,5 @@
-@import '../../modules/variables.scss';
-@import '../../modules/mixins.scss';
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
 
 .select {
   position: relative;
@@ -11,7 +11,7 @@
 }
 
 .button {
-  @include text();
+  @include mixins.text();
   display: flex;
   width: 100%;
   height: 48px;
@@ -21,10 +21,10 @@
   background: none;
   cursor: pointer;
   outline: none;
-  border: 1px solid $text-dark;
+  border: 1px solid variables.$color-text-dark;
 
   &::after {
-    content: url(../../assets/icons/caret-up.svg);
+    content: url('../../assets/icons/caret-up.svg');
     display: block;
     position: absolute;
     top: 11px;
@@ -33,7 +33,7 @@
   }
 
   &_active {
-    @include text();
+    @include mixins.text();
     display: flex;
     width: 100%;
     height: 48px;
@@ -43,10 +43,10 @@
     background: none;
     cursor: pointer;
     outline: none;
-    border: 1px solid $text-dark;
+    border: 1px solid variables.$color-text-dark;
 
     &::after {
-      content: url(../../assets/icons/caret-down.svg);
+      content: url('../../assets/icons/caret-down.svg');
       display: block;
       position: absolute;
       top: 11px;
@@ -59,7 +59,7 @@
 .list {
   margin: 0;
   padding: 5px 0;
-  background-color: $btn-hover;
+  background-color: variables.$backgroud-white;
   list-style-type: none;
   position: absolute;
   top: 47px;
@@ -69,7 +69,7 @@
   max-height: 191px;
   border-radius: 0 0 4px 4px;
   box-shadow: 0px 0px 4px rgba(78, 59, 255, 0.25);
-  border: 1px solid $text-dark;
+  border: 1px solid variables.$color-text-dark;
   box-sizing: border-box;
   z-index: 3;
 
@@ -82,14 +82,14 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $text-light;
+    background-color: variables.$color-text-light;
     border-radius: 3px;
-    border: 3px solid $white;
+    border: 3px solid variables.$backgroud-white;
   }
 
   &__item {
-    @include text();
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     display: block;
     width: 100%;
     padding: 6px 16px;
@@ -97,20 +97,20 @@
     box-sizing: border-box;
 
     &:hover {
-      background: $neon-pink;
-      color: $white;
+      background: variables.$color-neon-pink;
+      color: variables.$backgroud-white;
     }
   }
 }
 
 .input {
-  @include text();
+  @include mixins.text();
   width: 100%;
   height: 48px;
   border-radius: 4px;
   padding: 12px 16px;
   box-sizing: border-box;
-  border: 1px solid $text-dark;
+  border: 1px solid variables.$color-text-dark;
   outline: none;
   cursor: pointer;
 
@@ -121,7 +121,7 @@
   &[type=file] {
     color: transparent;
     background-color: transparent;
-    background:url("../../assets/icons/attach.svg") $white no-repeat 97% 50%;
+    background: url('../../assets/icons/attach.svg') variables.$backgroud-white no-repeat 97% 50%;
 
     &::-webkit-file-upload-button {
       visibility: hidden;
@@ -129,19 +129,19 @@
   }
 
   &__label {
-    @include text();
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     padding-bottom: 2px;
   }
 
   &__error {
-    @include text();
-    color: $error;
+    @include mixins.text();
+    color: variables.$color-error;
   }
 }
 
 .textarea {
-  @include text();
+  @include mixins.text();
   border-radius: 4px;
   padding: 12px 16px;
   box-sizing: border-box;
@@ -150,7 +150,7 @@
   overflow: auto;
   resize: none;
   outline: none;
-  border: 1px solid $text-dark;
+  border: 1px solid variables.$color-text-dark;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -161,29 +161,29 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $text-light;
+    background-color: variables.$color-text-light;
     border-radius: 3px;
-    border: 3px solid $white;
+    border: 3px solid variables.$backgroud-white;
   }
 
   &::-webkit-input-placeholder {
-    color: $placeholder;
-    font-family: $font-family;
+    color: variables.$color-placeholder;
+    font-family: variables.$font-family;
   }
 
   &::-moz-placeholder {
-    color: $placeholder;
-    font-family: $font-family;
+    color: variables.$color-placeholder;
+    font-family: variables.$font-family;
   }
 
   &::-ms-input-placeholder {
-    color: $placeholder;
-    font-family: $font-family;
+    color: variables.$color-placeholder;
+    font-family: variables.$font-family;
   }
 
   &::placeholder {
-    color: $placeholder;
-    font-family: $font-family;
+    color: variables.$color-placeholder;
+    font-family: variables.$font-family;
   }
 }
 
@@ -196,9 +196,9 @@
   &__select {
     border: none;
     outline: none;
-    @include h3_desktop();
-    font-weight: $h2_desktop_font-weight;
-    font-family: $font-family;
+    @include mixins.h3_desktop();
+    font-weight: variables.$h2_desktop_font-weight;
+    font-family: variables.$font-family;
     min-width: 68px;
     background-color: #F8F8F8; //Уникальное значение
 
@@ -215,9 +215,9 @@
     }
   
     &::-webkit-scrollbar-thumb {
-      background-color: $text-light;
+      background-color: variables.$color-text-superlight;
       border-radius: 3px;
-      border: 3px solid $white;
+      border: 3px solid variables.$backgroud-white;
     }
   }
 }

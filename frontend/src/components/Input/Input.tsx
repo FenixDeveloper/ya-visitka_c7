@@ -1,22 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FC } from 'react';
 import styles from './Input.module.scss';
-import { defaultArr, getListYears, months } from '../../utils/constants';
-import DatePicker from "react-datepicker";
-import "../../assets/react-datepicker.css";
+import { EXAMPLE_DEFAUT_ARR, MONTHS } from '../../utils/constants';
+import { getListYears } from '../../utils/utils';
+import DatePicker from 'react-datepicker';
+import '../../assets/react-datepicker.css';
 import { ProfileContext } from '../../services/profileContext';
+import { IInputProps } from '../../services/types/data';
 
-type TInput = {
-  type: 'text' | 'textarea' | 'file' | 'select' | 'date';
-  name?: string;
-  label?: string;
-  arrValues?: string[];
-  placeholder?: string;
-  onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
-  value?: string;
-  errorMessage?: string;
-}
 
-export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, arrValues = defaultArr, placeholder, onChange, value, errorMessage }) => {
+export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues = EXAMPLE_DEFAUT_ARR, placeholder, onChange, value, errorMessage }) => {
   const [valueSelect, setValueSelect] = React.useState(value? value : arrValues[0]);
   const [isVisible, setIsVisible] = React.useState(false);
   const [startDate, setStartDate] = React.useState(new Date(1990, 0, 7));
@@ -25,7 +17,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
 
   function handleClick() {
     isVisible ? setIsVisible(false) : setIsVisible(true);
-  };
+  }
 
   function changeSelectedOption(item: string) {
     setValueSelect(item); 
@@ -86,7 +78,7 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
           onChange={(date: Date) => changeSelectedDate(date!)}
           dateFormat='dd.MM.yyyy'
           maxDate={new Date()}
-          popperPlacement="bottom-end"
+          popperPlacement='bottom-end'
           renderCustomHeader={({ date, changeYear, changeMonth }) => (
             <div className={styles.datePicker}>
               <select value={date.getFullYear()} onChange={({ target: { value } }) => changeYear(Number(value))} className={styles.datePicker__select}>
@@ -96,8 +88,8 @@ export const Input: FunctionComponent<TInput> = ({ type = 'text', name, label, a
                   </option>
                 ))}
               </select>
-              <select value={months[date.getMonth()]} onChange={({ target: { value } }) => changeMonth(months.indexOf(value)) } className={styles.datePicker__select}>
-                {months.map(option => (
+              <select value={MONTHS[date.getMonth()]} onChange={({ target: { value } }) => changeMonth(MONTHS.indexOf(value)) } className={styles.datePicker__select}>
+                {MONTHS.map(option => (
                   <option key={option} value={option} className={styles.datePicker__option}>
                     {option}
                   </option>

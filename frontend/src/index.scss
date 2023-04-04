@@ -1,6 +1,8 @@
-@import './assets/fonts/fonts.scss';
-@import './modules/variables.scss';
+@use './assets/fonts/fonts.scss';
+@use './modules/variables.scss';
+@import './assets/normalize.css';
 
-* {
-  font-family: $font-family;
+body {
+  margin: 0;
+  font-family: variables.$font-family;
 }
