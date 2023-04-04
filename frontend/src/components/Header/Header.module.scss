@@ -1,4 +1,4 @@
-@import "../../modules/variables.scss";
+@use '../../modules/variables.scss';
 
 .container {
   display: flex;
@@ -13,6 +13,7 @@
 
   @media screen and (max-width: 768px) {
     height: 96px;
+
     &__title {
       margin: 35px 0 35px 32px;
     }
@@ -20,6 +21,7 @@
 
   @media screen and (max-width: 576px) {
     height: 80px;
+
     &__title {
       margin: 27.5px 0 27.5px 24px;
     }

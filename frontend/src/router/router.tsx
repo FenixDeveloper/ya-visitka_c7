@@ -1,47 +1,46 @@
-import {
-    createBrowserRouter,
-  } from "react-router-dom";
+import React from 'react';
+import { createBrowserRouter } from 'react-router-dom';
 import { MainPage } from '../pages/MainPage/MainPage';
-import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
+import { PageNotFound } from '../pages/PageNotFound/PageNotFound';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
-import { ProfileDetailsPage } from "../pages/ProfileDetailsPage/ProfileDetailsPage";
-import { MapPage } from "../pages/MapPage/MapPage";
-import { ProfileEditPage } from "../pages/ProfileEditPage/ProfileEditPage";
-import { AdminCommentsPage } from "../pages/AdminCommentsPage/AdminCommentsPage";
-import { AdminUsersPage } from "../pages/AdminUsersPage/AdminUsersPage";
-  
+import { ProfileDetailsPage } from '../pages/ProfileDetailsPage/ProfileDetailsPage';
+import { MapPage } from '../pages/MapPage/MapPage';
+import { ProfileEditPage } from '../pages/ProfileEditPage/ProfileEditPage';
+import { AdminCommentsPage } from '../pages/AdminCommentsPage/AdminCommentsPage';
+import { AdminUsersPage } from '../pages/AdminUsersPage/AdminUsersPage';
+
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <MainPage />,
-    errorElement: <ErrorPage />,
+    errorElement: <PageNotFound />,
   },
   {
-    path: "/cohort/:cohortId",
+    path: '/cohort/:cohortId',
     element: <MainPage />,
   },
   {
-    path: "login",
+    path: 'login',
     element: <LoginPage />,
   },
   {
-    path: "profiles/profileId",
+    path: 'profiles/:profileId',
     element: <ProfileDetailsPage />,
   },
   {
-    path: "edit",
+    path: 'edit',
     element: <ProfileEditPage />,
   },
   {
-    path: "map",
+    path: 'map',
     element: <MapPage />,
   },
   {
-    path: "admin",
+    path: 'admin',
     element: <AdminCommentsPage />,
   },
   {
-    path: "admin/users",
+    path: 'admin/users',
     element: <AdminUsersPage />,
   },
 ]);

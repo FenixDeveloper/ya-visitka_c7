@@ -1,7 +1,64 @@
-@mixin text($size, $weight, $height) {
+@use './variables.scss';
+
+@mixin h1_desktop() {
   font: {
-    size: $size;
-    weight: $weight;
-    height: $height;
+    size: variables.$h1_desktop_font-size;
+    weight: variables.$h1_desktop_font-weight;
   }
+
+  line-height: variables.$h1_desktop_line-height;
+}
+
+@mixin h1_tablet() {
+  font: {
+    size: variables.$h1_tablet_font-size;
+    weight: variables.$h1_tablet_font-weight;
+  }
+
+  line-height: variables.$h1_tablet_line-height;
+}
+
+@mixin h1_mobile() {
+  font: {
+    size: variables.$h1_mobile_font-size;
+    weight: variables.$h1_mobile_font-weight;
+  }
+
+  line-height: variables.$h1_mobile_line-height;
+}
+
+@mixin h2_desktop() {
+  font: {
+    size: variables.$h2_desktop_font-size;
+    weight: variables.$h2_desktop_font-weight;
+  }
+
+  line-height: variables.$h2_desktop_line-height;
+}
+
+@mixin h3_desktop() {
+  font: {
+    size: variables.$h3_desktop_font-size;
+    weight: variables.$h3_desktop_font-weight;
+  }
+
+  line-height: variables.$h3_desktop_line-height;
+}
+
+@mixin h4_desktop() {
+  font: {
+    size: variables.$h4_desktop_font-size;
+    weight: variables.$h4_desktop_font-weight;
+  }
+
+  line-height: variables.$h4_desktop_line-height;
+}
+
+@mixin text() {
+  font: {
+    size: variables.$text_font-size;
+    weight: variables.$text_font-weight;
+  }
+
+  line-height: variables.$text_line-height;
 }

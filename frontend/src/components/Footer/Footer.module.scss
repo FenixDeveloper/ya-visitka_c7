@@ -1,5 +1,5 @@
-@import '../../modules/variables.scss';
-@import '../../modules/mixins.scss';
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
 
 .footer {
   display: flex;
@@ -7,7 +7,7 @@
   padding: 24px 40px;
   width: 100%;
   box-sizing: border-box;
-  border-top: 1px solid rgba(16, 12, 52, 0.3);
+  border-top: 1px solid rgba(16, 12, 52, 0.3); // уникальное значение
 
   @media screen and (max-width: 780px) {
     padding: 24px 32px;
@@ -18,15 +18,15 @@
   }
 
   &__copyright {
-    @include text(16px, 400, 24px);
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     opacity: .5;
     margin: 0;
   }
 
   &__author {
-    @include text(16px, 400, 24px);
-    color: $text-dark;
+    @include mixins.text();
+    color: variables.$color-text-dark;
     opacity: .5;
     margin: 0;
   }

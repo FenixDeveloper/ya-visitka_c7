@@ -1,5 +1,5 @@
-import { BASE_URL, BASE_URL_AUTH, GITHUB_URL } from './constants';
-import { IProfile, TUser } from './types';
+import { IProfile, IUserRequest } from '../services/types/data';
+import { BASE_URL, GITHUB_URL } from './constants';
 
 class Api {
   private _baseUrl: string;
@@ -10,50 +10,34 @@ class Api {
 
   // вспомогательная функция проверки на ошибку возвращающая либо ОК ,либо ОШИБКУ
   _parseResponse = (res: Response) =>
-    res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
+    res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 
   // TOKENS
   // Получение токена из кода подтверждения
-  getToken(body: { code: string; client_id: string; client_secret: string }) {
-    // const codeBase64 = btoa(`${body.client_id}:${body.client_secret}`);
-    return fetch(`${BASE_URL_AUTH}/token`, {
-      method: 'POST',
+  getToken(code: string) {
+    return fetch(`${this._baseUrl}/token`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        // authorization: `Basic ${codeBase64}`,
       },
-      body: JSON.stringify({
-        grant_type: 'authorization_code',
-        code: body.code,
-        client_id: body.client_id,
-        client_secret: body.client_secret,
-      }),
+      body: JSON.stringify({ code }),
     }).then((res) => this._parseResponse(res));
   }
 
   // USERS
   // Получения данных о пользователе
-  getUser(token: string) {
+  getUser(accessToken: string) {
     return fetch(`${this._baseUrl}/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: token,
+        authorization: accessToken,
       },
-    })
-      .then((res) => this._parseResponse(res))
-      .then((data) => {
-        if (!data) {
-          return Promise.reject(data);
-        }
-        const accessToken = data.split('Bearer ')[1];
-        localStorage.setItem('accessToken', accessToken);
-        return accessToken;
-      });
+    }).then((res) => this._parseResponse(res));
   }
 
   // Отправка данных пользователя - POST - {{baseUrl}}/users
-  postUsers(accessToken: string, body: TUser) {
+  postUsers(accessToken: string, body: IUserRequest) {
     return fetch(`${this._baseUrl}/users`, {
       method: 'POST',
       headers: {
@@ -79,7 +63,7 @@ class Api {
   }
 
   // Создание/замена данных пользователя - PUT - {{baseUrl}}/users/:id
-  putUsers(accessToken: string, body: TUser, id: string) {
+  putUsers(accessToken: string, body: IUserRequest, id: string) {
     return fetch(`${this._baseUrl}/users/${id}`, {
       method: 'PUT',
       headers: {
@@ -208,11 +192,6 @@ class Api {
         token: refreshToken,
       }),
     }).then((res) => this._parseResponse(res));
-  }
-
-  // Запрос на выход из системы
-  logout() {
-    localStorage.removeItem('refreshToken');
   }
 
   checkExistUserGitHub(nickname: string) {

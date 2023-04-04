@@ -1,0 +1,55 @@
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
+
+.button {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  background: variables.$gradient-button-default;
+  color: variables.$color-text-button;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    &:not([disabled]) {
+        background: variables.$gradient-button-hover;
+    }
+  }
+
+  &:active {
+    &:not([disabled]) {
+      background: variables.$gradient-button-active;
+    }
+  }
+}
+
+.small {
+  height: 44px;
+  width: 260px;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.medium {
+  height: 60px;
+  width: 272px;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.large {
+  height: 68px;
+  width: 439px;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.disabled {
+  background: variables.$backgroud-button-disabled;
+  cursor: default;
+}
