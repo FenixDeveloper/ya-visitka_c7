@@ -10,7 +10,7 @@ const opts = {
 export const jwtStrategy = new JwtStrategy(opts, function(jwt_payload: any, done: any) {
   console.log('payload received', jwt_payload);
 
-    User.findOne(jwt_payload.sud, function(err: any, user: any) {
+    User.findOne({id: jwt_payload.sub}, function(err: any, user: any) {
       if (err) {
           return done(err, false);
       }

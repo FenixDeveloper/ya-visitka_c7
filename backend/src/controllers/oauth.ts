@@ -52,6 +52,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const isCurator = curatorList.includes(userProfile.default_email);
     if(isCurator){
       token = jwt.sign({ _id: null,
+        email: userProfile.default_email,
         role: 'curator' },
          'strong-secret',
        { expiresIn: '7d' });

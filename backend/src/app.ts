@@ -6,6 +6,9 @@ import { rateLimit } from 'express-rate-limit';
 import { PORT, DB_URL } from './config/config';
 import { login } from './controllers/oauth';
 import { Router } from 'express';
+import { jwtStrategy } from './strategy/jwt.strategy';
+import passport from 'passport';
+import jwt from 'jsonwebtoken';
 // import { Reaction, EmotionReaction } from './models/Reaction';
 
 
@@ -29,6 +32,8 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+passport.use(jwtStrategy)
+
 app.use(limiter);
 app.use(helmet());
 app.use(express.json());
@@ -42,6 +47,22 @@ app.get('/auth/yandex', async (req, res) => {
 
 app.use(
   router.post('/auth', login)
+)
+
+app.use(
+  router.get('/user',  (req, res) => {
+    const token = req.body.token;
+
+    const { role } = jwt.decode(token) as any;
+    if( role === 'student') {
+      const {id, name, email, cohort} = jwt.decode(token) as any;
+      res.send({id, name, email, cohort, role})
+    }
+    if ( role === 'curator') {
+      const {id, email} = jwt.decode(token) as any;
+      res.send({id, email, role})
+    }
+  })
 )
 
 
