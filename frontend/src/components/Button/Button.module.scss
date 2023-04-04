@@ -1,6 +1,5 @@
 @use '../../modules/variables.scss';
 @use '../../modules/mixins.scss';
-
 .button {
   padding: 0;
   margin: 0;
@@ -11,7 +10,7 @@
   border-radius: 4px;
   text-align: center;
   background: variables.$gradient-button-default;
-  color: variables.$color-text-button;
+  color: variables.$color-text-superlight;
   cursor: pointer;
   font-weight: 500;
 

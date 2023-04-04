@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import styles from './App.module.scss';
 import { RouterProvider } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -11,7 +12,7 @@ const App: FC = () => {
   const profileState = React.useState({ select: 'Петровск (Саратовская область)', date: new Date(1990, 0, 7), file: '' });
 
   return (
-    <>
+    <section className={styles.app}>
       <Header user={EXAMPLE_CURRENT_USER} />
       <main>
         <ProfileContext.Provider value={profileState}>
@@ -19,7 +20,7 @@ const App: FC = () => {
         </ProfileContext.Provider>
       </main>
       <Footer />
-    </>
+    </section>
   );
 };
 
