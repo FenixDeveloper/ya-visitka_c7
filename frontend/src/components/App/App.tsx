@@ -8,13 +8,13 @@ import { router } from '../../router/router';
 
 const App: FC = () => {
   return (
-    <div className={styles.app}>
+    <section className={styles.app}>
       <Header user={EXAMPLE_CURRENT_USER} />
       <main>
         <RouterProvider router={router} />
       </main>
       <Footer />
-    </div>
+    </section>
   );
 };
 
