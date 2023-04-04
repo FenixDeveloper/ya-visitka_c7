@@ -18,11 +18,11 @@ const App: FC = () => {
   return (
     <ProfileContext.Provider value={profileState}>
       <section className={styles.app}>
-        <Header />
+     
         <main>
           <RouterProvider router={router} />
         </main>
-        <Footer />
+       
       </section>
     </ProfileContext.Provider>
   );
