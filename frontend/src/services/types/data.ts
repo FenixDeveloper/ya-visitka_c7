@@ -1,9 +1,9 @@
 import React, { SyntheticEvent } from 'react';
 
 export interface UserData {
-  user: { 
-    name: string; 
-    avatar?: string 
+  user: {
+    name: string;
+    avatar?: string
   };
 }
 
@@ -24,4 +24,48 @@ export interface IInputProps {
   onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   value?: string;
   errorMessage?: string;
+}
+
+export interface IUserRequest {
+  email: string;
+  cohort?: string;
+}
+
+export interface ITokens {
+  accessToken: string,
+  refreshToken: string
+}
+
+export interface IProfile {
+  profile: {
+    name: string;
+    photo: string;
+    city: {
+      name: string;
+      geocode: Array<number>;
+    };
+    birthday: string;
+    quote: string;
+    telegram: string;
+    github: string;
+    template: string;
+  };
+  info: {
+    hobby: {
+      text: string;
+      image: null;
+    };
+    status: {
+      text: string;
+      image: null;
+    };
+    job: {
+      text: string;
+      image: null;
+    };
+    edu: {
+      text: string;
+      image: null;
+    };
+  };
 }
