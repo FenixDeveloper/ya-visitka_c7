@@ -42,7 +42,7 @@ app.use(express.json());
 
 //вместо фронтенда, для получения кода подтверждения
 app.get('/auth/yandex', async (req, res) => {
-  await res.redirect(`https://oauth.yandex.ru/authorize?response_type=code&client_id='6588f39ea0274d599d3c60fb10c53556`);
+  await res.redirect(`https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556`);
 });
 
 //где можно получить код -> /auth/yandex/callback;
