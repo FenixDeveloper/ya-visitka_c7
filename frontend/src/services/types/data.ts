@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
 
 export interface UserData {
   user: { 
@@ -13,4 +13,15 @@ export interface IButtonProps {
   children?: React.ReactNode;
   disabled?: boolean;
   htmlType?: 'button' | 'submit' | 'reset';
+}
+
+export interface IInputProps {
+  type: 'text' | 'textarea' | 'file' | 'select' | 'date';
+  name?: string;
+  label?: string;
+  arrValues?: string[];
+  placeholder?: string;
+  onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
+  value?: string;
+  errorMessage?: string;
 }

@@ -7,7 +7,7 @@ import { UserData } from '../../services/types/data';
 const Header: FC<UserData> = ({ user }) => {
   return (
     <header className={styles.container}>
-      <img className={styles.container__title} src={logo} alt="VISITKI-logo" />
+      <img className={styles.container__title} src={logo} alt='VISITKI-logo' />
       <Login user={user} />
     </header>
   );
