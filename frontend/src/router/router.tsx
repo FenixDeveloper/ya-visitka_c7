@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { MainPage } from '../pages/MainPage/MainPage';
-import { PageNotFound } from '../pages/PageNotFound/PageNotFound';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { ProfileDetailsPage } from '../pages/ProfileDetailsPage/ProfileDetailsPage';
 import { MapPage } from '../pages/MapPage/MapPage';
@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <MainPage />,
-    errorElement: <PageNotFound />,
+    errorElement: <NotFoundPage />,
   },
   {
     path: '/cohort/:cohortId',
