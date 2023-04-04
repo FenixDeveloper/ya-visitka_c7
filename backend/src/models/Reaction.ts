@@ -1,25 +1,53 @@
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from 'mongoose';
 
-const options = { discriminatorKey: "kind" };
+const { Schema } = mongoose;
 
-const reactionSchema = new mongoose.Schema(
+interface IStudent {
+  _id: ObjectId;
+  name: string;
+  email: string;
+}
+
+const studentSchema = new Schema<IStudent>(
   {
-    from: {
-      _id: mongoose.SchemaTypes.ObjectId,
-      name: String,
-      email: String,
+    name: {
+      type: String,
     },
-    target: String,
-    text: String,
+    email: {
+      type: String,
+    },
+    _id: { type: mongoose.SchemaTypes.ObjectId, ref: 'User' },
   },
-  options
-);
-//todo: fix any
-const Reaction: any = mongoose.model("Reaction", reactionSchema);
-
-const EmotionReaction = Reaction.discriminator(
-  "EmotionReaction",
-  new mongoose.Schema({ emotion: String }, options)
+  { _id: false },
 );
 
-export { Reaction, EmotionReaction };
+export const reactionSchema = new Schema(
+  {
+    from: studentSchema,
+    target: {
+      type: String,
+      enum: ['hobby', 'status', 'job', 'edu', 'quote', null],
+    },
+  },
+  { discriminatorKey: 'type' },
+);
+
+// Проблема с типом, пока поставили any
+const reaction: any = mongoose.model('Reaction', reactionSchema);
+
+const TextSchema = new Schema({
+  text: {
+    type: String,
+    maxlength: 200,
+  },
+});
+
+const EmotionSchema = new Schema({
+  emotion: {
+    type: String,
+    maxlength: 200,
+  },
+});
+
+export const Text = reaction.discriminator('Text', TextSchema);
+export const Emotion = reaction.discriminator('Emotion', EmotionSchema);

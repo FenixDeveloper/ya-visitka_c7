@@ -71,3 +71,17 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     //next(new UnauthorizedError('Необходима авторизация'));
   });
 };
+
+export const getUser = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.body.token;
+
+  const { role } = jwt.decode(token) as any;
+  if( role === 'student') {
+    const {id, name, email, cohort} = jwt.decode(token) as any;
+    res.send({id, name, email, cohort, role})
+  }
+  if ( role === 'curator') {
+    const {id, email} = jwt.decode(token) as any;
+    res.send({id, email, role})
+  }
+};
