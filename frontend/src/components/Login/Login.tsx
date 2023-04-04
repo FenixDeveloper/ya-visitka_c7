@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import defaulAvatar from '../../assets/icons/default-avatar.svg';
-import styles from './Login.module.scss';
 import { NavLink } from 'react-router-dom';
 import { UserData } from '../../services/types/data';
+import defaulAvatar from '../../assets/icons/default-avatar.svg';
+import styles from './Login.module.scss';
 
 const Login: FC<UserData> = ({ user }) => {
   const [active, setActive] = React.useState<boolean>(false);
@@ -34,7 +34,7 @@ const Login: FC<UserData> = ({ user }) => {
           </div>
           {active && (
             <div className={styles.links}>
-              <NavLink to='#1' className={styles.link}>
+              <NavLink to='/profile' className={styles.link}>
                 Профиль
               </NavLink>
               <button type='button' className={styles.btn}>
