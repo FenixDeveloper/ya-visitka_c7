@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './NotFoundPage.module.scss';
 import { Button } from '../../components/Button/Button';
 
 export const NotFoundPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.content}>
@@ -20,7 +22,7 @@ export const NotFoundPage: React.FC = () => {
         </h1>
         <p className={styles.content__paragraph}> 👀 📃 🚫 🔎</p>
         <Link className={styles.content__button} to="/">
-          <Button size="small">Вернуться на главную</Button>
+          <Button size="small" onClick={() => navigate(-1)}>назад</Button>
         </Link>
       </div>
     </div>
