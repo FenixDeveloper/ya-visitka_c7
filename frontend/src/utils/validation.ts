@@ -54,7 +54,9 @@ class Validation {
       return 'Изображение должно быть одного из форматов jpg, jpeg, png, bmp';
     }
     if (photo.size > maxSizeInBytes) {
-      return 'Изображение слишком большое';
+      const sizeInMegabytes = maxSizeInBytes / (1048576);
+      const maxSize = sizeInMegabytes >= 1 ? `${parseFloat(sizeInMegabytes.toFixed(1))} МБайт` : `${Math.round(maxSizeInBytes / 1024)} КБайт`;
+      return `Изображение слишком большое, максимальный допустимый размер: ${maxSize}`;
     }
     return '';
   }
