@@ -43,7 +43,7 @@ const getToken = (user: any) => {
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { code } = req.body;
 
-  const userProfile = getUserProfileYndex(code) as any;
+  const userProfile = await getUserProfileYndex(code) as any;
 
   User.findOne({email: userProfile.default_email})
   .then((user) => {
