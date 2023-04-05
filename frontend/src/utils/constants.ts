@@ -1,4 +1,4 @@
-export const EXAMPLE_CURRENT_USER: { name: string, avatar?: string } = {
+export const EXAMPLE_CURRENT_USER: { name: string, avatar?: string; } = {
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
 };
@@ -11,3 +11,7 @@ export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрел
 
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com/';
+
+export const IMAGEVALIDATION = /^https:\/\/([^\s(["<,>/]*)(\/)[^\s[",><]*\.(png|jpg|jpeg|bmp)(\?[^\s[",><]*)?/;
+
+export const EMAILVALIDATION = /^[^.](?=[a-z\d!#$%&'*+\-\\/=?.^_`{}|~]+@([a-z-.\d]+\.)+[a-z]{2,}$)((?!\.\.).)*$/i;
