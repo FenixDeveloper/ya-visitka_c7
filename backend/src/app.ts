@@ -5,19 +5,17 @@ import 'isomorphic-fetch';
 import { rateLimit } from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { errors } from 'celebrate';
+import passport from 'passport';
 import errorMiddleware from './middlwares/error-middleware';
 import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import { login, getUser } from './controllers/oauth';
 import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
-import passport from 'passport';
-
 
 // Ниже импорты для использования в захардкорженных данных (стр.45)
 // import User from './models/User';
 // import { Text, Emotion } from './models/Reaction';
-
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -28,8 +26,8 @@ const limiter = rateLimit({
 
 const app = express();
 
-passport.use(jwtStrategy)
-app.use(passport.initialize())
+passport.use(jwtStrategy);
+app.use(passport.initialize());
 app.use(
   mongoSanitize({
     replaceWith: '_',
@@ -40,23 +38,23 @@ app.use(limiter);
 app.use(helmet());
 app.use(express.json());
 
-//вместо фронтенда, для получения кода подтверждения
+// вместо фронтенда, для получения кода подтверждения
 app.get('/auth/yandex', (req, res) => {
-  res.redirect(`https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556`);
+  res.redirect('https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556');
 });
 
-//где можно получить код -> /auth/yandex/callback;
+// где можно получить код -> /auth/yandex/callback;
 
-//app.use(requestLogger);
+// app.use(requestLogger);
 
-//берет код подтверждения - отдает токен
+// берет код подтверждения - отдает токен
 app.post('/api/auth', login);
-//берет токен - отдает user
-app.get('/api/user',  getUser);
-//тест паспорта
+// берет токен - отдает user
+app.get('/api/user', getUser);
+// тест паспорта
 app.get('/api/test', authenticate, (req, res) => {
-  res.send("hello");
-})
+  res.send('hello');
+});
 
 app.use(router);
 /**

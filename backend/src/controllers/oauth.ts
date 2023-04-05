@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
-import User from '../models/User';
 import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
 const yandex = {
   CLIENT_ID: '6588f39ea0274d599d3c60fb10c53556',
@@ -34,70 +34,68 @@ const getUserProfileYndex = async (code: string) => {
 
   const userProfile = await userResponse.json();
   return userProfile;
-}
+};
 
-const getToken = (user: any) => {
-  return jwt.sign(user, 'secret', { expiresIn: '7d' });
-}
+const getToken = (user: any) => jwt.sign(user, 'secret', { expiresIn: '7d' });
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { code } = req.body;
 
   const userProfile = await getUserProfileYndex(code) as any;
 
-  User.findOne({email: userProfile.default_email})
-  .then((user) => {
-    let token;
+  User.findOne({ email: userProfile.default_email })
+    .then((user) => {
+      let token;
 
-    if(user) {
+      if (user) {
+        const student = {
+          _id: user._id,
+          name: userProfile.first_name,
+          email: user.email,
+          cohort: user.cohort,
+          photo: user.profile?.photo,
+          role: 'student',
+        };
 
-      const student = { _id: user._id,
-        name: userProfile.first_name,
-        email: user.email,
-        cohort: user.cohort,
-        photo: user.profile?.photo,
-        role: 'student'
-      };
+        token = getToken(student);
+      }
+      const isCurator = curatorList.includes(userProfile.default_email);
 
-      token = getToken(student);
-    }
-    const isCurator = curatorList.includes(userProfile.default_email);
+      if (isCurator) {
+        const curator = {
+          email: userProfile.default_email,
+          role: 'curator',
+        };
 
-    if(isCurator) {
+        token = getToken(curator);
+      }
 
-      const curator = {
-        email: userProfile.default_email,
-        role: 'curator'
-      };
-
-      token = getToken(curator);
-    }
-
-    res.cookie('jwt', token, {
-      maxAge: 3600000 * 24 * 7,
-      httpOnly: true,
-      sameSite: true,
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7,
+        httpOnly: true,
+        sameSite: true,
+      })
+        .send({
+          token,
+        });
     })
-    .send({
-      token,
+    .catch(() => {
+    // next(new UnauthorizedError('Необходима авторизация'));
     });
-  })
-  .catch(() => {
-    //next(new UnauthorizedError('Необходима авторизация'));
-  });
 };
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.body.token;
+  const { token } = req.body;
 
   const { role, email } = jwt.decode(token) as any;
-  if( role === 'student') {
+  if (role === 'student') {
     const { id, name, cohort } = jwt.decode(token) as any;
-    return res.send({ id, name, email, cohort, role });
-  };
+    return res.send({
+      id, name, email, cohort, role,
+    });
+  }
 
-  if ( role === 'curator') {
+  if (role === 'curator') {
     return res.send({ email, role });
-  };
-
+  }
 };
