@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
-import styles from './App.module.scss';
 import { RouterProvider } from 'react-router-dom';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
 import { router } from '../../router/router';
 import { ProfileContext } from '../../services/profileContext';
@@ -17,13 +14,7 @@ const App: FC = () => {
 
   return (
     <ProfileContext.Provider value={profileState}>
-      <section className={styles.app}>
-     
-        <main>
-          <RouterProvider router={router} />
-        </main>
-       
-      </section>
+      <RouterProvider router={router} />
     </ProfileContext.Provider>
   );
 };

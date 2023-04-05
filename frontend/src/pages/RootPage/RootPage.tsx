@@ -1,15 +1,17 @@
 import React, { FC } from 'react';
-import RootPageStyles from './MainPage.module.css';
 import { Outlet } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import styles from './RootPage.module.scss';
 
 export const RootPage: FC = () => {
   return (
-    <>
+    <section className={styles.container}>
       <Header />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Footer />
-    </>
+    </section>
   );
-}
+};
