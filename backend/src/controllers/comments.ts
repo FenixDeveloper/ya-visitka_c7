@@ -9,12 +9,38 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
   User.aggregate([
     { $skip: Number(offset) > 0 ? Number(offset) : 0 },
     { $limit: limit !== undefined && Number(limit) !== 0 ? Number(limit) : 0 },
+    { $unwind: '$reactions' },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'reactions.from._id',
+        foreignField: '_id',
+        as: 'userWithCohort',
+      },
+    },
+    { $unwind: '$userWithCohort' },
+    {
+      $addFields: {
+        'reactions.from.cohort': '$userWithCohort.cohort',
+      },
+    },
+    {
+      $group: {
+        _id: '$_id',
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        email: { $first: '$email' },
+        cohort: { $first: '$cohort' },
+        name: { $first: '$profile.name' },
+        reactions: { $push: '$reactions' },
+      },
+    },
     {
       $project: {
         _id: 1,
         to: {
           _id: '$_id',
-          name: '$profile.name',
+          name: '$name',
           email: '$email',
           cohort: '$cohort',
         },
@@ -38,14 +64,7 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
                 '$$item',
                 { type: '$type' },
                 { to: '$to' },
-                {
-                  from: {
-                    _id: '$$item.from._id',
-                    name: '$$item.from.name',
-                    email: '$$item.from.email',
-                    cohort: '$to.cohort',
-                  },
-                },
+                { from: '$from' },
               ],
             },
           },
@@ -67,7 +86,8 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
       },
     },
     { $group: { _id: 'null', items: { $push: '$items' }, total: { $sum: 1 } } },
-    { $project: { _id: 0, total: 1, items: 1 } }])
+    { $project: { _id: 0, total: 1, items: 1 } },
+  ])
     .then((comments) => {
       res.status(StatusCodes.OK).json(comments[0]);
     })
