@@ -10,8 +10,12 @@ export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрел
   'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
-export const GITHUB_URL = 'https://api.github.com/';
+export const GITHUB_URL = 'https://api.github.com';
 
 export const IMAGEVALIDATION = /^https:\/\/([^\s(["<,>/]*)(\/)[^\s[",><]*\.(png|jpg|jpeg|bmp)(\?[^\s[",><]*)?/;
 
 export const EMAILVALIDATION = /^[^.](?=[a-z\d!#$%&'*+\-\\/=?.^_`{}|~]+@([a-z-.\d]+\.)+[a-z]{2,}$)((?!\.\.).)*$/i;
+
+export const TELEGRAMVALIDATION = /^@[a-zA-Z0-9_]{5,32}$/i;
+
+export const IMAGETYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/bmp'];
