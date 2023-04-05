@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import User from '../models/User';
-import { NotFoundError } from '../errors';
+import { ConflictError, NotFoundError } from '../errors';
 import ErrorMessages from '../helpers/error-messages';
 
 export async function getUsers(
@@ -56,6 +56,11 @@ export async function updateUser(
 ) {
   const { email, cohort } = req.body;
   try {
+    const existingEmail = await User.findOne({email});
+    if (existingEmail) {
+      throw new ConflictError(ErrorMessages.EmailConflict);
+    }
+    
     const user = await User.findById(req.params.id);
     if (!user) {
       throw new NotFoundError(ErrorMessages.NotFound);
