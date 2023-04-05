@@ -1,14 +1,15 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import helmet from 'helmet';
-import { rateLimit } from 'express-rate-limit';
-import mongoSanitize from 'express-mongo-sanitize';
-import { errors } from 'celebrate';
-import errorMiddleware from './middlwares/error-middleware';
-import router from './routes/upload-files';
-import { requestLogger, errorLogger } from './middlwares/logger';
+import express from "express";
+import mongoose from "mongoose";
+import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
+import { errors } from "celebrate";
+import errorMiddleware from "./middlwares/error-middleware";
+import router from "./routes/upload-files";
+import { requestLogger, errorLogger } from "./middlwares/logger";
 
-import { PORT, DB_URL } from './config/config';
+import { PORT, DB_URL } from "./config/config";
+import usersRouter from "./routes/user";
 // Ниже импорты для использования в захардкорженных данных (стр.45)
 // import User from './models/User';
 // import { Text, Emotion } from './models/Reaction';
@@ -24,8 +25,8 @@ const app = express();
 
 app.use(
   mongoSanitize({
-    replaceWith: '_',
-  }),
+    replaceWith: "_",
+  })
 );
 
 app.use(limiter);
@@ -35,9 +36,10 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use(router);
+app.use("/api/users", usersRouter);
 /**
  * Далее должны быть мидлвары по обработке рутов
-*/
+ */
 
 app.use(errorLogger);
 app.use(errors());
@@ -45,7 +47,7 @@ app.use(errorMiddleware);
 /**
  * Далее должны быть мидлвары обработки ошибок валидации
  * и централизованного обработчика ошибок
-*/
+ */
 
 async function main() {
   await mongoose.connect(DB_URL);
