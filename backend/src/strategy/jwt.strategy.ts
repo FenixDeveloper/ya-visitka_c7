@@ -1,10 +1,9 @@
 import passport from 'passport';
 import User from '../models/User';
+import { CURATOR_LIST } from '../config/config';
 
 const JwtStrategy = require('passport-jwt').Strategy;
 const { ExtractJwt } = require('passport-jwt');
-
-const curatorList = ['curator_1@yandex.ru', 'curator_2@yandex.ru'];
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -15,7 +14,7 @@ export const jwtStrategy = new JwtStrategy(opts, ((jwt_payload: any, done: any) 
   const { email } = jwt_payload;
 
   const student = User.findOne({ email });
-  const curator = curatorList.includes(email);
+  const curator = CURATOR_LIST.includes(email);
 
   if (student) {
     return done(null, student);

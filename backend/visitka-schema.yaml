@@ -16,6 +16,8 @@ tags:
     description: Secured curator-only calls
   - name: student
     description: Operations available to regular students
+  - name: authorization
+    description:
 
 paths:
   /users:
@@ -381,6 +383,34 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  /auth:
+    post:
+      tags: [ authorization ]
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+      responses:
+#        '200':
+#          description: OK
+#          content:
+#            application/json:
+#              schema:
+#                type: object
+#                allOf:
+#                  - $ref: '#/components/schemas/BaseFields'
+#                  - $ref: '#/components/schemas/UserAccount'
+#        '400':
+#          $ref: '#/components/responses/BadRequest'
+#        '401':
+#          $ref: '#/components/responses/Unauthorized'
+#        '403':
+#          $ref: '#/components/responses/Forbidden'
+
 components:
   securitySchemes:
     bearerAuth:
@@ -637,3 +667,14 @@ components:
             reactions:
               type: number
               minimum: 0
+
+    Auth:
+      type: object
+      properties:
+        clientId:
+          type: string
+        confirmCode:
+          type: string
+      required:
+        - clientId
+        - confirmCode

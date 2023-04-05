@@ -16,7 +16,7 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
     /* Completeness */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
-    "typeRoots": ["./@types"]
+    "typeRoots": ["./@types"],
   },
   "include": [
     "src/**/*.ts"

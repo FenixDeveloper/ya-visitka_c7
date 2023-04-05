@@ -1,19 +1,18 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import { CLIENT_ID, CLIENT_SECRET, CURATOR_LIST } from '../config/config';
+import UnauthorizedError from '../errors/unauthorized-error';
+import ErrorMessages from '../helpers/error-messages';
 
 const yandex = {
-  CLIENT_ID: '6588f39ea0274d599d3c60fb10c53556',
-  CLIENT_SECRET: '0b81a854811c449fa333c98c0e44c806',
   CALLBACK_URL: 'http://127.0.0.1:3000/auth/yandex/callback',
   OATH_URL: 'https://oauth.yandex.ru/authorize?response_type=code',
   TOKEN_URL: 'https://oauth.yandex.ru/token',
   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
 };
 
-const curatorList = ['curator_1@yandex.ru', 'curator_2@yandex.ru'];
-
-const getUserProfileYndex = async (code: string) => {
+const getUserProfileYandex = async (code: string) => {
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',
     headers: {
@@ -22,17 +21,19 @@ const getUserProfileYndex = async (code: string) => {
     body: new URLSearchParams({
       grant_type: 'authorization_code',
       code,
-      client_id: yandex.CLIENT_ID,
-      client_secret: yandex.CLIENT_SECRET,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
     }),
   });
   const { access_token } = await response.json();
+  if (!access_token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
   const userResponse = await fetch(yandex.PROFILE_URL, {
     headers: { Authorization: `OAuth${access_token}` },
   });
 
   const userProfile = await userResponse.json();
+  if (!userProfile) throw new UnauthorizedError(ErrorMessages.Unauthorized);
   return userProfile;
 };
 
@@ -40,8 +41,9 @@ const getToken = (user: any) => jwt.sign(user, 'secret', { expiresIn: '7d' });
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { code } = req.body;
+  // if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
-  const userProfile = await getUserProfileYndex(code) as any;
+  const userProfile = await getUserProfileYandex(code) as any;
 
   User.findOne({ email: userProfile.default_email })
     .then((user) => {
@@ -59,7 +61,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         token = getToken(student);
       }
-      const isCurator = curatorList.includes(userProfile.default_email);
+      const isCurator = CURATOR_LIST.includes(userProfile.default_email);
 
       if (isCurator) {
         const curator = {
@@ -85,7 +87,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
-  const { token } = req.body;
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
   const { role, email } = jwt.decode(token) as any;
   if (role === 'student') {

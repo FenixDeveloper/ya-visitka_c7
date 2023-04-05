@@ -50,13 +50,10 @@ app.get('/auth/yandex', (req, res) => {
 // берет код подтверждения - отдает токен
 app.post('/api/auth', login);
 // берет токен - отдает user
-app.get('/api/user', getUser);
-// тест паспорта
-app.get('/api/test', authenticate, (req, res) => {
-  res.send('hello');
-});
+app.get('/api/auth/get_user', authenticate, getUser);
 
 app.use(router);
+
 /**
  * Далее должны быть мидлвары по обработке рутов
 */
