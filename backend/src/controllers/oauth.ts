@@ -37,7 +37,7 @@ const getUserProfileYndex = async (code: string) => {
 }
 
 const getToken = (user: any) => {
-  return jwt.sign(user, 'strong-secret', { expiresIn: '7d' });
+  return jwt.sign(user, 'secret', { expiresIn: '7d' });
 }
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
