@@ -10,7 +10,7 @@ import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import { login, getUser } from './controllers/oauth';
-import { jwtStrategy } from './strategy/jwt.strategy';
+import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
 import passport from 'passport';
 
 
@@ -29,7 +29,7 @@ const limiter = rateLimit({
 const app = express();
 
 passport.use(jwtStrategy)
-
+app.use(passport.initialize())
 app.use(
   mongoSanitize({
     replaceWith: '_',
@@ -41,18 +41,22 @@ app.use(helmet());
 app.use(express.json());
 
 //вместо фронтенда, для получения кода подтверждения
-app.get('/auth/yandex', async (req, res) => {
-  await res.redirect(`https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556`);
+app.get('/auth/yandex', (req, res) => {
+  res.redirect(`https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556`);
 });
 
 //где можно получить код -> /auth/yandex/callback;
 
-app.use(requestLogger);
+//app.use(requestLogger);
 
 //берет код подтверждения - отдает токен
 app.post('/api/auth', login);
 //берет токен - отдает user
 app.get('/api/user',  getUser);
+//тест паспорта
+app.get('/api/test', authenticate, (req, res) => {
+  res.send("hello");
+})
 
 app.use(router);
 /**
