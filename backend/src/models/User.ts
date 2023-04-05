@@ -1,11 +1,10 @@
 import {
   model, Schema, Model, Document,
 } from 'mongoose';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import isEmail from 'validator/lib/isEmail';
+import { isCohortValid, imageOrTempIdRegex } from '../helpers/validate-url';
 import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
-import { imageOrTempIdRegex } from '../constants/constants';
 import { reactionSchema } from './Reaction';
 
 interface IBlock {
@@ -36,7 +35,7 @@ interface IProfile {
   template: string | null;
 }
 
-interface IUser {
+export interface IUser {
   createdAt: number;
   updatedAt: number;
   email: string;
@@ -62,7 +61,7 @@ interface IUserModel extends Model<IUser> {
     // eslint-disable-next-line no-unused-vars
     email: string,
   ) => Promise<Document<unknown, any, IUser>>;
-  agregateAndSort: () => Promise<Document<unknown, any, IUser>>;
+  aggregateAndSort: () => Promise<Document<unknown, any, IUser>>;
 }
 
 const blockSchema = new Schema<IBlock>(
@@ -161,7 +160,11 @@ const userSchema = new Schema<IUser, IUserModel>(
     },
     cohort: {
       type: String,
-      // match: cohortRegEx,
+      validate: {
+        validator(cohort: string) {
+          return isCohortValid(cohort);
+        },
+      },
     },
     profile: profileSchema,
     info: infoSchema,
@@ -182,13 +185,6 @@ userSchema.static('findUserByEmail', function findUserByEmail(email: string) {
     }
     return user;
   });
-});
-
-userSchema.static('agregateAndSort', function agregateAndSort() {
-  return this.aggregate([
-    { $unwind: '$reactions' },
-    { $sort: { 'reactions._id': 1 } },
-  ]).exec();
 });
 
 userSchema.index({ email: 1 }, { unique: true });
