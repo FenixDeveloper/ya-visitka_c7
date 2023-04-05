@@ -17,6 +17,10 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
+        path: '*',
+        element: <NotFoundPage />,
+      },
+      {
         path: '/cohort/:cohortId',
         element: <MainPage />,
       },
