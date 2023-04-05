@@ -13,9 +13,7 @@ const yandex = {
 
 const curatorList = ['curator_1@yandex.ru', 'curator_2@yandex.ru'];
 
-
-export const login = async (req: Request, res: Response, next: NextFunction) => {
-  const { code } = req.body  //req.query.code as string;
+const getUserProfileYndex = async (code: string) => {
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',
     headers: {
@@ -33,29 +31,46 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   const userResponse = await fetch(yandex.PROFILE_URL, {
     headers: { Authorization: `OAuth${access_token}` },
   });
-  const userProfile = await userResponse.json();
 
+  const userProfile = await userResponse.json();
+  return userProfile;
+}
+
+const getToken = (user: any) => {
+  return jwt.sign(user, 'strong-secret', { expiresIn: '7d' });
+}
+
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+  const { code } = req.body;
+
+  const userProfile = getUserProfileYndex(code) as any;
 
   User.findOne({email: userProfile.default_email})
   .then((user) => {
     let token;
-    if(user){
-      token = jwt.sign({ _id: user._id,
+
+    if(user) {
+
+      const student = { _id: user._id,
         name: userProfile.first_name,
-        email: userProfile.default_email,
+        email: user.email,
         cohort: user.cohort,
         photo: user.profile?.photo,
-        role: 'student' },
-         'strong-secret',
-       { expiresIn: '7d' });
+        role: 'student'
+      };
+
+      token = getToken(student);
     }
     const isCurator = curatorList.includes(userProfile.default_email);
-    if(isCurator){
-      token = jwt.sign({ _id: null,
+
+    if(isCurator) {
+
+      const curator = {
         email: userProfile.default_email,
-        role: 'curator' },
-         'strong-secret',
-       { expiresIn: '7d' });
+        role: 'curator'
+      };
+
+      token = getToken(curator);
     }
 
     res.cookie('jwt', token, {
@@ -75,13 +90,14 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
   const token = req.body.token;
 
-  const { role } = jwt.decode(token) as any;
+  const { role, email } = jwt.decode(token) as any;
   if( role === 'student') {
-    const {id, name, email, cohort} = jwt.decode(token) as any;
-    res.send({id, name, email, cohort, role})
-  }
+    const { id, name, cohort } = jwt.decode(token) as any;
+    return res.send({ id, name, email, cohort, role });
+  };
+
   if ( role === 'curator') {
-    const {id, email} = jwt.decode(token) as any;
-    res.send({id, email, role})
-  }
+    return res.send({ email, role });
+  };
+
 };
