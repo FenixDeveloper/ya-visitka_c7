@@ -8,22 +8,24 @@ export async function getUsers(
   res: Response,
   next: NextFunction,
 ) {
-  const { offset, limit } = req.query;
+  const { offset, limit, search } = req.query;
+
+  const searchQuery = search?.length
+    ? [{ email: search }, { cohort: search }, { 'profile.name': search }]
+    : [{}];
+
   try {
-    const items = await User.aggregate([
-      // { $match: search },
-      { $limit: Number(limit) },
-      { $skip: Number(offset) },
+    const items = await User.find(
       {
-        $project: {
-          createdAt: 1,
-          updatedAt: 1,
-          email: 1,
-          cohort: 1,
-          name: '$profile.name',
-        },
+        $or: searchQuery,
       },
-    ]);
+      {
+        createdAt: 1, updatedAt: 1, email: 1, cohort: 1, name: '$profile.name',
+      },
+    )
+      .limit(Number(limit))
+      .skip(Number(offset));
+
     const result = {
       total: items.length,
       items,
@@ -56,11 +58,11 @@ export async function updateUser(
 ) {
   const { email, cohort } = req.body;
   try {
-    const existingEmail = await User.findOne({email});
+    const existingEmail = await User.findOne({ email });
     if (existingEmail) {
       throw new ConflictError(ErrorMessages.EmailConflict);
     }
-    
+
     const user = await User.findById(req.params.id);
     if (!user) {
       throw new NotFoundError(ErrorMessages.NotFound);
