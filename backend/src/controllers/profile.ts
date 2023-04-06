@@ -1,20 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import userSchema, { IUser } from '../models/User';
 import StatusCodes from '../helpers/status-codes';
+import NotFoundError from '../errors/not-found-error';
 
 export const getProfiles = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const { offset, limit, cohort } = req.query;
+  const { offset, limit = 20, cohort } = req.query;
 
   userSchema
     .find({ cohort })
     .skip(Number(offset) > 0 ? Number(offset) : 0)
-    .limit(limit !== undefined && Number(limit) !== 0
-      ? Number(limit)
-      : 0)
+    .limit(Number(limit))
     .then((users) => {
       res
         .status(StatusCodes.OK)
@@ -30,7 +29,9 @@ export const getProfile = async (
 ) => {
   const { id } = req.params;
 
-  userSchema.findById(id)
+  userSchema
+    .findById(id)
+    .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => {
       res
         .status(StatusCodes.OK)
@@ -48,7 +49,9 @@ export const patchProfile = (
   const { id } = req.params;
   const profileData: IUser = req.body;
 
-  userSchema.findOneAndUpdate({ id }, profileData)
+  userSchema
+    .findOneAndUpdate({ id }, profileData, { new: true })
+    .orFail(new NotFoundError('Пользователь не найден'))
     .then((updatedProfile) => {
       res
         .status(StatusCodes.OK)
