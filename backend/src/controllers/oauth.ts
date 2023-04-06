@@ -12,6 +12,15 @@ const yandex = {
   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
 };
 
+interface IUser {
+  id?: any;
+  name?: string;
+  email?: string;
+  photo?: string;
+  cohort?: string;
+  role?: string;
+}
+
 const getUserProfileYandex = async (code: string) => {
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',
@@ -37,11 +46,11 @@ const getUserProfileYandex = async (code: string) => {
   return userProfile;
 };
 
-const getToken = (user: any) => jwt.sign(user, 'secret', { expiresIn: '7d' });
+const getToken = (user: IUser) => jwt.sign(user, 'secret', { expiresIn: '7d' });
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { code } = req.body;
-  // if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
   const userProfile = await getUserProfileYandex(code) as any;
 
@@ -51,7 +60,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
       if (user) {
         const student = {
-          _id: user._id,
+          id: user._id,
           name: userProfile.first_name,
           email: user.email,
           cohort: user.cohort,
@@ -82,7 +91,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         });
     })
     .catch(() => {
-    // next(new UnauthorizedError('Необходима авторизация'));
+     next(new UnauthorizedError(ErrorMessages.Unauthorized));
     });
 };
 
@@ -90,9 +99,9 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
-  const { role, email } = jwt.decode(token) as any;
+  const { role, email } = jwt.decode(token) as IUser;
   if (role === 'student') {
-    const { id, name, cohort } = jwt.decode(token) as any;
+    const { id, name, cohort } = jwt.decode(token) as IUser;
     return res.send({
       id, name, email, cohort, role,
     });
