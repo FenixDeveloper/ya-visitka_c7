@@ -34,7 +34,7 @@ const Login: FC<UserData> = ({ user }) => {
           </div>
           {active && (
             <div className={styles.links}>
-              <NavLink to='/profile' className={styles.link}>
+              <NavLink to={`/profiles/${user._id}`} className={styles.link}>
                 Профиль
               </NavLink>
               <button type='button' className={styles.btn}>
