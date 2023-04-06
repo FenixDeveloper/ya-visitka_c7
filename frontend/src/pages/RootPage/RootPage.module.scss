@@ -1,12 +1,12 @@
-.app{
+.container {
   display: grid;
   grid-template-rows: 112px auto 72px;
   min-height: 100vh;
   @media screen and (max-width: 768px) {
-      grid-template-rows: 96px auto 72px;
+    grid-template-rows: 96px auto 72px;
   }
 
   @media screen and (max-width: 576px) {
-      grid-template-rows: 80px auto 72px;
+    grid-template-rows: 80px auto 72px;
   }
 }
