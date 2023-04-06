@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: 'visitka-backend'
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    restart: on-failure
+    ports:
+      - '4000:4000'
+    depends_on:
+      - mongo
+    healthcheck:
+      test: "wget -nv -t1 --spider 'http://localhost:4000/'"
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - internal-networks
+      - internet
+
+  mongo:
+    container_name: 'visitka-db'
+    image: mongo
+    restart: on-failure
+    env_file:
+      - ./backend/.env
+    networks:
+      - internal-networks
+
+networks:
+  internal-networks:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge

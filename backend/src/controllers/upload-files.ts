@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 import {
-  Request, Response, Express,
+  Request, Response, Express, NextFunction,
 } from 'express';
+import path from 'path';
+import fs from 'fs';
+import BadRequestError from '../errors/bad-request-error';
 
 type TInfoTypes = 'hobby' | 'status' | 'job' | 'education' | 'avatar';
 
@@ -29,4 +32,17 @@ export const uploadFiles = (
     );
 
   res.send(JSON.stringify(result));
+};
+
+export const getFile = (
+  req: Request<{ filename: string }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { filename } = req.params;
+  const filePath = path.resolve('./uploads', filename);
+  if (!fs.existsSync(filePath)) {
+    next(new BadRequestError('Такого файла не существует'));
+  }
+  res.sendFile(filePath);
 };
