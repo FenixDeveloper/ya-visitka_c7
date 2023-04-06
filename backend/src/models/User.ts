@@ -36,7 +36,7 @@ interface IProfile {
   template: string | null;
 }
 
-interface IUser {
+export interface IUser {
   createdAt: number;
   updatedAt: number;
   email: string;
