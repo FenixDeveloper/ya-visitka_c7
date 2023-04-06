@@ -91,7 +91,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         });
     })
     .catch(() => {
-     next(new UnauthorizedError(ErrorMessages.Unauthorized));
+      next(new UnauthorizedError(ErrorMessages.Unauthorized));
     });
 };
 
@@ -101,9 +101,11 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
 
   const { role, email } = jwt.decode(token) as IUser;
   if (role === 'student') {
-    const { id, name, cohort, photo } = jwt.decode(token) as IUser;
+    const {
+      id, name, cohort, photo,
+    } = jwt.decode(token) as IUser;
     return res.send({
-      id, name, email, cohort, role, photo
+      id, name, email, cohort, role, photo,
     });
   }
 
