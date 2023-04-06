@@ -10,6 +10,7 @@ import errorMiddleware from './middlwares/error-middleware';
 import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
+import usersRouter from './routes/user';
 import { login, getUser } from './controllers/oauth';
 import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
 
@@ -31,7 +32,7 @@ app.use(passport.initialize());
 app.use(
   mongoSanitize({
     replaceWith: '_',
-  }),
+  })
 );
 
 app.use(limiter);
@@ -53,10 +54,11 @@ app.use(authenticate);
 app.get('/api/auth/get-user', getUser);
 
 app.use(router);
+app.use('/api/users', usersRouter);
 
 /**
  * Далее должны быть мидлвары по обработке рутов
-*/
+ */
 
 app.use(errorLogger);
 app.use(errors());
@@ -64,7 +66,7 @@ app.use(errorMiddleware);
 /**
  * Далее должны быть мидлвары обработки ошибок валидации
  * и централизованного обработчика ошибок
-*/
+ */
 
 async function main() {
   await mongoose.connect(DB_URL);
