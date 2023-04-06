@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
   },
   {
     path: 'profiles/:profileId',
-    element: <ProfileDetailsPage />,
+    element: <ProfileDetailsPage typePage='DEFAULT_PAGE' />,
   },
   {
     path: 'edit',

@@ -11,3 +11,6 @@ export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрел
 
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com/';
+export const DEFAULT_PAGE = 'DEFAULT_PAGE';
+export const ROMANTIC_PAGE = 'ROMANTIC_PAGE';
+export const COCKY_PAGE = 'COCKY_PAGE';
