@@ -46,11 +46,11 @@ app.use(express.json());
 // где можно получить код -> /auth/yandex/callback;
 
 app.use(requestLogger);
-app.use(authenticate);
 // берет код подтверждения - отдает токен
 app.post('/api/auth', login);
+app.use(authenticate);
 // берет токен - отдает user
-app.get('/api/auth/get-user', authenticate, getUser);
+app.get('/api/auth/get-user', getUser);
 
 app.use(router);
 

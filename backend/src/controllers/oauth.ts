@@ -80,15 +80,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         token = getToken(curator);
       }
-
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      })
-        .send({
-          token,
-        });
+      res.send(token);
     })
     .catch(() => {
       next(new UnauthorizedError(ErrorMessages.Unauthorized));

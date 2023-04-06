@@ -400,11 +400,11 @@ paths:
          content:
            application/json:
              schema:
-               type: object              
+               type: string
        '401':
          $ref: '#/components/responses/Unauthorized'
 
-  /api/auth/get_user:
+  /api/auth/get-user:
     get:
       tags: [authorization]
       security:
@@ -699,4 +699,4 @@ components:
           type: string
         role:
           type: string
-      
+
