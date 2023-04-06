@@ -1,4 +1,5 @@
-export const EXAMPLE_CURRENT_USER: { name: string, avatar?: string } = {
+export const EXAMPLE_CURRENT_USER: { _id: string, name: string, avatar?: string } = {
+  _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
 };
