@@ -16,6 +16,8 @@ tags:
     description: Secured curator-only calls
   - name: student
     description: Operations available to regular students
+  - name: files
+    description: Adding and receiving files
 
 paths:
   /users:
@@ -381,6 +383,70 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  /files:
+    post:
+      tags:
+        - files
+      summary: Add files
+      description: This can only be done by the logged in user.
+      operationId: addFiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                hobby:
+                  type: string
+                  format: binary
+                status:
+                  type: string
+                  format: binary
+                job:
+                  type: string
+                  format: binary
+                education:
+                  type: string
+                  format: binary
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Files'
+
+  /files/{filename}:
+    get:
+      tags:
+        - files
+      summary: Get file by filename
+      description: ''
+      operationId: getFileByFilename
+      parameters:
+        - name: filename
+          in: path
+          description: 'The name that needs to be fetched'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A file
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: File not found
+
 components:
   securitySchemes:
     bearerAuth:
@@ -637,3 +703,24 @@ components:
             reactions:
               type: number
               minimum: 0
+
+    Files:
+      type: object
+      properties:
+        avatar:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+        hobby:
+          type: string
+          example: f0790d564efca6c397639e68a6bdb7a4
+        status:
+          type: string
+          example: f5ed1b02a01d4602f36b5b36636a6149
+        job:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+        education:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+      xml:
+        name: file
