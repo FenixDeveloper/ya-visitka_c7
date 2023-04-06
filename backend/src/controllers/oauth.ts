@@ -101,9 +101,9 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
 
   const { role, email } = jwt.decode(token) as IUser;
   if (role === 'student') {
-    const { id, name, cohort } = jwt.decode(token) as IUser;
+    const { id, name, cohort, photo } = jwt.decode(token) as IUser;
     return res.send({
-      id, name, email, cohort, role,
+      id, name, email, cohort, role, photo
     });
   }
 
