@@ -10,10 +10,10 @@ const opts = {
   secretOrKey: 'secret',
 };
 
-export const jwtStrategy = new JwtStrategy(opts, ((jwt_payload: any, done: any) => {
+export const jwtStrategy = new JwtStrategy(opts, (async (jwt_payload: any, done: any) => {
   const { email } = jwt_payload;
 
-  const student = User.findOne({ email });
+  const student = await User.findOne({ email });
   const curator = CURATOR_LIST.includes(email);
 
   if (student) {

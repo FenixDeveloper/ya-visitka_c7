@@ -9,10 +9,8 @@ interface IUser {
 }
 
 export const isCurator = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
-
-  const { role } = jwt.decode(token) as IUser;
+  const { role } = req.user as IUser;
+  if (!role ) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
   if( role === 'curator' ) {
     next();
