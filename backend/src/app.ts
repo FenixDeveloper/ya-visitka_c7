@@ -4,9 +4,9 @@ import helmet from 'helmet';
 import 'isomorphic-fetch';
 import { rateLimit } from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
-import commentsRouter from './routes/comments';
 import { errors } from 'celebrate';
 import passport from 'passport';
+import commentsRouter from './routes/comments';
 import errorMiddleware from './middlwares/error-middleware';
 import router from './routes/upload-files';
 import { requestLogger, errorLogger } from './middlwares/logger';
@@ -33,7 +33,7 @@ app.use(passport.initialize());
 app.use(
   mongoSanitize({
     replaceWith: '_',
-  })
+  }),
 );
 
 app.use(limiter);
@@ -64,10 +64,8 @@ app.use('/api/users', usersRouter);
 app.use('/api/comments', commentsRouter);
 
 app.use(errorLogger);
-/**
- * Далее должны быть мидлвары обработки ошибок валидации
- * и централизованного обработчика ошибок
- */
+app.use(errors());
+app.use(errorMiddleware);
 
 async function main() {
   await mongoose.connect(DB_URL);
