@@ -5,15 +5,15 @@ import { router } from '../../router/router';
 import { ProfileContext } from '../../services/profileContext';
 
 const App: FC = () => {
-  const profileState = {
+  const [profileState, setProfileState] = React.useState({
     select: 'Петровск (Саратовская область)',
     date: new Date(1990, 0, 7),
     file: '',
     user: EXAMPLE_CURRENT_USER,
-  };
+  });
 
   return (
-    <ProfileContext.Provider value={profileState}>
+    <ProfileContext.Provider value={[profileState, setProfileState]}>
       <RouterProvider router={router} />
     </ProfileContext.Provider>
   );

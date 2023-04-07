@@ -13,7 +13,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   const [isVisible, setIsVisible] = React.useState(false);
   const [startDate, setStartDate] = React.useState(new Date(1990, 0, 7));
   const years = getListYears(1980);
-  const [inputs, setInputs] = React.useContext(ProfileContext);
+  const [profileState, setProfileState] = React.useContext(ProfileContext);
 
   function handleClick() {
     isVisible ? setIsVisible(false) : setIsVisible(true);
@@ -22,12 +22,12 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   function changeSelectedOption(item: string) {
     setValueSelect(item); 
     setIsVisible(false); 
-    setInputs({ ...inputs, select: item });
+    setProfileState({ ...profileState, select: item });
   }
 
   function changeSelectedDate(date: Date) {
     setStartDate(date!);
-    setInputs({ ...inputs, date: date! });
+    setProfileState({ ...profileState, date: date! });
   }
 
   const changeValueSelect = (e: React.ChangeEvent<HTMLInputElement>) => {

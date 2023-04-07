@@ -5,12 +5,12 @@ import logo from '../../assets/icons/title-logo.svg';
 import { ProfileContext } from '../../services/profileContext';
 
 const Header: FC = () => {
-  const { user } = React.useContext(ProfileContext);
+  const [profileState, setProfileState] = React.useContext(ProfileContext);
 
   return (
     <header className={styles.container}>
       <img className={styles.container__title} src={logo} alt='VISITKI-logo' />
-      {user?.name && <Login user={user} />}
+      {profileState.user?.name && <Login user={profileState.user} />}
     </header>
   );
 };
