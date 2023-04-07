@@ -80,7 +80,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         token = getToken(curator);
       }
-      res.send(token);
+      res.send({ token });
     })
     .catch(() => {
       next(new UnauthorizedError(ErrorMessages.Unauthorized));
