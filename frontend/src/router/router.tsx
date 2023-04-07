@@ -8,6 +8,7 @@ import { MapPage } from '../pages/MapPage/MapPage';
 import { ProfileEditPage } from '../pages/ProfileEditPage/ProfileEditPage';
 import { AdminCommentsPage } from '../pages/AdminCommentsPage/AdminCommentsPage';
 import { AdminUsersPage } from '../pages/AdminUsersPage/AdminUsersPage';
+import { COCKY_PAGE, DEFAULT_PAGE, ROMANTIC_PAGE } from '../utils/constants';
 
 export const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
   },
   {
     path: 'profiles/:profileId',
-    element: <ProfileDetailsPage typePage='DEFAULT_PAGE' />,
+    element: <ProfileDetailsPage typePage={DEFAULT_PAGE} />,
   },
   {
     path: 'edit',

@@ -1,0 +1,124 @@
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
+
+.profileDetails {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__container {
+        width: 94.5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__infoBox {
+        margin-top: 150px;
+        max-width: 443px;
+        width: 443px;
+    }
+
+    &__title {
+        @include mixins.h1_desktop();
+        font-family: 'IBM Plex Sans';
+        margin: 0 0 97px 0;
+    }
+
+    &__iconBox {
+        display: flex;
+    }
+
+    &__iconLink {
+        margin-top: 10px;
+        margin-right: 25px;
+    }
+
+    &__icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    &__text {
+        color: variables.$color-text-dark;
+        font-size: variables.$text_font-size;
+        font-weight: variables.$text_font-weight;
+        line-height: variables.$text_line-height;
+    }
+
+    &__avatarBox {
+        position: relative;
+        display: flex;
+    }
+
+    &__avatar {
+        max-width: 440px;
+        width: 440px;
+        max-height: 440px;
+        height: 440px;
+        object-fit: cover;
+
+        &_romantic {
+            border-radius: 360px;
+        }
+    }
+
+    &__maskAvatar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 440px;
+        height: 440px;
+        background-image: url(../../assets/icons/mask.png);
+        z-index: 1;
+    }
+
+    &__decriptionBox {
+        position: relative;
+        height: 258px;
+        align-Self: flex-end;
+    }
+
+    &__chatButton {
+        border: none; 
+        outline: none;
+        position: absolute;
+        top: -32px;
+        right: -13px;
+        background-image: url(../../assets/icons/chat.svg);
+        background-color: inherit;
+        Width: 32px;
+        Height: 32px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__descriptionText {
+        @include mixins.h2_desktop();
+        width: 325px;
+        margin: 7px 0 0 0;
+    }
+
+    &__descriptionText_notDefault {
+        color: #FF00A8;
+    }
+
+    &__quotesBox {
+        display: flex;
+    }
+
+    &__quotesIcon {
+        background-image: url(../../assets/icons/quotes.svg);
+        width: 26px;
+        height: 45px;
+        margin-right: 10px;
+    }
+
+    &__quotesIcon_pink {
+        background-image: url(../../assets/icons/quotespink.svg);
+    }
+}
