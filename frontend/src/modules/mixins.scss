@@ -62,3 +62,12 @@
 
   line-height: variables.$text_line-height;
 }
+
+@mixin reaction_count() {
+  font: {
+    size: variables.$reaction_count_font-size;
+    weight: variables.$reaction_count_font-weight;
+  }
+
+  line-height: variables.$reaction_count_line-height;
+}
