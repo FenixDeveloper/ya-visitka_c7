@@ -15,14 +15,8 @@ const App: FC = () => {
 
   return (
     <ProfileContext.Provider value={[profileState, setProfileState]}>
-      <section className={styles.app}>
-        <Header />
-        <main>
-          <RouterProvider router={router} />
-        </main>
-        <Footer />
-      </section>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
+    </ProfileContext.Provider>
   );
 };
 

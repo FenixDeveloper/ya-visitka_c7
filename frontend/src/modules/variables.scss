@@ -8,11 +8,12 @@ $color-neon-green: #38ec42;
 $color-error: #e90d41;
 $color-blue: #3b23b7;
 $color-shadow-dark: #00000014;
+$color-silver: #cccccc;
 $backgroud-white: #ffffff;
+$backgroud-button-disabled: #bfbfbf;
 $gradient-button-default: linear-gradient(269.17deg, #3b23b7 30.28%, #c914e7 63.24%);
 $gradient-button-hover: linear-gradient(269.17deg, #3f26c4 30.28%, #d315f2 63.24%);
 $gradient-button-active: linear-gradient(269.17deg, #4328d1 30.28%, #de16ff 63.24%);
-$backgroud-button-disabled: #bfbfbf;
 $font-family: 'IBM Plex Sans', Helvetica, sans-serif;
 
 $h1_desktop_font-size: 60px;
@@ -46,3 +47,8 @@ $text_line-height: 24px;
 $reaction_count_font-size: 12px;
 $reaction_count_font-weight: 500;
 $reaction_count_line-height: 12px;
+
+$text_feedback_font-size: 16px;
+$text_feedback_placeholder_font-size: 14px;
+$text_feedback_font-weight: 400;
+$text_feedback_line-height: 20px;

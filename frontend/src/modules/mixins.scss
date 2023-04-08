@@ -71,3 +71,21 @@
 
   line-height: variables.$reaction_count_line-height;
 }
+
+@mixin text_feedback() {
+  font: {
+    size: variables.$text_feedback_font-size;
+    weight: variables.$text_feedback_font-weight;
+  }
+
+  line-height: variables.$text_feedback_line-height;
+}
+
+@mixin text_feedback_placeholder() {
+  font: {
+    size: variables.$text_feedback_placeholder_font-size;
+    weight: variables.$text_feedback_font-weight;
+  }
+
+  line-height: variables.$text_feedback_line-height;
+}
