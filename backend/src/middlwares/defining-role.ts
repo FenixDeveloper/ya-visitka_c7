@@ -7,7 +7,7 @@ interface IUser {
   role?: string;
 }
 
-export const isCurator = (req: Request, res: Response, next: NextFunction) => {
+const isCurator = (req: Request, res: Response, next: NextFunction) => {
   const { role } = req.user as IUser;
   if (!role ) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
@@ -18,3 +18,5 @@ export const isCurator = (req: Request, res: Response, next: NextFunction) => {
   }
 
 };
+
+export default isCurator;
