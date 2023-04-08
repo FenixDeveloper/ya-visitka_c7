@@ -1,5 +1,4 @@
 import { Response, Request, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ForbiddenError from '../errors/forbidden-error';
 import ErrorMessages from '../helpers/error-messages';
