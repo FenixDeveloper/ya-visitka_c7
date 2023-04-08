@@ -4,6 +4,7 @@ import styles from './Visitka.module.scss';
 import chatIcon from '../../assets/icons/chat.svg';
 import { ProfileContext } from '../../services/profileContext';
 import { UserStatus } from '../../services/types/data';
+import { NavLink } from 'react-router-dom';
 
 type TVisitka = {
   id: string;
@@ -18,22 +19,25 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
   const [profileState, setProfileState] = useContext(ProfileContext);
   const userStatus = profileState.user.status;
 
-  const openDetailPage = () => {
-    console.log('open Detail Page');
-  };
-
   const openFeedback = () => {
     setFeedback(!isFeedbackOpen);
   };
 
   return (
-    <section className={styles.content}>
-      <img
-        className={styles.photo}
-        src={'https://i.pravatar.cc/300'}
-        alt="Фото пользователя"
-        onClick={openDetailPage}
-      ></img>
+    <article className={styles.content}>
+      <NavLink className={styles.navlink} to={`/profiles/${id}`}>
+        <img
+          className={styles.photo}
+          src={photo}
+          alt="Фото пользователя"
+        ></img>
+        <div className={styles.userInfo}>
+          <p className={styles.name}>{name}</p>
+          <p className={styles.city}>{city}</p>
+          {userStatus === UserStatus.Curator && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
+        
+        </div>
+      </NavLink>
       <button className={styles.chatButton} onClick={openFeedback}>
         <img className={styles.chatIcon} src={chatIcon} />
         {feedbackTextArrLength>0 && (
@@ -42,13 +46,7 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
           </div>
         )}
       </button>
-      <div className={styles.userInfo} onClick={openDetailPage}>
-        <p className={styles.name}>{'name'}</p>
-        <p className={styles.city}>{'city'}</p>
-        {userStatus === UserStatus.Curator && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
-        
-      </div>
       {isFeedbackOpen && <div className={styles.feedback}>Здесь должен быть компонент Feedback</div>}
-    </section>
+    </article>
   );
 };

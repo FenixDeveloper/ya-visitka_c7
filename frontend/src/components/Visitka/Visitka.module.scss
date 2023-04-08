@@ -2,19 +2,26 @@
 @import '../../modules/mixins.scss';
 
 .content {
+  position: relative;
+  max-width: 325px;
+}
+
+.navlink {
   display: flex;
   flex-direction: column;
   position: relative;
   max-width: 325px;
+  z-index: 0;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.content:hover .photo {
+.navlink:hover .photo {
   outline: 2px $color-neon-pink solid;
   outline-offset: -2px;
 }
 
-.content:hover .name {
+.navlink:hover .name {
   color: $color-neon-pink;
 }
 
@@ -24,6 +31,7 @@
 
 .photo {
   margin-bottom: 11px;
+  min-height: 325px;
 }
 
 .chatButton {
@@ -38,7 +46,7 @@
   right: 16px;
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  z-index: 5;
 }
 
 .chatIcon {
@@ -77,12 +85,18 @@
   margin: 0;
   color: $color-text-dark;
   @include h4_desktop();
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .city {
   margin: 0;
   @include text;
   color: $color-text-light;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .name:hover {
@@ -100,25 +114,41 @@
   width: 321px;
   margin: 4px 1px;
   top: 44px;
-
+  z-index: 1;
 }
 
-@media screen and (max-width: 786px) {
-  .content {
+@media screen and (max-width: 900px) {
+  .content { 
+    max-width: 342px;
+  }
+  
+  .navlink {
     max-width: 342px;
   }
 
   .feedback {
     width: 338px;  
   }
+
+  .photo {
+    min-height: 342px;
+  }
 }
 
-@media screen and (max-width: 320px) {
-  .content {
+@media screen and (max-width: 600px) {
+  .content { 
+    max-width: 272px;
+  }
+
+  .navlink {
     max-width: 272px;
   }
 
   .feedback {
     width: 278px;  
+  }
+
+  .photo {
+    min-height: 272px;
   }
 }
