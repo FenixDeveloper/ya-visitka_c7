@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import styles from './App.module.scss';
 import { RouterProvider } from 'react-router-dom';
 import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
 import { router } from '../../router/router';
@@ -14,8 +15,14 @@ const App: FC = () => {
 
   return (
     <ProfileContext.Provider value={[profileState, setProfileState]}>
-      <RouterProvider router={router} />
-    </ProfileContext.Provider>
+      <section className={styles.app}>
+        <Header />
+        <main>
+          <RouterProvider router={router} />
+        </main>
+        <Footer />
+      </section>
+    <RouterProvider router={router} />
   );
 };
 
