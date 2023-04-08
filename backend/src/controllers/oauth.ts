@@ -13,7 +13,7 @@ const yandex = {
 };
 
 interface IUser {
-  id?: any;
+  _id?: any;
   name?: string;
   email?: string;
   photo?: string;
@@ -60,7 +60,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
       if (user) {
         const student = {
-          id: user._id,
+          _id: user._id,
           name: userProfile.first_name,
           email: user.email,
           cohort: user.cohort,
@@ -94,10 +94,10 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
   const { role, email } = jwt.decode(token) as IUser;
   if (role === 'student') {
     const {
-      id, name, cohort, photo,
+      _id, name, cohort, photo,
     } = jwt.decode(token) as IUser;
     return res.send({
-      id, name, email, cohort, role, photo,
+      _id, name, email, cohort, role, photo,
     });
   }
 
