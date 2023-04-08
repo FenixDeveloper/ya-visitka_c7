@@ -1,8 +1,6 @@
 import React, { FC, useState } from 'react';
 import styles from './App.module.scss';
 import { RouterProvider } from 'react-router-dom';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
 import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
 import { router } from '../../router/router';
 import { ProfileContext } from '../../services/profileContext';
@@ -24,7 +22,7 @@ const App: FC = () => {
         </main>
         <Footer />
       </section>
-    </ProfileContext.Provider>
+    <RouterProvider router={router} />
   );
 };
 
