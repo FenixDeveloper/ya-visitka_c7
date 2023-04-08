@@ -1,26 +1,37 @@
 import passport from 'passport';
+import { VerifiedCallback, ExtractJwt, Strategy } from 'passport-jwt';
 import User from '../models/User';
 import { CURATOR_LIST } from '../config/config';
+import { IUserPayload } from '../types/user-payload';
 
-const JwtStrategy = require('passport-jwt').Strategy;
-const { ExtractJwt } = require('passport-jwt');
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'secret',
 };
 
-export const jwtStrategy = new JwtStrategy(opts, ((jwt_payload: any, done: any) => {
-  const { email } = jwt_payload;
+export const jwtStrategy = new Strategy(opts, (async (jwtPayload: IUserPayload, done: VerifiedCallback) => {
+  const { email } = jwtPayload;
 
-  const student = User.findOne({ email });
-  const curator = CURATOR_LIST.includes(email);
+  const student = await User.findOne({ email });
+  const curator = CURATOR_LIST.includes(email!);
 
   if (student) {
-    return done(null, student);
+
+    const user = {
+      id: jwtPayload._id,
+      role: jwtPayload.role,
+      email: jwtPayload.email,
+    }
+    return done(null, user);
   }
   if (curator) {
-    return done(null, jwt_payload);
+
+    const user = {
+      role: jwtPayload.role,
+      email: jwtPayload.email,
+    }
+    return done(null, user);
   }
   return done(null, false);
 }));
