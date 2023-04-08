@@ -14,8 +14,8 @@ export const ProtectedRoute: FC<IProtectedRoute> = ({
   redirectRoute = '/login', 
   children 
 }) => {
-  const profileContext = useContext(ProfileContext);
-  const userStatus = profileContext.user.status;
+  const [profileState, setProfileState] = useContext(ProfileContext);
+  const userStatus = profileState.user.status;
   if (requiredStatus.includes(userStatus)) {
     return <>
       {children}
