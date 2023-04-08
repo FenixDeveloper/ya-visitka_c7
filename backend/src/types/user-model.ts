@@ -1,0 +1,58 @@
+import { Model, Document } from 'mongoose';
+
+export interface IBlock {
+  text?: string;
+  image?: string | null;
+}
+
+export interface IInfo {
+  hobby: IBlock;
+  status: IBlock;
+  job: IBlock;
+  edu: IBlock;
+}
+
+export interface ICity {
+  name: string;
+  geocode: number[];
+}
+
+export interface IProfile {
+  name: string;
+  photo: string;
+  city: ICity | null;
+  birthday: string | null;
+  quote: string;
+  telegram: string | null;
+  github: string | null;
+  template: string | null;
+}
+
+export interface IUser {
+  createdAt: number;
+  updatedAt: number;
+  email: string;
+  cohort: string;
+  timestamps: boolean;
+  profile: IProfile;
+  info: IInfo;
+  reactions: [
+    {
+      from: {
+        name: string;
+        email: string;
+      };
+      target: string | null;
+      text?: string;
+      emotion?: string;
+    }
+  ];
+}
+
+export interface IUserModel extends Model<IUser> {
+  findUserByEmail: (
+    // eslint-disable-next-line no-unused-vars
+    email: string,
+  ) => Promise<Document<unknown, any, IUser>>;
+  aggregateAndSort: () => Promise<Document<unknown, any, IUser>>;
+}

@@ -1,68 +1,12 @@
-import {
-  model, Schema, Model, Document,
-} from 'mongoose';
+import { model, Schema } from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
 import { isCohortValid, imageOrTempIdRegex } from '../helpers/validate-url';
 import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
 import { reactionSchema } from './Reaction';
-
-interface IBlock {
-  text?: string;
-  image?: string | null;
-}
-
-interface IInfo {
-  hobby: IBlock;
-  status: IBlock;
-  job: IBlock;
-  edu: IBlock;
-}
-
-interface ICity {
-  name: string;
-  geocode: number[];
-}
-
-interface IProfile {
-  name: string;
-  photo: string;
-  city: ICity | null;
-  birthday: string | null;
-  quote: string;
-  telegram: string | null;
-  github: string | null;
-  template: string | null;
-}
-
-export interface IUser {
-  createdAt: number;
-  updatedAt: number;
-  email: string;
-  cohort: string;
-  timestamps: boolean;
-  profile: IProfile;
-  info: IInfo;
-  reactions: [
-    {
-      from: {
-        name: string;
-        email: string;
-      };
-      target: string | null;
-      text?: string;
-      emotion?: string;
-    }
-  ];
-}
-
-interface IUserModel extends Model<IUser> {
-  findUserByEmail: (
-    // eslint-disable-next-line no-unused-vars
-    email: string,
-  ) => Promise<Document<unknown, any, IUser>>;
-  aggregateAndSort: () => Promise<Document<unknown, any, IUser>>;
-}
+import {
+  IBlock, ICity, IInfo, IProfile, IUser, IUserModel,
+} from '../types/user-model';
 
 const blockSchema = new Schema<IBlock>(
   {

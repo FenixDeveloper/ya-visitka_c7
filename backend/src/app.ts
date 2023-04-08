@@ -61,7 +61,7 @@ app.use('/api/users', usersRouter);
  * Далее должны быть мидлвары по обработке рутов
  */
 
-app.use('/api/comments', commentsRouter);
+app.use('/comments', commentsRouter);
 
 app.use(errorLogger);
 app.use(errors());
