@@ -9,15 +9,25 @@
   cursor: pointer;
 }
 
+.content:hover .photo {
+  outline: 2px $color-neon-pink solid;
+  outline-offset: -2px;
+}
+
+.content:hover .name {
+  color: $color-neon-pink;
+}
+
+.content:hover .chatButton {
+  opacity: 1;
+}
+
 .photo {
   margin-bottom: 11px;
 }
 
-.photo:hover {
-  outline: 2px $color-neon-pink solid;
-}
-
 .chatButton {
+  opacity: 0;
   position: absolute;
   height: 32px;
   width: 32px;
@@ -28,6 +38,7 @@
   right: 16px;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .chatIcon {

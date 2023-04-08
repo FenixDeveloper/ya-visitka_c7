@@ -70,3 +70,8 @@ export interface IProfile {
     };
   };
 }
+
+export enum UserStatus {
+  Curator = 'CURATOR',
+  Student = 'STUDENT'
+}

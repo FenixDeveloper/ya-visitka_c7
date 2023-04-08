@@ -1,7 +1,10 @@
-export const EXAMPLE_CURRENT_USER: { _id: string, name: string, avatar?: string } = {
+import { UserStatus } from '../services/types/data';
+
+export const EXAMPLE_CURRENT_USER: { _id: string, name: string, avatar?: string, status: UserStatus} = {
   _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
+  status: UserStatus.Student
 };
 
 export const EXAMPLE_DEFAUT_ARR = ['Петровск (Саратовская область)', 'Петровск-Забайкальский (Забайкальский край)',
