@@ -47,6 +47,11 @@
   background-color: transparent;
   border: none;
   z-index: 5;
+  cursor: pointer;
+}
+
+.chatButton:focus-visible {
+  outline: none;
 }
 
 .chatIcon {

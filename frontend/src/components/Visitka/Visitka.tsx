@@ -13,15 +13,16 @@ type TVisitka = {
   city: string;
 };
 
-const feedbackTextArrLength = 100; // для тестирования отображения количества сообщений
 export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
   const [isFeedbackOpen, setFeedback] = useState(false);
   const [profileState, setProfileState] = useContext(ProfileContext);
   const userStatus = profileState.user.status;
+  const feedbackTextArrLength = profileState?.reactions?.length;
 
   const openFeedback = () => {
     setFeedback(!isFeedbackOpen);
   };
+
 
   return (
     <article className={styles.content}>
