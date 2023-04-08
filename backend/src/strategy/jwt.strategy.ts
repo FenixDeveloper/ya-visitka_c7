@@ -1,4 +1,5 @@
 import passport from 'passport';
+import { VerifiedCallback } from 'passport-jwt';
 import User from '../models/User';
 import { CURATOR_LIST } from '../config/config';
 import { IUserPayload } from '../types/user-payload';
@@ -11,7 +12,7 @@ const opts = {
   secretOrKey: 'secret',
 };
 
-export const jwtStrategy = new JwtStrategy(opts, (async (jwt_payload: IUserPayload, done: any) => {
+export const jwtStrategy = new JwtStrategy(opts, (async (jwt_payload: IUserPayload, done: VerifiedCallback) => {
   const { email } = jwt_payload;
 
   const student = await User.findOne({ email });
