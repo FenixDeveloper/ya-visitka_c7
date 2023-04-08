@@ -6,13 +6,12 @@ import { rateLimit } from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { errors } from 'celebrate';
 import passport from 'passport';
-import commentsRouter from './routes/comments';
 import errorMiddleware from './middlwares/error-middleware';
-import router from './routes/upload-files';
+import router from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
-import usersRouter from './routes/user';
-import { login, getUser } from './controllers/oauth';
+import { login } from './controllers/oauth';
+import alive from './controllers/health-check';
 import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
 
 // Ниже импорты для использования в захардкорженных данных (стр.45)
@@ -49,19 +48,14 @@ app.use(express.json());
 
 app.use(requestLogger);
 // берет код подтверждения - отдает токен
-app.post('/api/auth', login);
+app.get('/healthcheck', alive);
+app.post('/auth', login);
 app.use(authenticate);
-// берет токен - отдает user
-app.get('/api/auth/get-user', getUser);
-
 app.use(router);
-app.use('/api/users', usersRouter);
 
 /**
  * Далее должны быть мидлвары по обработке рутов
  */
-
-app.use('/api/comments', commentsRouter);
 
 app.use(errorLogger);
 app.use(errors());
