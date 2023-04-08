@@ -25,6 +25,7 @@ export interface IInputProps {
   onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   value?: string;
   errorMessage?: string;
+  caption?: string;
 }
 
 export interface IUserRequest {

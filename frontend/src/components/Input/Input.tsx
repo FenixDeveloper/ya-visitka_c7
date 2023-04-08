@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './Input.module.scss';
-import { EXAMPLE_DEFAUT_ARR, MONTHS } from '../../utils/constants';
+import { EXAMPLE_DEFAUT_ARR, MONTHS, PATTERN_ARR } from '../../utils/constants';
 import { getListYears } from '../../utils/utils';
 import DatePicker from 'react-datepicker';
 import '../../assets/react-datepicker.css';
@@ -8,44 +8,70 @@ import { ProfileContext } from '../../services/profileContext';
 import { IInputProps } from '../../services/types/data';
 
 
-export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues = EXAMPLE_DEFAUT_ARR, placeholder, onChange, value, errorMessage }) => {
-  const [valueSelect, setValueSelect] = React.useState(value? value : arrValues[0]);
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [startDate, setStartDate] = React.useState(new Date(1990, 0, 7));
-  const years = getListYears(1980);
+export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues = EXAMPLE_DEFAUT_ARR, placeholder, onChange, value, errorMessage, caption }) => {
   const [profileState, setProfileState] = React.useContext(ProfileContext);
+  const [valueSelectCity, setValueSelectCity] = React.useState(value? value : arrValues[0]);
+  const [valueSelectPattern, setValueSelectPattern] = React.useState(value? value : arrValues[0]);
+  const [isVisible, setIsVisible] = React.useState(false);
+  const years = getListYears(1980);
 
   function handleClick() {
     isVisible ? setIsVisible(false) : setIsVisible(true);
   }
 
-  function changeSelectedOption(item: string) {
-    setValueSelect(item); 
+  function changeSelectedOptionCity(item: string) {
+    setValueSelectCity(item); 
     setIsVisible(false); 
-    setProfileState({ ...profileState, select: item });
+    setProfileState({ ...profileState, formCity: item });
+  }
+
+  function changeSelectedOptionPattern(item: string) {
+    setValueSelectPattern(item); 
+    setIsVisible(false); 
+    setProfileState({ ...profileState, formPattern: item });
   }
 
   function changeSelectedDate(date: Date) {
-    setStartDate(date!);
-    setProfileState({ ...profileState, date: date! });
+    setProfileState({ ...profileState, formBirthday: date! });
   }
 
-  const changeValueSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValueSelect(e.target.value);
+  const changeValueSelectPattern = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValueSelectPattern(e.target.value);
+  };
+
+  const changeValueSelectCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValueSelectCity(e.target.value);
   };
   
-  if (type === 'select') {
+  if (type === 'select' && arrValues === PATTERN_ARR) {
     return (
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <div className={styles.select}>
-          <button className={isVisible ? styles.button_active : styles.button} onClick={handleClick}>{valueSelect}</button>
+          <button className={isVisible ? styles.button_active : styles.button} onClick={handleClick}>{valueSelectPattern}</button>
           {isVisible && <ul className={styles.list}>
             {arrValues.map((item, index) => (
-              <li className={styles.list__item} onClick={() => changeSelectedOption(item)} key={index}>{item}</li>
+              <li className={styles.list__item} onClick={() => changeSelectedOptionPattern(item)} key={item}>{item}</li>
             ))}
           </ul>}
-          <input className={styles.select__input} type='text' name={name} value={valueSelect} onChange={changeValueSelect} />
+          <input className={styles.select__input} type='text' name={name} value={valueSelectPattern} onChange={changeValueSelectPattern} />
+        </div>
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
+      </>
+    )
+
+  } else if (type === 'select' && arrValues !== PATTERN_ARR) {
+    return (
+      <>
+        {label && <label className={styles.input__label}>{label}</label>}
+        <div className={styles.select}>
+          <button className={isVisible ? styles.button_active : styles.button} onClick={handleClick}>{valueSelectCity}</button>
+          {isVisible && <ul className={styles.list}>
+            {arrValues.map((item, index) => (
+              <li className={styles.list__item} onClick={() => changeSelectedOptionCity(item)} key={index}>{item}</li>
+            ))}
+          </ul>}
+          <input className={styles.select__input} type='text' name={name} value={valueSelectCity} onChange={changeValueSelectCity} />
         </div>
         {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
@@ -56,6 +82,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <input className={styles.input} type={type} name={name} value={value} onChange={onChange} />
+        {caption && <span className={styles.input__caption}>{caption}</span>}
         {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
     )
@@ -74,7 +101,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <DatePicker 
-          selected={startDate} 
+          selected={profileState.formBirthday} 
           onChange={(date: Date) => changeSelectedDate(date!)}
           dateFormat='dd.MM.yyyy'
           maxDate={new Date()}

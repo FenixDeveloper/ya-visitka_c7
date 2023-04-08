@@ -33,3 +33,5 @@ export const VALIDATION = {
 };
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/bmp'];
+
+export const PATTERN_ARR = ['серьезный', 'романтичный', 'дерзкий'];

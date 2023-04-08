@@ -131,12 +131,23 @@
   &__label {
     @include mixins.text();
     color: variables.$color-text-dark;
-    padding-bottom: 2px;
+    display: block;
+    margin-bottom: 4px;
+    margin-top: 16px;
   }
 
   &__error {
     @include mixins.text();
     color: variables.$color-error;
+  }
+
+  &__caption {
+    @include mixins.h3_desktop();
+    font-weight: variables.$h2_desktop_font-weight;
+    color: variables.$color-text-dark;
+    display: block;
+    margin-top: 4px;
+    margin-bottom: 10px;
   }
 }
 

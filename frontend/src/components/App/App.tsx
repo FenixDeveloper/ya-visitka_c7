@@ -6,10 +6,17 @@ import { ProfileContext } from '../../services/profileContext';
 
 const App: FC = () => {
   const [profileState, setProfileState] = React.useState({
-    select: 'Петровск (Саратовская область)',
-    date: new Date(1990, 0, 7),
-    file: '',
     user: EXAMPLE_CURRENT_USER,
+    pattern: 'серьезный',
+    birthday: new Date(1990, 0, 7),
+    fileHobby: '',
+    fileHome: '',
+    city: 'Петровск (Саратовская область)',
+    formBirthday: new Date(1990, 0, 7),
+    formPattern: 'серьезный',
+    formFileHobby: '',
+    formFileHome: '',
+    formSity: 'Петровск (Саратовская область)'
   });
 
   return (
