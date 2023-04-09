@@ -7,12 +7,13 @@ import mongoSanitize from 'express-mongo-sanitize';
 import { errors } from 'celebrate';
 import passport from 'passport';
 import errorMiddleware from './middlwares/error-middleware';
-import router from './routes';
+import rootRouter from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import { login } from './controllers/oauth';
 import alive from './controllers/health-check';
 import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
+import nonExistentRequestHandler from './middlwares/non-existent-request-handler';
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -47,17 +48,10 @@ app.use(requestLogger);
 app.get('/healthcheck', alive);
 app.post('/auth', login);
 app.use(authenticate);
-app.use(router);
+app.use(rootRouter);
 
-/**
- * Далее должны быть мидлвары по обработке рутов
- */
+app.use(nonExistentRequestHandler);
 
-<<<<<<< HEAD
-=======
-app.use('/comments', commentsRouter);
-
->>>>>>> 01b000004f7c1392c7feb5f9d9ee8491449de2ad
 app.use(errorLogger);
 app.use(errors());
 app.use(errorMiddleware);
