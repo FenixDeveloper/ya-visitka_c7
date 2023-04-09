@@ -4,9 +4,9 @@ import StatusCodes from '../helpers/status-codes';
 import User from '../models/User';
 
 export const getComments = (req: Request, res: Response, next: NextFunction) => {
-  const { offset, limit = 20, search } = req.query;
+  const { offset = 0, limit = 20, search = '' } = req.query;
 
-  const skipCommentsStage = { $skip: Number(offset) > 0 ? Number(offset) : 0 };
+  const skipCommentsStage = { $skip: Number(offset) };
 
   const limitCommentsStage = { $limit: Number(limit) };
 
@@ -37,7 +37,7 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
 
   const excludeEmotionReactionsStage = { $match: { 'reactions.emotion': { $exists: false } } };
 
-  const collectToOpjAndMakeProjectStage = {
+  const collectToObjAndMakeProjectStage = {
     $project: {
       _id: 1,
       to: {
@@ -79,7 +79,7 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
     },
   };
 
-  const deleteReactionTypeFielFromProjectStage = { $project: { 'items.type': 0 } };
+  const deleteReactionTypeFieldFromProjectStage = { $project: { 'items.type': 0 } };
 
   const searchByFields = {
     $match: {
@@ -107,7 +107,7 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
     { $unwind: '$reactionSenderObject' },
     addSenderCohortIntoReactionFromFieldStage,
     groupUserObjectWithAddedSenderReactionCohortWithoutUnusedFieldsStage,
-    collectToOpjAndMakeProjectStage,
+    collectToObjAndMakeProjectStage,
     { $unwind: '$reactions' },
     excludeEmotionReactionsStage,
     groupUserObjByIdAndSaveToObjStage,
@@ -115,7 +115,7 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
     collectReactionDocWithTotalAndItemsFieldsAndAddToObjIntoEachReactionStage,
     { $unwind: '$items' },
     { $sort: { 'items._id': 1 } },
-    deleteReactionTypeFielFromProjectStage,
+    deleteReactionTypeFieldFromProjectStage,
     searchByFields,
     groupAllReactionObjectsIntoOneArrAndAddTotalForThemStage,
     deleteIdFieldFromTheOutputStage,
