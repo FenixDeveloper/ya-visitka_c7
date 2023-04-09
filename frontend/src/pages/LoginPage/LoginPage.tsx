@@ -5,6 +5,7 @@ import LoginPageStyles from './LoginPage.module.scss';
 export const LoginPage: FC = () => {
 
     const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+    const [errorActive, setErrorActive] = useState<boolean>(false);
 
     useEffect(() => {
       function updateWindowWidth() {
@@ -31,6 +32,9 @@ export const LoginPage: FC = () => {
               Войти с Яндекс ID
             </p>
           </Button>
+          <p className={`${LoginPageStyles.loginPage__errorText} ${errorActive && LoginPageStyles.loginPage__errorText_active}`}>
+            что-то пошло не так, попробуйте еще раз
+          </p>
         </a>
       </section>
     );

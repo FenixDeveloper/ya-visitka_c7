@@ -2,6 +2,7 @@
 @import '../../modules/mixins.scss';
 
 .loginPage {
+	height: 100%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -17,12 +18,29 @@
 	}
 
 	&__buttonBox {
-		margin-bottom: 454px;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		// margin-bottom: 454px;
 		text-decoration: none;
 	}
 
 	&__buttonText {
+		margin: 0;
+		padding: 0;
 		font-family: "IBM Plex Sans";
+	}
+
+	&__errorText {
+		display: none;
+		font-family: "IBM Plex Sans";
+		text-align: center;
+
+		&_active {
+			display: block;
+			color: red;
+		}
 	}
 
 	@media screen and (max-width: 768px) {
@@ -39,7 +57,7 @@
 		}
 
 		&__buttonBox {
-			margin-bottom: 181px;
+			// margin-bottom: 181px;
 		}
 	}
 }
