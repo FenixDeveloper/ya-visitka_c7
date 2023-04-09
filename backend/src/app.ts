@@ -6,14 +6,14 @@ import { rateLimit } from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import { errors } from 'celebrate';
 import passport from 'passport';
-import commentsRouter from './routes/comments';
 import errorMiddleware from './middlwares/error-middleware';
-import router from './routes/upload-files';
+import rootRouter from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
-import usersRouter from './routes/user';
-import { login, getUser } from './controllers/oauth';
+import { login } from './controllers/oauth';
+import alive from './controllers/health-check';
 import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
+import nonExistentRequestHandler from './middlwares/non-existent-request-handler';
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -42,22 +42,15 @@ app.use(express.json());
 // });
 
 // где можно получить код -> /auth/yandex/callback;
+// берет код подтверждения - отдает токен
 
 app.use(requestLogger);
-// берет код подтверждения - отдает токен
-app.post('/api/auth', login);
+app.get('/healthcheck', alive);
+app.post('/auth', login);
 app.use(authenticate);
-// берет токен - отдает user
-app.get('/api/auth/get-user', getUser);
+app.use(rootRouter);
 
-app.use(router);
-app.use('/api/users', usersRouter);
-
-/**
- * Далее должны быть мидлвары по обработке рутов
- */
-
-app.use('/comments', commentsRouter);
+app.use(nonExistentRequestHandler);
 
 app.use(errorLogger);
 app.use(errors());

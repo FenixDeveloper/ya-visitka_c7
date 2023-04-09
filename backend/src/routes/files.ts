@@ -3,9 +3,9 @@ import { uploadFiles, getFile } from '../controllers/upload-files';
 
 import { uploadsMiddleware } from '../middlwares/upload-middleware';
 
-const router = Router();
+const fileRouter = Router();
 
-router.post('/files', uploadsMiddleware, uploadFiles);
-router.get('/files/:filename', getFile);
+fileRouter.post('/files', uploadsMiddleware, uploadFiles);
+fileRouter.get('/files/:filename', getFile);
 
-export default router;
+export default fileRouter;
