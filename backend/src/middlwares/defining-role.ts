@@ -9,14 +9,13 @@ interface IUser {
 
 const isCurator = (req: Request, res: Response, next: NextFunction) => {
   const { role } = req.user as IUser;
-  if (!role ) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  if (!role) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
-  if( role === 'curator' ) {
+  if (role === 'curator') {
     next();
   } else {
-    throw new ForbiddenError(ErrorMessages.Forbidden)
+    throw new ForbiddenError(ErrorMessages.Forbidden);
   }
-
 };
 
 export default isCurator;

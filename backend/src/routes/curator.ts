@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import isCurator from '../middlwares/defining-role';
 import { getComments, deleteComment } from '../controllers/comments';
 import { getUsers, createUser, updateUser } from '../controllers/user';
 import {
@@ -10,6 +11,8 @@ import {
 } from '../helpers/validators';
 
 const curatorRouter = Router();
+
+curatorRouter.use(isCurator);
 
 curatorRouter.post('/users', createUserValidator, createUser);
 curatorRouter.get('/users', getUsersValidator, getUsers);
