@@ -6,20 +6,15 @@ import { EMOJI } from '../../utils/constants';
 import styles from './Feedback.module.scss';
 
 export const Feedback: FC = () => {
-  const initfeedbackTextArr = [
-    ' 1Классные у тебя увлечения, я тоже играю в настолки, любимая игра — Эволюция. Люблю еще музыку слушать и отдыхать на природе. 🤣',
-    ' 2Классные у тебя увлечения, я тоже играю в настолки, любимая игра — Эволюция. Люблю еще музыку слушать и отдыхать на природе. 🤣',
-    ' 3Классные у тебя увлечения, я тоже играю в настолки, любимая игра — Эволюция. Люблю еще музыку слушать и отдыхать на природе. 🤣',
-  ];
-  const counterEmoji = 5;
+  console.log('render');
   const [inputValue, setInputValue] = useState<string>('');
-  const [feedbackTextArr, setFeedbackTextArr] =
-    useState<string[]>([]);
-
+  const [feedbackTextArr, setFeedbackTextArr] = useState<string[]>([]);
+  const [emoji, setEmoji] = useState(EMOJI);
   //тестовая функция для добавления комментариев
   const addFeedback = (comment: string) => {
     setFeedbackTextArr([...feedbackTextArr, comment]);
     setInputValue('');
+    console.log('feed', feedbackTextArr);
   };
   //отправка комментария при нажатии Enter
   const onSubmit = (e: FormEvent) => {
@@ -27,8 +22,19 @@ export const Feedback: FC = () => {
     addFeedback(inputValue);
   };
 
-  const handleIconClick = () => {
-    console.log('Click like');
+  const handleIconClick = (index: number) => {
+    const newEmoji = emoji.map((emoji, i) => {
+      if (i === index && emoji.acitve === false) {
+        emoji.acitve = true;
+        emoji.counter++;
+      } else if (i === index) {
+        emoji.acitve = false;
+        emoji.counter--;
+      }
+      return emoji;
+    });
+
+    setEmoji(newEmoji);
   };
 
   return (
@@ -51,20 +57,28 @@ export const Feedback: FC = () => {
       </form>
       {/* блок эмоджи */}
       <div className={styles.feedback__icons}>
-        {EMOJI?.map((icon) => (
-          <div className={styles.feedback__icon} key={icon.alt}>
-            <Emoji
-              symbol={icon.symbol}
-              label={icon.alt}
-              onClick={handleIconClick}
-            />
-            {counterEmoji && (
-              <p className={styles.feedback__icon_count}>
-                {counterEmoji > 99 ? '99+' : counterEmoji}
-              </p>
-            )}
-          </div>
-        ))}
+        {emoji?.map((icon, index) => {
+          const activeLike = icon.acitve
+            ? `${styles.feedback__icon_active}`
+            : '';
+          return (
+            <div
+              className={`${styles.feedback__icon} ${activeLike}`}
+              key={icon.alt}
+            >
+              <Emoji
+                symbol={icon.symbol}
+                label={icon.alt}
+                onClick={() => handleIconClick(index)}
+              />
+              {icon.counter && (
+                <p className={styles.feedback__icon_count}>
+                  {icon.counter > 99 ? '99+' : icon.counter}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

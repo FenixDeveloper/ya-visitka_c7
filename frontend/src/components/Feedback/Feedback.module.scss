@@ -4,8 +4,6 @@
 .feedback__modal {
   width: 100%;
   position: absolute;
-  // top: 48px;
-  left: 2px;
   max-height: calc(100% - 112px);
   padding: 12px;
   background-color: $backgroud-white;
@@ -103,6 +101,11 @@
   cursor: pointer;
 
   &:hover {
+    border-radius: 20px;
+    border: 1px solid $color-neon-pink;
+  }
+
+  &_active {
     border-radius: 20px;
     border: 1px solid $color-neon-pink;
   }

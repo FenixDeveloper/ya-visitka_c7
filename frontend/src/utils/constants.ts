@@ -38,14 +38,14 @@ export const VALIDATION = {
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/bmp'];
 
 export const EMOJI = [
-  { symbol: '👍', alt: 'палец вверх' },
-  { symbol: '👎️', alt: 'палец вниз' },
-  { symbol: '👋️', alt: 'машет рукой' },
-  { symbol: '🙂️', alt: 'слегка улыбается' },
-  { symbol: '😞️', alt: 'разочарование' },
-  { symbol: '🤣️', alt: 'катается со смеху' },
-  { symbol: '😬️', alt: 'лицо с гримасой' },
-  { symbol: '😱️', alt: 'в ужасе' },
-  { symbol: '😍️', alt: 'улыбающееся лицо с глазами-сердечками' },
-  { symbol: '🖤', alt: 'сердце' },
+  { symbol: '👍', alt: 'палец вверх', acitve: false, counter: 1 },
+  { symbol: '👎️', alt: 'палец вниз', acitve: false, counter: 2 },
+  { symbol: '👋️', alt: 'машет рукой', acitve: true, counter: 3 },
+  { symbol: '🙂️', alt: 'слегка улыбается', acitve: false, counter: 4 },
+  { symbol: '😞️', alt: 'разочарование', acitve: false, counter: 5 },
+  { symbol: '🤣️', alt: 'катается со смеху', acitve: false, counter: 6 },
+  { symbol: '😬️', alt: 'лицо с гримасой', acitve: false, counter: 7 },
+  { symbol: '😱️', alt: 'в ужасе', acitve: false, counter: 8 },
+  { symbol: '😍️', alt: 'улыбающееся лицо с глазами-сердечками', acitve: false, counter: 9 },
+  { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
 ]
