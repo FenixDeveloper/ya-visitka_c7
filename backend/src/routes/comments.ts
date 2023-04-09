@@ -4,8 +4,8 @@ import { getCommentsValidator, deleteCommentValidator } from '../helpers/validat
 
 const router = Router();
 
-router.get('/', getComments, getCommentsValidator);
+router.get('/', getCommentsValidator, getComments);
 
-router.delete('/:id', deleteComment, deleteCommentValidator);
+router.delete('/:id', deleteCommentValidator, deleteComment);
 
 export default router;
