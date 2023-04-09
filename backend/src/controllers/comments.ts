@@ -6,7 +6,7 @@ import User from '../models/User';
 export const getComments = (req: Request, res: Response, next: NextFunction) => {
   const { offset = 0, limit = 20, search = '' } = req.query;
 
-  const skipCommentsStage = { $skip: Number(offset) > 0 ? Number(offset) : 0 };
+  const skipCommentsStage = { $skip: Number(offset) };
 
   const limitCommentsStage = { $limit: Number(limit) };
 
