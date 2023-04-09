@@ -45,9 +45,9 @@ app.use(express.json());
 // });
 
 // где можно получить код -> /auth/yandex/callback;
+// берет код подтверждения - отдает токен
 
 app.use(requestLogger);
-// берет код подтверждения - отдает токен
 app.get('/healthcheck', alive);
 app.post('/auth', login);
 app.use(authenticate);
