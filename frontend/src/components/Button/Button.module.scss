@@ -51,3 +51,9 @@
   background: variables.$backgroud-button-disabled;
   cursor: default;
 }
+
+@media screen and (max-width: 600px) {
+  .large {
+    height: 60px;
+  }
+}
