@@ -4,6 +4,7 @@ import { Input } from '../../components/Input/Input';
 import { ProfileContext } from '../../services/profileContext';
 import { Button } from '../../components/Button/Button';
 import { EXAMPLE_DEFAUT_ARR, PATTERN_ARR } from '../../utils/constants';
+import { validation } from '../../utils/validation';
 
 export const ProfileEditPage: FC = () => {
   const [profileState, setProfileState] = React.useContext(ProfileContext);
@@ -16,34 +17,57 @@ export const ProfileEditPage: FC = () => {
   const [reason, setReason] = React.useState<string>(profileState.reason);
   const [fileHobbyValue, setFileHobbyValue] = React.useState('');
   const [fileHomeValue, setFileHomeValue] = React.useState('');
+  const [githubErrorMessage, setGithubErrorMessage] = React.useState('');
+  const [telegramErrorMessage, setTelegramErrorMessage] = React.useState('');
+  const [quoteErrorMessage, setQuoteErrorMessage] = React.useState('');
+  const [bioErrorMessage, setBioErrorMessage] = React.useState('');
+  const [hobbyErrorMessage, setHobbyErrorMessage] = React.useState('');
+  const [relationshipErrorMessage, setRelationshipErrorMessage] = React.useState('');
+  const [reasonErrorMessage, setReasonErrorMessage] = React.useState('');
+  const [isValid, setIsValid] = React.useState(true);
 
+  const handleGithubLink = async (nickname: string) => {
+    if (nickname === '') {
+      setGithubErrorMessage('');
+    } else {
+      const githubValidationResult = await validation.isExistUserGithub(nickname);
+      setGithubErrorMessage(githubValidationResult);
+    }
+  };
 
   const changeNicknameTelegram = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameTelegram(e.target.value);
+    setTelegramErrorMessage(e.target.value ? validation.isTelegramLink(e.target.value) : '');
   }
 
   const changeNicknameGithub = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNicknameGithub(e.target.value);
+    handleGithubLink(e.target.value);
   }
 
   const changeQuote = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuote(e.target.value);
+    setQuoteErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 100) : '');
   }
 
   const changeHobby = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setHobby(e.target.value);
+    setHobbyErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
   }
 
   const changeRelationship = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setRelationship(e.target.value);
+    setRelationshipErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
   }
 
   const changeBio = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.target.value);
+    setBioErrorMessage(e.target.value ? validation.checkLength(e.target.value, 3, 300) : '')
   }
 
   const changeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReason(e.target.value);
+    setReasonErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
   }
 
   const uploadFileHobby = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,6 +117,16 @@ export const ProfileEditPage: FC = () => {
     console.log(profileState.sity, profileState.birthday, profileState.avatar);
   }
 
+  React.useEffect(() => {
+    if (telegramErrorMessage || githubErrorMessage || quoteErrorMessage || bioErrorMessage || 
+      relationshipErrorMessage || hobbyErrorMessage || reasonErrorMessage) {
+      setIsValid(false)
+    } else {
+      setIsValid(true)
+    }
+  }, [telegramErrorMessage, githubErrorMessage, quoteErrorMessage, bioErrorMessage, 
+    relationshipErrorMessage, hobbyErrorMessage, reasonErrorMessage])
+
   return (
     <>
       <div className={styles.container}>
@@ -100,18 +134,25 @@ export const ProfileEditPage: FC = () => {
           <Input type='avatar' label='Загрузите фото *' caption='(размер не менее 440х440 пикселей)' />
           <Input type='date' label='Дата рождения *' />
           <Input type='select' label='Выберите город *' arrValues={EXAMPLE_DEFAUT_ARR} value={profileState.sity} />
-          <Input type='text' label='Ник в телеграм' value={nicknameTelegram} onChange={changeNicknameTelegram} />
-          <Input type='text' label='Ник на гитхабе' value={nicknameGithub} onChange={changeNicknameGithub} />
+          <Input type='text' label='Ник в телеграм' value={nicknameTelegram} onChange={changeNicknameTelegram}
+            errorMessage={telegramErrorMessage} />
+          <Input type='text' label='Ник на гитхабе' value={nicknameGithub} onChange={changeNicknameGithub}
+            errorMessage={githubErrorMessage} />
           <Input type='select' label='Выберите шаблон' arrValues={PATTERN_ARR} value={profileState.pattern} />
-          <Input type='textarea' value={quote} onChange={changeQuote} label='Девиз, цитата' placeholder='Не более 100 символов' />
+          <Input type='textarea' value={quote} onChange={changeQuote} label='Девиз, цитата' placeholder='Не более 100 символов' 
+            errorMessage={quoteErrorMessage} />
           <Input type='file' label='Увлечения, досуг, интересы' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHobby} />
-          <Input type='textarea' value={hobby} onChange={changeHobby} placeholder='Не более 300 символов' />
+          <Input type='textarea' value={hobby} onChange={changeHobby} placeholder='Не более 300 символов' 
+            errorMessage={hobbyErrorMessage} />
           <Input type='file' label='Семья, статус, домашние животные' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHome} />
-          <Input type='textarea' value={relationship} onChange={changeRelationship} placeholder='Не более 300 символов' />
-          <Input type='textarea' value={bio} onChange={changeBio} label='Из какой сферы пришёл? Кем работаешь?' placeholder='Не более 300 символов' />
-          <Input type='textarea' value={reason} onChange={changeReason} label='Почему решил учиться на веб-разработчика?' placeholder='Не более 300 символов'/>
+          <Input type='textarea' value={relationship} onChange={changeRelationship} placeholder='Не более 300 символов' 
+            errorMessage={relationshipErrorMessage} />
+          <Input type='textarea' value={bio} onChange={changeBio} label='Из какой сферы пришёл? Кем работаешь?' placeholder='Не более 300 символов' 
+            errorMessage={bioErrorMessage} />
+          <Input type='textarea' value={reason} onChange={changeReason} label='Почему решил учиться на веб-разработчика?' placeholder='Не более 300 символов'
+            errorMessage={reasonErrorMessage} />
           <span className={styles.caption}>Поля, отмеченные звездочкой, обязательны для заполнения</span>
-          <Button onClick={() => submitForm(
+          <Button disabled={!isValid} onClick={() => submitForm(
             profileState.formAvatar,
             profileState.formBirthday, 
             profileState.formSity,

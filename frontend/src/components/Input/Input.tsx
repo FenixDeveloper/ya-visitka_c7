@@ -148,8 +148,9 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
       <div className={styles.input__container}>
         {label && <label className={styles.input__label_avatar}>{label}</label>}
         {caption && <span className={styles.input__caption_avatar}>{caption}</span>}
-        <input type='file' className={avatar ? styles.avatar_loaded : styles.avatar} style={{background: `url('${avatar!}') no-repeat center/cover`}}
-          onChange={uploadAvatar} />
+        {avatar && <input type='file' className={styles.avatar_loaded} style={{background: `url('${avatar}') no-repeat center/cover`}}
+          onChange={uploadAvatar} />}
+        {!avatar && <input type='file' className={styles.avatar} onChange={uploadAvatar} />}
       </div>
     )
     
