@@ -6,7 +6,6 @@ import { EMOJI } from '../../utils/constants';
 import styles from './Feedback.module.scss';
 
 export const Feedback: FC = () => {
-  console.log('render');
   const [inputValue, setInputValue] = useState<string>('');
   const [feedbackTextArr, setFeedbackTextArr] = useState<string[]>([]);
   const [emoji, setEmoji] = useState(EMOJI);
@@ -14,7 +13,6 @@ export const Feedback: FC = () => {
   const addFeedback = (comment: string) => {
     setFeedbackTextArr([...feedbackTextArr, comment]);
     setInputValue('');
-    console.log('feed', feedbackTextArr);
   };
   //отправка комментария при нажатии Enter
   const onSubmit = (e: FormEvent) => {
