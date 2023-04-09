@@ -12,6 +12,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   const [profileState, setProfileState] = React.useContext(ProfileContext);
   const [valueSelectCity, setValueSelectCity] = React.useState(value? value : arrValues[0]);
   const [valueSelectPattern, setValueSelectPattern] = React.useState(value? value : arrValues[0]);
+  const [avatar, setAvatar] = React.useState(profileState.avatar);
   const [isVisible, setIsVisible] = React.useState(false);
   const years = getListYears(1980);
 
@@ -42,6 +43,19 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   const changeValueSelectCity = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValueSelectCity(e.target.value);
   };
+
+  const uploadAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.value;
+    setAvatar(file);
+    console.log(file);
+    
+    if (file) {
+      const data = new FormData();
+      data.append('file', file);
+      // axios.post('/files', data)...
+      setProfileState({ ...profileState, formAvatar: file });
+    }
+  }
   
   if (type === 'select' && arrValues === PATTERN_ARR) {
     return (
@@ -127,6 +141,16 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
         />
         {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
+    )
+    
+  } else if (type === 'avatar') {
+    return (
+      <div className={styles.input__container}>
+        {label && <label className={styles.input__label_avatar}>{label}</label>}
+        {caption && <span className={styles.input__caption_avatar}>{caption}</span>}
+        <input type='file' className={avatar ? styles.avatar_loaded : styles.avatar} style={{background: `url('${avatar!}') no-repeat center/cover`}}
+          onChange={uploadAvatar} />
+      </div>
     )
     
   } else {

@@ -17,7 +17,7 @@ export interface IButtonProps {
 }
 
 export interface IInputProps {
-  type: 'text' | 'textarea' | 'file' | 'select' | 'date';
+  type: 'text' | 'textarea' | 'file' | 'select' | 'date' | 'avatar';
   name?: string;
   label?: string;
   arrValues?: string[];

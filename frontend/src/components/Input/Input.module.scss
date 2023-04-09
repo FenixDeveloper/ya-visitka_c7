@@ -148,6 +148,17 @@
     display: block;
     margin-top: 4px;
     margin-bottom: 10px;
+
+    &_avatar {
+      color: variables.$color-placeholder;
+      margin-bottom: 8px;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -229,6 +240,44 @@
       background-color: variables.$color-text-superlight;
       border-radius: 3px;
       border: 3px solid variables.$backgroud-white;
+    }
+  }
+}
+
+.avatar {
+  color: transparent;
+  background: url('../../images/avatar.png') no-repeat;
+  display: block;
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  &_loaded {
+    color: transparent;
+    border-radius: 75px;
+    display: block;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid variables.$color-text-dark;
+    box-sizing: border-box;
+
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+
+    &:hover {
+      &::after {
+        content: url('../../images/avatar.png');
+        position: absolute;
+        top: -1px;
+        left: -1px;
+      }
     }
   }
 }
