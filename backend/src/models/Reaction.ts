@@ -1,12 +1,7 @@
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose from 'mongoose';
+import { IStudent } from '../types/reaction-model';
 
 const { Schema } = mongoose;
-
-interface IStudent {
-  _id: ObjectId;
-  name: string;
-  email: string;
-}
 
 const studentSchema = new Schema<IStudent>(
   {
