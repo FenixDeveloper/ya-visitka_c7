@@ -27,8 +27,7 @@ export const reactionSchema = new Schema(
   { discriminatorKey: 'type' },
 );
 
-// Проблема с типом, пока поставили any
-const reaction: any = mongoose.model('Reaction', reactionSchema);
+const reaction = mongoose.model('Reaction', reactionSchema);
 
 const TextSchema = new Schema({
   text: {

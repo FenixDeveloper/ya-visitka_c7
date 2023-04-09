@@ -13,7 +13,6 @@ const yandex = {
   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
 };
 
-
 const getUserProfileYandex = async (code: string) => {
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',

@@ -1,4 +1,3 @@
-
 export interface IUserPayload {
   _id?: any;
   name?: string;
