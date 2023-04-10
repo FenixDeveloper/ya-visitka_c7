@@ -19,7 +19,7 @@ tags:
   - name: files
     description: Adding and receiving files
   - name: authorization
-    description:
+    description: Authorization
 
 paths:
   /users:
