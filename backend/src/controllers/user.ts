@@ -9,7 +9,7 @@ export async function getUsers(
   next: NextFunction,
 ) {
   const { offset = 0, limit = 20, search = ''} = req.query;  
-  const searchRegex = new RegExp(String(search));
+  const searchRegex = new RegExp(String(search).toLowerCase());
   const searchQuery = search?.length
     ? [{ email: searchRegex }, { cohort: searchRegex }, { 'profile.name': searchRegex }]
     : [{}];
