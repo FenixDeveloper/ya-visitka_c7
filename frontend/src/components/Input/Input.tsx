@@ -7,8 +7,8 @@ import '../../assets/react-datepicker.css';
 import { ProfileContext } from '../../services/profileContext';
 import { IInputProps } from '../../services/types/data';
 
-
-export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues = EXAMPLE_DEFAUT_ARR, placeholder, onChange, value, errorMessage, caption }) => {
+export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues = EXAMPLE_DEFAUT_ARR, placeholder, 
+  onChange, value, errorMessage, caption }) => {
   const [profileState, setProfileState] = React.useContext(ProfileContext);
   const [valueSelectCity, setValueSelectCity] = React.useState(value? value : arrValues[0]);
   const [valueSelectPattern, setValueSelectPattern] = React.useState(value? value : arrValues[0]);
@@ -151,6 +151,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
         {avatar && <input type='file' className={styles.avatar_loaded} style={{background: `url('${avatar}') no-repeat center/cover`}}
           onChange={uploadAvatar} />}
         {!avatar && <input type='file' className={styles.avatar} onChange={uploadAvatar} />}
+        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </div>
     )
     

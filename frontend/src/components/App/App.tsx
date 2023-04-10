@@ -1,11 +1,8 @@
-import React, { FC, useState } from 'react';
-import styles from './App.module.scss';
+import React, { FC } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
 import { router } from '../../router/router';
 import { ProfileContext } from '../../services/profileContext';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 const App: FC = () => {
   const [profileState, setProfileState] = React.useState({
@@ -33,9 +30,7 @@ const App: FC = () => {
 
   return (
     <ProfileContext.Provider value={[profileState, setProfileState]}>
-      
       <RouterProvider router={router} />
-      
     </ProfileContext.Provider>
   );
 };

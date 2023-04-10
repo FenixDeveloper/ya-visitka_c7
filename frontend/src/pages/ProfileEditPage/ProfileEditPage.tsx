@@ -24,6 +24,8 @@ export const ProfileEditPage: FC = () => {
   const [hobbyErrorMessage, setHobbyErrorMessage] = React.useState('');
   const [relationshipErrorMessage, setRelationshipErrorMessage] = React.useState('');
   const [reasonErrorMessage, setReasonErrorMessage] = React.useState('');
+  const [fileHobbyErrorMessage, setFileHobbyErrorMessage] = React.useState('');
+  const [fileHomeErrorMessage, setFileHomeErrorMessage] = React.useState('');
   const [isValid, setIsValid] = React.useState(true);
 
   const handleGithubLink = async (nickname: string) => {
@@ -52,27 +54,28 @@ export const ProfileEditPage: FC = () => {
 
   const changeHobby = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setHobby(e.target.value);
-    setHobbyErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
+    setHobbyErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '');
   }
 
   const changeRelationship = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setRelationship(e.target.value);
-    setRelationshipErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
+    setRelationshipErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '');
   }
 
   const changeBio = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setBio(e.target.value);
-    setBioErrorMessage(e.target.value ? validation.checkLength(e.target.value, 3, 300) : '')
+    setBioErrorMessage(e.target.value ? validation.checkLength(e.target.value, 3, 300) : '');
   }
 
   const changeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReason(e.target.value);
-    setReasonErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '')
+    setReasonErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '');
   }
 
   const uploadFileHobby = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.value;
     setFileHobbyValue(file);
+    //setFileHobbyErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
     console.log(file);
     
     if (file) {
@@ -86,6 +89,7 @@ export const ProfileEditPage: FC = () => {
   const uploadFileHome = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.value;
     setFileHomeValue(file);
+    //setFileHomeErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
     console.log(file);
     
     if (file) {
@@ -119,19 +123,20 @@ export const ProfileEditPage: FC = () => {
 
   React.useEffect(() => {
     if (telegramErrorMessage || githubErrorMessage || quoteErrorMessage || bioErrorMessage || 
-      relationshipErrorMessage || hobbyErrorMessage || reasonErrorMessage) {
+      relationshipErrorMessage || hobbyErrorMessage || reasonErrorMessage || fileHomeErrorMessage
+      || fileHobbyErrorMessage) {
       setIsValid(false)
     } else {
       setIsValid(true)
     }
   }, [telegramErrorMessage, githubErrorMessage, quoteErrorMessage, bioErrorMessage, 
-    relationshipErrorMessage, hobbyErrorMessage, reasonErrorMessage])
+    relationshipErrorMessage, hobbyErrorMessage, reasonErrorMessage, fileHomeErrorMessage, fileHobbyErrorMessage])
 
   return (
     <>
       <div className={styles.container}>
         <form className={styles.form} onSubmit={(evt) => evt.preventDefault()}>
-          <Input type='avatar' label='Загрузите фото *' caption='(размер не менее 440х440 пикселей)' />
+          <Input type='avatar' label='Загрузите фото *' caption='(размер не менее 440х440)' />
           <Input type='date' label='Дата рождения *' />
           <Input type='select' label='Выберите город *' arrValues={EXAMPLE_DEFAUT_ARR} value={profileState.sity} />
           <Input type='text' label='Ник в телеграм' value={nicknameTelegram} onChange={changeNicknameTelegram}
@@ -141,10 +146,12 @@ export const ProfileEditPage: FC = () => {
           <Input type='select' label='Выберите шаблон' arrValues={PATTERN_ARR} value={profileState.pattern} />
           <Input type='textarea' value={quote} onChange={changeQuote} label='Девиз, цитата' placeholder='Не более 100 символов' 
             errorMessage={quoteErrorMessage} />
-          <Input type='file' label='Увлечения, досуг, интересы' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHobby} />
+          <Input type='file' label='Увлечения, досуг, интересы' caption='Рекомендуемый размер фото 230х129' 
+            onChange={uploadFileHobby} errorMessage={fileHobbyErrorMessage} />
           <Input type='textarea' value={hobby} onChange={changeHobby} placeholder='Не более 300 символов' 
             errorMessage={hobbyErrorMessage} />
-          <Input type='file' label='Семья, статус, домашние животные' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHome} />
+          <Input type='file' label='Семья, статус, домашние животные' caption='Рекомендуемый размер фото 230х129' 
+            onChange={uploadFileHome} errorMessage={fileHomeErrorMessage} />
           <Input type='textarea' value={relationship} onChange={changeRelationship} placeholder='Не более 300 символов' 
             errorMessage={relationshipErrorMessage} />
           <Input type='textarea' value={bio} onChange={changeBio} label='Из какой сферы пришёл? Кем работаешь?' placeholder='Не более 300 символов' 

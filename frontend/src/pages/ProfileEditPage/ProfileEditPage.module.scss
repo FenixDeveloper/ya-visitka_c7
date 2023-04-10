@@ -1,10 +1,18 @@
 .container {
   padding-bottom: 96px;
+
+  @media screen and (max-width: 780px) {
+    padding-bottom: 88px;
+  }
 }
 
 .form {
   width: 440px;
   margin: 0 auto;
+
+  @media screen and (max-width: 500px) {
+    width: 272px;
+  }
 }
 
 .caption {
