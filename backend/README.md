@@ -136,10 +136,19 @@
 
 ## Запуск проекта
 
-* Склонировать репозиторий*ссылка
-
+* Склонировать репозиторий и перейти в папку с проектном
+```bash
+git clone https://github.com/FenixDeveloper/ya-visitka_c7.git
+```
+* Перейти в ветку backend
+```bash
+git checkout backend
+```
 * Установить зависимости
-
+```bash
+cd voshod--websocket-
+npm install
+```
 * Добавить файл .env, заполнить по образцу файла .env.example
 
 * Запустить проект - npm start, либо в корневой дирректории выполнить команду sudo docker compose up - что развернет контейнер с приложением и базой данных
