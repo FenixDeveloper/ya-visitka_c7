@@ -39,14 +39,17 @@ export async function getUsers(
 export async function createUser(
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) {
   try {
     const { email, cohort } = req.body;
     const user = await User.create({ email, cohort });
     const result = await User.findById(user._id);
     res.send(result);
-  } catch (err) {
+  } catch (err: any) {
+    if (err.code == 11000) {
+      return next(new ConflictError(ErrorMessages.EmailConflict));
+    }
     next(err);
   }
 }
