@@ -81,7 +81,6 @@ export const postProfileReaction = async (
     from: reactionFrom,
     ...reactionBody,
   };
-  // console.log(reaction);
 
   userSchema
     .findByIdAndUpdate(
@@ -91,7 +90,6 @@ export const postProfileReaction = async (
     )
     .orFail(new NotFoundError(ErrorMessages.UserNotFound))
     .then(() => {
-      // console.log(data);
       res.status(StatusCodes.OK).json();
     })
     .catch(next);

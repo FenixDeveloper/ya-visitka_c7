@@ -3,8 +3,15 @@ import curatorRouter from './curator';
 import fileRouter from './files';
 import authRouter from './auth';
 import studentRouter from './student';
+import alive from '../controllers/health-check';
+import { login } from '../controllers/oauth';
+import { authenticate } from '../strategy/jwt.strategy';
 
 const router = Router();
+
+router.get('/healthcheck', alive);
+router.post('/auth', login);
+router.use(authenticate);
 
 router.use(authRouter);
 router.use(studentRouter);
