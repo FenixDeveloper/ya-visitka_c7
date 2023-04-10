@@ -6,7 +6,7 @@ config({
 });
 
 const {
-  PORT = 3000,
+  PORT = 4000,
   JWT_SECRET = 'super-secret-word',
   DB_URL = 'mongodb://127.0.0.1:27017/visitka',
   CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556',

@@ -8,10 +8,10 @@ export async function getUsers(
   res: Response,
   next: NextFunction,
 ) {
-  const { offset, limit, search } = req.query;
-
+  const { offset = 0, limit = 20, search = ''} = req.query;  
+  const searchRegex = new RegExp(String(search), "i");
   const searchQuery = search?.length
-    ? [{ email: search }, { cohort: search }, { 'profile.name': search }]
+    ? [{ email: searchRegex }, { cohort: searchRegex }, { 'profile.name': searchRegex }]
     : [{}];
 
   try {
@@ -39,14 +39,17 @@ export async function getUsers(
 export async function createUser(
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) {
   try {
     const { email, cohort } = req.body;
     const user = await User.create({ email, cohort });
     const result = await User.findById(user._id);
     res.send(result);
-  } catch (err) {
+  } catch (err: any) {
+    if (err.code == 11000) {
+      return next(new ConflictError(ErrorMessages.EmailConflict));
+    }
     next(err);
   }
 }
@@ -68,7 +71,12 @@ export async function updateUser(
       throw new NotFoundError(ErrorMessages.NotFound);
     }
     await user.updateOne({ email, cohort });
-    const result = await User.find({_id: user._id}, {email: 1, cohort: 1, updatedAt: 1, createdAt: 1})
+    const result = await User.find(
+      { _id: user._id },
+      {
+        email: 1, cohort: 1, updatedAt: 1, createdAt: 1,
+      },
+    );
     res.send(result);
   } catch (err) {
     next(err);
