@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { ObjectId } from 'mongoose';
-import { JwtPayload } from "jsonwebtoken"
+import { IReqUser } from './custom.types';
 
 declare global{
     namespace Express {
+
+
         interface Request {
-            user: string | JwtPayload;
+            user?: IReqUser;
         }
     }
 }

@@ -28,6 +28,16 @@ export interface IProfile {
   template: string | null;
 }
 
+export interface IReaction {
+  from: {
+    name: string;
+    email: string;
+  };
+  target: string | null;
+  text?: string;
+  emotion?: string;
+}
+
 export interface IUser {
   createdAt: number;
   updatedAt: number;
@@ -36,17 +46,7 @@ export interface IUser {
   timestamps: boolean;
   profile: IProfile;
   info: IInfo;
-  reactions: [
-    {
-      from: {
-        name: string;
-        email: string;
-      };
-      target: string | null;
-      text?: string;
-      emotion?: string;
-    }
-  ];
+  reactions: IReaction[];
 }
 
 export interface IUserModel extends Model<IUser> {
