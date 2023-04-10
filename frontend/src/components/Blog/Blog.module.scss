@@ -41,4 +41,15 @@
         @include mixins.text();
         color: variables.$color-text-dark;
     }
+
+    @media screen and (max-width: 1024px) {
+        width: 342px;
+    }
+
+    @media screen and (max-width: 760px) {
+        max-width: 342px;
+        min-width: 272px;
+        width: 100%;
+        margin-left: 10px;
+    }
 }
