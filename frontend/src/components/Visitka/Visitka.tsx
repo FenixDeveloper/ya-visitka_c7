@@ -1,6 +1,6 @@
-import React, { FC, useContext, useState} from 'react';
+import React, { FC, useContext, useState } from 'react';
 import styles from './Visitka.module.scss';
-//import { Feedback } from '../Feedback/Feedback';
+import { Feedback } from '../Feedback/Feedback';
 import chatIcon from '../../assets/icons/chat.svg';
 import { ProfileContext } from '../../services/profileContext';
 import { UserStatus } from '../../services/types/data';
@@ -23,7 +23,6 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
     setFeedback(!isFeedbackOpen);
   };
 
-
   return (
     <article className={styles.content}>
       <NavLink className={styles.navlink} to={`/profiles/${id}`}>
@@ -36,7 +35,7 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
           <p className={styles.name}>{name}</p>
           <p className={styles.city}>{city}</p>
           {userStatus === UserStatus.Curator && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
-        
+
         </div>
       </NavLink>
       <button className={styles.chatButton} onClick={openFeedback}>
@@ -47,7 +46,13 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
           </div>
         )}
       </button>
-      {isFeedbackOpen && <div className={styles.feedback}>Здесь должен быть компонент Feedback</div>}
+      {isFeedbackOpen && (
+        <div className={styles.feedback}>
+          <div className={styles.feedback__container}>
+            <Feedback />
+          </div>
+        </div>
+      )}
     </article>
   );
 };

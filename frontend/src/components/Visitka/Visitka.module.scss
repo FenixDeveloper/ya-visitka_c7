@@ -117,22 +117,28 @@
 .feedback {
   position: absolute;
   width: 321px;
-  margin: 4px 1px;
+  margin: 4px 2px;
   top: 44px;
   z-index: 1;
+  height: 100%;
+
+  &__container {
+    position: relative;
+    height: 100%;
+  }
 }
 
 @media screen and (max-width: 900px) {
-  .content { 
+  .content {
     max-width: 342px;
   }
-  
+
   .navlink {
     max-width: 342px;
   }
 
   .feedback {
-    width: 338px;  
+    width: 338px;
   }
 
   .photo {
@@ -141,7 +147,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .content { 
+  .content {
     max-width: 272px;
   }
 
@@ -150,7 +156,7 @@
   }
 
   .feedback {
-    width: 278px;  
+    width: 278px;
   }
 
   .photo {
