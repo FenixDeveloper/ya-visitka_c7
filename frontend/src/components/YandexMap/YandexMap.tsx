@@ -1,5 +1,12 @@
-import React, { FC } from 'react';
-import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+/* eslint-disable */
+import React, { FC, } from 'react';
+import {
+  YMaps, Map, Placemark, ZoomControl, SearchControl, TrafficControl, RulerControl,
+  GeolocationControl, FullscreenControl, RoutePanel, TypeSelector, RouteButton, RouteEditor
+} from '@pbe/react-yandex-maps';
+
+import MapIcon from '../../assets/icons/map1.svg';
+
 
 type Student = {
   id: number;
@@ -20,16 +27,49 @@ export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504],
       <Map
         defaultState={{ center, zoom }}
         width="100vw"
-        height="80vh"
+        height="calc(100vh - 184px)"
         options={{ minZoom: 0, maxZoom: 19 }} // Ограничение зум, можно ли ограничить выползания за карту?
       >
+        <RouteButton options={{ float: 'right' }} />
+        <TypeSelector />
+        {/* <RoutePanel /> */}
+        <RouteEditor />
+        <ZoomControl className="custom-zoom-control" options={{ position: { top: 200, right: 10 } }} />
+
+        <FullscreenControl />
+        <TrafficControl />
+        <RulerControl />
+        <GeolocationControl />
+        <SearchControl options={{ float: "left" }} />
+
         {students.map((student) => (
           <Placemark
             key={student.id}
+            instanceRef={e => {
+              e?.balloon?.open();
+            }}
+
             geometry={student.location}
+            options={{
+              iconLayout: 'default#image',
+              iconImageSize: [48, 48],
+              iconImageOffset: [-24, -24],
+              iconContentOffset: [15, 15],
+              iconImageHref: MapIcon,
+              hideIconOnBalloonOpen: false,
+              balloonOffset: [80, 40],
+
+            }}
+            modules={["geoObject.addon.balloon"]}
             properties={{
-              balloonContentHeader: student.name,
-              balloonContentBody: `<img src="${student.preview}" alt="${student.name}" width="100px" />`,
+              balloonContent: `
+           <div style='display: flex;'>
+             <img style='border-radius:100%;' src='${student.preview}' width='50'/>
+             <div>
+               <p>${student.name}</p>
+             </div>
+           </div>
+         `
             }}
           />
         ))}
@@ -37,3 +77,23 @@ export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504],
     </YMaps>
   );
 };
+
+
+// .ymaps-2-1-79-balloon__tail {
+//   visibility: hidden;
+// }
+
+// .ymaps-2-1-79-zoom__scale {
+//   visibility: hidden;
+// }
+
+// .ymaps-2-1-79-zoom__plus {
+//   margin-left: -5px;
+//   margin-top: 130px;
+//   scale: 1.5;
+// }
+
+// .ymaps-2-1-79-zoom__minus {
+//   margin-left: -5px;
+//   scale: 1.5;
+// }
