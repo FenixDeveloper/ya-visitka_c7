@@ -81,7 +81,7 @@ export const postProfileReaction = async (
     from: reactionFrom,
     ...reactionBody,
   };
-  console.log(reaction);
+  // console.log(reaction);
 
   userSchema
     .findByIdAndUpdate(
@@ -90,9 +90,27 @@ export const postProfileReaction = async (
       { new: true },
     )
     .orFail(new NotFoundError(ErrorMessages.UserNotFound))
-    .then((data) => {
+    .then(() => {
       // console.log(data);
       res.status(StatusCodes.OK).json();
+    })
+    .catch(next);
+};
+
+export const getProfileReactions = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { offset = 0, limit = 20 } = req.query;
+  const { id: userId } = req.params;
+
+  userSchema
+    .findById(userId)
+    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .then((userData) => {
+      const reactions = userData.reactions.slice(+offset, +offset + +limit);
+      res.status(StatusCodes.OK).json(reactions);
     })
     .catch(next);
 };
