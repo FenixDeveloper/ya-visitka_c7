@@ -5,7 +5,7 @@ import LoginPageStyles from './LoginPage.module.scss';
 export const LoginPage: FC = () => {
 
     const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-    const [errorActive, setErrorActive] = useState<boolean>(true);
+    const [errorActive, setErrorActive] = useState<boolean>(false);
 
     useEffect(() => {
       function updateWindowWidth() {
