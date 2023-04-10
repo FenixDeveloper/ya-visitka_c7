@@ -158,7 +158,7 @@ export const ProfileEditPage: FC = () => {
             errorMessage={bioErrorMessage} />
           <Input type='textarea' value={reason} onChange={changeReason} label='Почему решил учиться на веб-разработчика?' placeholder='Не более 300 символов'
             errorMessage={reasonErrorMessage} />
-          <span className={styles.caption}>Поля, отмеченные звездочкой, обязательны для заполнения</span>
+          <span className={styles.caption}>Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения</span>
           <Button disabled={!isValid} onClick={() => submitForm(
             profileState.formAvatar,
             profileState.formBirthday, 

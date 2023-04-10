@@ -173,6 +173,8 @@
     margin-bottom: 10px;
 
     &_avatar {
+      @include mixins.h3_desktop();
+      font-weight: variables.$h2_desktop_font-weight;
       color: variables.$color-placeholder;
       margin-bottom: 8px;
     }
@@ -196,6 +198,11 @@
   resize: none;
   outline: none;
   border: 1px solid variables.$color-text-dark;
+  margin-bottom: -2px;
+
+  @media screen and (max-width: 850px) {
+    margin-bottom: -3px;
+  }
 
   &::-webkit-scrollbar {
     width: 10px;

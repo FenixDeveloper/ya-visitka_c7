@@ -1,8 +1,14 @@
+@use '../../modules/mixins.scss';
+
 .container {
   padding-bottom: 96px;
 
   @media screen and (max-width: 780px) {
     padding-bottom: 88px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding-top: 10px;
   }
 }
 
@@ -16,6 +22,7 @@
 }
 
 .caption {
+  @include mixins.text();
   display: block;
   margin: 16px 0;
 }
