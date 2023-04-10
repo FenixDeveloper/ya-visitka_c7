@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import userSchema, { IUser } from '../models/User';
+import userSchema from '../models/User';
 import StatusCodes from '../helpers/status-codes';
 import NotFoundError from '../errors/not-found-error';
+import { IUser } from '../types/user-model';
 
 export const getProfiles = (
   req: Request,

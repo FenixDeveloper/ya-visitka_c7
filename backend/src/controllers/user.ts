@@ -68,7 +68,12 @@ export async function updateUser(
       throw new NotFoundError(ErrorMessages.NotFound);
     }
     await user.updateOne({ email, cohort });
-    const result = await User.find({_id: user._id}, {email: 1, cohort: 1, updatedAt: 1, createdAt: 1})
+    const result = await User.find(
+      { _id: user._id },
+      {
+        email: 1, cohort: 1, updatedAt: 1, createdAt: 1,
+      },
+    );
     res.send(result);
   } catch (err) {
     next(err);
