@@ -5,6 +5,7 @@ import { ProfileContext } from '../../services/profileContext';
 import telegramIcon from '../../assets/icons/telegram.svg';
 import githubIcon from '../../assets/icons/github.svg'
 import { Blogs } from '../../components/Blogs/Blogs';
+import { Communication } from '../../components/Communication/Communication';
 
 interface IProps {
   typePage: typeof DEFAULT_PAGE | typeof ROMANTIC_PAGE | typeof COCKY_PAGE;
@@ -49,7 +50,9 @@ export const ProfileDetailsPage: FC<IProps> = ({ typePage }) => {
           <div className={`${typePage === 'COCKY_PAGE' && styles.profileDetails__maskAvatar}`}></div>
         </div>
         <div className={styles.profileDetails__decriptionBox}>
-          <button className={styles.profileDetails__chatButton} type='button'></button>
+          <div className={styles.profileDetails__communicationBox}>
+            <Communication />
+          </div>
           <div className={styles.profileDetails__quotesBox}>
             <div className={`${styles.profileDetails__quotesIcon} ${typePage !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
             <div className={`${styles.profileDetails__quotesIcon} ${typePage !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
