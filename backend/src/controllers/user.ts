@@ -10,7 +10,6 @@ export async function getUsers(
 ) {
   const { offset = 0, limit = 20, search = ''} = req.query;  
   const searchRegex = new RegExp(String(search), "i");
-  console.log(searchRegex);
   const searchQuery = search?.length
     ? [{ email: searchRegex }, { cohort: searchRegex }, { 'profile.name': searchRegex }]
     : [{}];
