@@ -4,6 +4,7 @@ import { DEFAULT_PAGE, ROMANTIC_PAGE, COCKY_PAGE, GITHUB_URL, TELEGRAM_URL } fro
 import { ProfileContext } from '../../services/profileContext';
 import telegramIcon from '../../assets/icons/telegram.svg';
 import githubIcon from '../../assets/icons/github.svg'
+import { Blogs } from '../../components/Blogs/Blogs';
 
 interface IProps {
   typePage: typeof DEFAULT_PAGE | typeof ROMANTIC_PAGE | typeof COCKY_PAGE;
@@ -57,6 +58,9 @@ export const ProfileDetailsPage: FC<IProps> = ({ typePage }) => {
             Делай, что должно и будь, что будет.
           </p>
         </div>
+      </div>
+      <div className={styles.profileDetails__containerBlogs}>
+        <Blogs />
       </div>
     </section>
   );
