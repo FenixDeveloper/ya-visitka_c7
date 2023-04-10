@@ -81,20 +81,10 @@
         align-Self: flex-end;
     }
 
-    &__chatButton {
-        border: none; 
-        outline: none;
+    &__communicationBox {
         position: absolute;
         top: -32px;
         right: -13px;
-        background-image: url(../../assets/icons/chat.svg);
-        background-color: inherit;
-        Width: 32px;
-        Height: 32px;
-
-        &:hover {
-            cursor: pointer;
-        }
     }
 
     &__descriptionText {
