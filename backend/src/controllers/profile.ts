@@ -79,6 +79,7 @@ export const postProfileReaction = async (
 
   const reaction = {
     from: reactionFrom,
+    type: reactionBody.text ? 'Text' : 'Emotion',
     ...reactionBody,
   };
 
@@ -107,7 +108,7 @@ export const getProfileReactions = (
     .findById(userId)
     .orFail(new NotFoundError(ErrorMessages.UserNotFound))
     .then((userData) => {
-      const reactions = userData.reactions.slice(+offset, +offset + +limit);
+      const reactions = userData.reactions.slice(Number(offset), Number(offset) + Number(limit));
       res.status(StatusCodes.OK).json(reactions);
     })
     .catch(next);
