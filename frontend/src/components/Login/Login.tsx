@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { UserData } from '../../services/types/data';
 import defaulAvatar from '../../assets/icons/default-avatar.svg';
 import styles from './Login.module.scss';
+import { ProfileContext } from '../../services/profileContext';
 
-const Login: FC<UserData> = ({ user }) => {
+const Login: FC = () => {
   const [active, setActive] = React.useState<boolean>(false);
   const closePopupStyle = !active ? styles.popup_open_closed : '';
+
+  const [profileState, setProfileState] = React.useContext(ProfileContext);
+  const { user } = profileState;
 
   const handlerClickPopup = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
