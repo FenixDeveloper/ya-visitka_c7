@@ -8,7 +8,7 @@ export async function getUsers(
   res: Response,
   next: NextFunction,
 ) {
-  const { offset, limit, search } = req.query;
+  const { offset = 0, limit = 20, search = ''} = req.query;
 
   const searchQuery = search?.length
     ? [{ email: search }, { cohort: search }, { 'profile.name': search }]
