@@ -9,13 +9,12 @@ import { authenticate } from '../strategy/jwt.strategy';
 
 const router = Router();
 
-router.get('/healthcheck', alive);
-router.post('/auth', login);
+router.get('/api/healthcheck', alive);
+router.post('/api/auth', login);
 router.use(authenticate);
-
-router.use(authRouter);
-router.use(studentRouter);
-router.use(fileRouter);
-router.use(curatorRouter);
+router.use('/api', authRouter);
+router.use('/api', studentRouter);
+router.use('/api', fileRouter);
+router.use('/api', curatorRouter);
 
 export default router;

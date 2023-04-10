@@ -43,7 +43,10 @@ app.use(express.json());
 // берет код подтверждения - отдает токен
 
 app.use(requestLogger);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2d574cfcb770b72470feea70c4a174e8fee8c8ab
 app.use(rootRouter);
 
 app.use(nonExistentRequestHandler);
