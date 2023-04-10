@@ -146,7 +146,6 @@ git checkout backend
 ```
 * Установить зависимости
 ```bash
-cd voshod--websocket-
 npm install
 ```
 * Добавить файл .env, заполнить по образцу файла .env.example
