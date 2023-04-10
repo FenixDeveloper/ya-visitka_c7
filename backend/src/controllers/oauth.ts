@@ -13,7 +13,7 @@ const yandex = {
   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
 };
 
-const getUserProfileYandex = async (code: string) => {
+const getUserProfileYandex = async (code: string) =>  {
   const response = await fetch(yandex.TOKEN_URL, {
     method: 'POST',
     headers: {
@@ -35,7 +35,12 @@ const getUserProfileYandex = async (code: string) => {
 
   const userProfile = await userResponse.json();
   if (!userProfile) throw new UnauthorizedError(ErrorMessages.Unauthorized);
-  return userProfile;
+
+  const user: IUserPayload = {
+    email: userProfile.default_email,
+    name: userProfile.first_name
+  }
+  return user;
 };
 
 const getToken = (user: IUserPayload) => jwt.sign(user, 'secret', { expiresIn: '7d' });
@@ -44,16 +49,16 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   const { code } = req.body;
   if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
-  const userProfile = await getUserProfileYandex(code) as any;
+  const userProfile = await getUserProfileYandex(code);
 
-  User.findOne({ email: userProfile.default_email })
+  User.findOne({ email: userProfile.email })
     .then((user) => {
       let token;
 
       if (user) {
-        const student = {
+        const student: IUserPayload = {
           _id: user._id,
-          name: userProfile.first_name,
+          name: userProfile.name,
           email: user.email,
           cohort: user.cohort,
           photo: user.profile?.photo,
@@ -62,11 +67,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         token = getToken(student);
       }
-      const isCurator = CURATOR_LIST.includes(userProfile.default_email);
+      const isCurator = CURATOR_LIST.includes(userProfile.email!);
 
       if (isCurator) {
         const curator: IUserPayload = {
-          email: userProfile.default_email,
+          email: userProfile.email,
           role: 'curator',
         };
 
