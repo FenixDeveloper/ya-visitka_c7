@@ -1,0 +1,44 @@
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
+
+.blog {
+    width: 440px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__line {
+        width: 100%;
+        border-top: 3px solid #100C34;
+        
+        &_romantic {
+            border: none;
+            height: 7px;
+            background-image: url(../../assets/icons/wavy.svg);
+        }
+
+        &_cocky {
+            border: none;
+            height: 9px;
+            background-image: url(../../assets/icons/sharp.svg);
+        }
+    }
+
+    &__title {
+        margin: 16px 0 0 0;
+        font-size: 14px;
+    }
+
+    &__image {
+        margin-top: 16px;
+        width: 210px;
+        height: 130px;
+    }
+
+    &__text {
+        margin: 15px 0 0 0;
+        @include mixins.text();
+        color: variables.$color-text-dark;
+    }
+}
