@@ -36,10 +36,10 @@
 		display: none;
 		font-family: "IBM Plex Sans";
 		text-align: center;
+		color: red;
 
 		&_active {
 			display: block;
-			color: red;
 		}
 	}
 
