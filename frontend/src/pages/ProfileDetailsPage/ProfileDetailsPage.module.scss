@@ -115,7 +115,7 @@
 
     &__containerBlogs {
         width: 94.5%;
-        margin: 70px auto 20px auto;
+        margin: 70px auto 56px auto;
     }
 
     @media screen and (max-width: 1400px) {
@@ -221,6 +221,10 @@
             width: 100%;
             min-width: 272px;
             justify-self: start;
+        }
+
+        &__containerBlogs {
+            margin-bottom: 104px;
         }
     }
 }
