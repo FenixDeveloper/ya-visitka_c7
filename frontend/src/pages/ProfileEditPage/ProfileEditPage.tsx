@@ -27,7 +27,6 @@ export const ProfileEditPage: FC = () => {
   const [fileHobbyErrorMessage, setFileHobbyErrorMessage] = React.useState('');
   const [fileHomeErrorMessage, setFileHomeErrorMessage] = React.useState('');
   const [isValid, setIsValid] = React.useState(true);
-  const [isVisible, setIsVisible] = React.useState(false);
 
   const handleGithubLink = async (nickname: string) => {
     if (nickname === '') {
