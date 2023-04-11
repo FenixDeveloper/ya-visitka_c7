@@ -98,23 +98,31 @@
 
 `/profiles/:id`
 
-**Назначение**:
+**Назначение**: 
 
 **Метод**: POST
 
 
-`/profiles/:id/reactions`
+`api/profiles/:id/reactions`
 
-**Назначение**:
+**Назначение**: Добавляет реакцию к профилю студента
+- Query - параматры **limit** и **offset**; не обязательные; по дефолту **limit = 20**, **offset = 0**
+- Params - **id** целевого профиля;
+- body - ```{ 
+              target: ключ из поля profile.info или null для профиля,
+              "text": "string",  если это комментарий,
+              "emotion":"string", если это эмоция
+            }```
 
+**Метод**: POST
+
+
+`api/profiles/:id/reactions`
+
+**Назначение**: Получение реакций профиля
+- Query - параматры **limit** и **offset**; не обязательные; по дефолту **limit = 20**, **offset = 0**
+- Params - **id** целевого профиля;
 **Метод**: GET
-
-
-`/profiles/:id/reactions`
-
-**Назначение**:
-
-**Метод**: POST
 
 
 `/healthcheck`

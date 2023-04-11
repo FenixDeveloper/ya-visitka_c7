@@ -12,8 +12,8 @@ import {
 
 const curatorRouter = Router();
 
-curatorRouter.post('/users', createUserValidator, createUser);
-curatorRouter.get('/users', getUsersValidator, getUsers);
+curatorRouter.post('/users', isCurator, createUserValidator, createUser);
+curatorRouter.get('/users', isCurator, getUsersValidator, getUsers);
 curatorRouter.put('/users/:id', isCurator, updateUserValidator, updateUser);
 
 curatorRouter.get('/comments', isCurator, getCommentsValidator, getComments);
