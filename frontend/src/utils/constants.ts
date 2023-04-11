@@ -37,6 +37,8 @@ export const VALIDATION = {
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/bmp'];
 
+export const PATTERN_ARR = ['серьезный', 'романтичный', 'дерзкий'];
+
 export const EMOJI = [
   { symbol: '👍', alt: 'палец вверх', acitve: false, counter: 1 },
   { symbol: '👎️', alt: 'палец вниз', acitve: false, counter: 2 },

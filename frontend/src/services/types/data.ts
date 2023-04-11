@@ -17,7 +17,7 @@ export interface IButtonProps {
 }
 
 export interface IInputProps {
-  type: 'text' | 'textarea' | 'file' | 'select' | 'date';
+  type: 'text' | 'textarea' | 'file' | 'select' | 'date' | 'avatar';
   name?: string;
   label?: string;
   arrValues?: string[];
@@ -25,6 +25,7 @@ export interface IInputProps {
   onChange?(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   value?: string;
   errorMessage?: string;
+  caption?: string;
 }
 
 export interface IUserRequest {
