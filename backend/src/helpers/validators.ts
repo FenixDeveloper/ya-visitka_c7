@@ -69,18 +69,6 @@ export const updateProfileValidator = celebrate({
     }),
 });
 
-export const postCommentValidator = celebrate({
-  params: Joi.object().keys({
-    id: joiId,
-  }),
-  body: Joi.object()
-    .required()
-    .keys({
-      target: Joi.string(),
-      text: Joi.string().max(200),
-    }),
-});
-
 export const postReactionValidator = celebrate({
   params: Joi.object().keys({
     id: joiId,
@@ -89,7 +77,8 @@ export const postReactionValidator = celebrate({
     .required()
     .keys({
       target: Joi.string(),
-      emotion: joiId,
+      text: Joi.string().max(200).optional(),
+      emotion: Joi.string().length(24).hex().optional(),
     }),
 });
 
