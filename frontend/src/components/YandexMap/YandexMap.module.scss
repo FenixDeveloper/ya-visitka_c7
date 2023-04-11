@@ -1,4 +1,16 @@
 .mapContainer {
-   width: 100vw;
-   height: calc(100vh - 184px);
+  width: 100vw;
+  height: calc(100vh - 184px);
+}
+
+@media screen and (max-width: 768px) {
+  .mapContainer {
+    height: calc(100vh - 168px);
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .mapContainer {
+    height: calc(100vh - 152px);
+  }
 }

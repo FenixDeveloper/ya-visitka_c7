@@ -1,20 +1,34 @@
 .balloon {
   display: flex;
+  height: 54px;
+  border-radius: 6px;
 
   .image {
     border-radius: 100%;
-    width: 50px;
+    width: 24px;
+    height: 24px;
   }
 
   .content {
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
   }
 
   .name {
-    margin-bottom: 0;
+    margin: 0;
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   .city {
-    margin-top: 0;
+    margin: 0;
   }
 }

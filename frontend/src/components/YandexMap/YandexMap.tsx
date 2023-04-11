@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { renderToString } from 'react-dom/server';
-import { YMaps, Map, Placemark, ZoomControl } from '@pbe/react-yandex-maps';
+import { YMaps, Map, Placemark, ZoomControl, } from '@pbe/react-yandex-maps';
 import { Balloon } from '../Balloon/Balloon';
 import MapIcon from '../../assets/icons/map-icon.svg';
 
 import styles from './YandexMap.module.scss';
-
 
 type Student = {
   id: number;
@@ -22,6 +21,7 @@ type YandexMapProps = {
 };
 
 export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504], zoom = 10, students }) => {
+
   return (
     <YMaps>
       <Map defaultState={{ center, zoom }} className={styles.mapContainer} >
@@ -32,12 +32,12 @@ export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504],
             geometry={student.location}
             options={{
               iconLayout: 'default#image',
-              iconImageSize: [48, 48],
+              iconImageSize: [60, 68],
               iconImageOffset: [-24, -24],
               iconContentOffset: [15, 15],
               iconImageHref: MapIcon,
               hideIconOnBalloonOpen: false,
-              balloonOffset: [80, 40]
+              balloonOffset: [88, 40]
             }}
             modules={['geoObject.addon.balloon']}
             properties={{ balloonContent: renderToString(<Balloon name={student.name} city={student.city} preview={student.preview} />) }}

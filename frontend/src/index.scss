@@ -7,10 +7,18 @@ body {
   font-family: variables.$font-family;
 }
 
+
+// убрал хвостик у балуна
 .ymaps-2-1-79-balloon__tail {
   visibility: hidden;
 }
 
+// убрал крестик у балуна
+.ymaps-2-1-79-balloon__close {
+  display: none;
+}
+
+// далее 3 селектора кнопки скрола изменяют, все изменения на глаз и приближены к макету
 .ymaps-2-1-79-zoom__scale {
   visibility: hidden;
 }
