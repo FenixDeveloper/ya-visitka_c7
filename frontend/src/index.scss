@@ -6,3 +6,22 @@ body {
   margin: 0;
   font-family: variables.$font-family;
 }
+
+.ymaps-2-1-79-balloon__tail {
+  visibility: hidden;
+}
+
+.ymaps-2-1-79-zoom__scale {
+  visibility: hidden;
+}
+
+.ymaps-2-1-79-zoom__plus {
+  margin-left: -5px;
+  margin-top: 130px;
+  scale: 1.5;
+}
+
+.ymaps-2-1-79-zoom__minus {
+  margin-left: -5px;
+  scale: 1.5;
+}

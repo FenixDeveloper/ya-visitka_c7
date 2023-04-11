@@ -1,0 +1,20 @@
+.balloon {
+  display: flex;
+
+  .image {
+    border-radius: 100%;
+    width: 50px;
+  }
+
+  .content {
+    margin-left: 10px;
+  }
+
+  .name {
+    margin-bottom: 0;
+  }
+
+  .city {
+    margin-top: 0;
+  }
+}
