@@ -1,8 +1,12 @@
 import imgOne from '../assets/icons/girl.png'
 import imgTwo from '../assets/icons/guitar.png'
-export const EXAMPLE_CURRENT_USER: { name: string, avatar?: string } = {
+export const DEFAULT_PAGE = 'DEFAULT_PAGE';
+export const ROMANTIC_PAGE = 'ROMANTIC_PAGE';
+export const COCKY_PAGE = 'COCKY_PAGE';
+export const EXAMPLE_CURRENT_USER: { name: string, avatar?: string, pageStyle: typeof DEFAULT_PAGE | typeof ROMANTIC_PAGE | typeof COCKY_PAGE } = {
   name: 'Константин Константинович',
   avatar: 'https://s0.rbk.ru/v6_top_pics/media/img/4/99/756723917919994.webp',
+  pageStyle: DEFAULT_PAGE,
 };
 
 export const EXAMPLE_DEFAUT_ARR = ['Петровск (Саратовская область)', 'Петровск-Забайкальский (Забайкальский край)',
@@ -14,9 +18,6 @@ export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрел
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com/';
 export const TELEGRAM_URL = 'https://tlgg.ru/test'
-export const DEFAULT_PAGE = 'DEFAULT_PAGE';
-export const ROMANTIC_PAGE = 'ROMANTIC_PAGE';
-export const COCKY_PAGE = 'COCKY_PAGE';
 export const EXAMPLE_USER_BLOGS = [
   {
     title: 'Увлечения',
