@@ -73,10 +73,6 @@ export const ProfileEditPage: FC = () => {
     setReasonErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '');
   }
 
-  function handleClick() {
-    setIsVisible(!isVisible);
-  }
-
   const uploadFileHobby = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.value;
     setFileHobbyValue(file);
