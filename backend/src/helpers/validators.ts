@@ -12,6 +12,20 @@ const joiInfoItem = Joi.object().keys({
   image: Joi.string().custom(isUrlValid),
 });
 
+const joiEmotion = Joi.object()
+  .required()
+  .keys({
+    target: Joi.string(),
+    emotion: Joi.string().length(24).hex().required(),
+  });
+
+const joiComment = Joi.object()
+  .required()
+  .keys({
+    target: Joi.string(),
+    text: Joi.string().max(200).required(),
+  });
+
 export const signInValidator = celebrate({
   body: Joi.object()
     .required()
@@ -73,13 +87,7 @@ export const postReactionValidator = celebrate({
   params: Joi.object().keys({
     id: joiId,
   }),
-  body: Joi.object()
-    .required()
-    .keys({
-      target: Joi.string(),
-      text: Joi.string().max(200).optional(),
-      emotion: Joi.string().length(24).hex().optional(),
-    }),
+  body: Joi.alternatives().try(joiComment, joiEmotion),
 });
 
 export const getUsersValidator = celebrate({
