@@ -25,8 +25,8 @@
 **Метод**: GET
 
 В заголовке Authorization передается **токен**, роут защищен авторизацией. Отдает **объект** с полями:
-студент - _id, name, email, cohort, photo, role
-куратор - email, role
+**студент** - _id, name, email, cohort, photo, role.
+**куратор** - email, role.
 При ошибке отправялет объект ошибки с полем error.
 
 `/users`
