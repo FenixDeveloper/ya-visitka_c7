@@ -47,7 +47,7 @@ export const ProfileEditPage: FC = () => {
     handleGithubLink(e.target.value);
   }
 
-  const changeQuote = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeQuote = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuote(e.target.value);
     setQuoteErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 100) : '');
   }
@@ -146,18 +146,17 @@ export const ProfileEditPage: FC = () => {
           <Input type='select' label='Выберите шаблон' arrValues={PATTERN_ARR} value={profileState.pattern} />
           <Input type='textarea' value={quote} onChange={changeQuote} label='Девиз, цитата' placeholder='Не более 100 символов' 
             errorMessage={quoteErrorMessage} />
-          <Input type='file' label='Увлечения, досуг, интересы' caption='Рекомендуемый размер фото 230х129' 
-            onChange={uploadFileHobby} errorMessage={fileHobbyErrorMessage} />
-          <Input type='textarea' value={hobby} onChange={changeHobby} placeholder='Не более 300 символов' 
-            errorMessage={hobbyErrorMessage} />
-          <Input type='file' label='Семья, статус, домашние животные' caption='Рекомендуемый размер фото 230х129' 
-            onChange={uploadFileHome} errorMessage={fileHomeErrorMessage} />
+          <Input type='file' label='Увлечения, досуг, интересы' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHobby} 
+            errorMessage={fileHobbyErrorMessage} />
+          <Input type='textarea' value={hobby} onChange={changeHobby} placeholder='Не более 300 символов' errorMessage={hobbyErrorMessage} />
+          <Input type='file' label='Семья, статус, домашние животные' caption='Рекомендуемый размер фото 230х129' onChange={uploadFileHome} 
+            errorMessage={fileHomeErrorMessage} />
           <Input type='textarea' value={relationship} onChange={changeRelationship} placeholder='Не более 300 символов' 
             errorMessage={relationshipErrorMessage} />
-          <Input type='textarea' value={bio} onChange={changeBio} label='Из какой сферы пришёл? Кем работаешь?' placeholder='Не более 300 символов' 
-            errorMessage={bioErrorMessage} />
-          <Input type='textarea' value={reason} onChange={changeReason} label='Почему решил учиться на веб-разработчика?' placeholder='Не более 300 символов'
-            errorMessage={reasonErrorMessage} />
+          <Input type='textarea' value={bio} onChange={changeBio} label='Из какой сферы пришёл? Кем работаешь?' 
+            placeholder='Не более 300 символов' errorMessage={bioErrorMessage} />
+          <Input type='textarea' value={reason} onChange={changeReason} label='Почему решил учиться на веб-разработчика?' 
+            placeholder='Не более 300 символов' errorMessage={reasonErrorMessage} />
           <span className={styles.caption}>Поля, отмеченные звездочкой, обязательны для&nbsp;заполнения</span>
           <Button disabled={!isValid} onClick={() => submitForm(
             profileState.formAvatar,

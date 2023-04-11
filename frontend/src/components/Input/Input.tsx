@@ -14,10 +14,10 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   const [valueSelectPattern, setValueSelectPattern] = React.useState(value? value : arrValues[0]);
   const [avatar, setAvatar] = React.useState(profileState.avatar);
   const [isVisible, setIsVisible] = React.useState(false);
-  const years = getListYears(1980);
+  const years = getListYears(1920);
 
   function handleClick() {
-    isVisible ? setIsVisible(false) : setIsVisible(true);
+    setIsVisible(!isVisible);
   }
 
   function changeSelectedOptionCity(item: string) {
@@ -95,7 +95,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
     return (
       <>
         {label && <label className={styles.input__label}>{label}</label>}
-        <input className={styles.input} type={type} name={name} value={value} onChange={onChange} />
+        <input className={styles.input} type={type} name={name} value={value} onChange={onChange}/>
         {caption && <span className={styles.input__caption}>{caption}</span>}
         {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
       </>
@@ -120,6 +120,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
           dateFormat='dd.MM.yyyy'
           maxDate={new Date()}
           popperPlacement='bottom-end'
+          onKeyDown={(e) => { e.preventDefault() }}
           renderCustomHeader={({ date, changeYear, changeMonth }) => (
             <div className={styles.datePicker}>
               <select value={date.getFullYear()} onChange={({ target: { value } }) => changeYear(Number(value))} className={styles.datePicker__select}>

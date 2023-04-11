@@ -26,6 +26,7 @@ export interface IInputProps {
   value?: string;
   errorMessage?: string;
   caption?: string;
+  setStateButton?: () => void;
 }
 
 export interface IUserRequest {
