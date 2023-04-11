@@ -2,10 +2,17 @@
 @use '../../modules/mixins.scss';
 
 .blog {
+    position: relative;
     width: 440px;
 
     &:hover {
         cursor: pointer;
+    }
+
+    &__communicationBox {
+        position: absolute;
+        top: 8px;
+        right: 14px;
     }
 
     &__line {

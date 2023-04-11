@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './Blog.module.scss';
 import { DEFAULT_PAGE, ROMANTIC_PAGE, COCKY_PAGE } from '../../utils/constants';
+import { Communication } from '../Communication/Communication';
 
 
 interface IProps {
@@ -38,6 +39,11 @@ export const Blog: FC<IProps> = ({ typeComponent, index, title, urlImage, text }
 
   return (
     <div className={styles.blog}>
+      {index === 0 && 
+        <div className={styles.blog__communicationBox}>
+          <Communication />
+        </div>
+      }
       <div className={`
         ${styles.blog__line} 
         ${typeComponent === ROMANTIC_PAGE && styles.blog__line_romantic} 
