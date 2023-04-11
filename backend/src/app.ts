@@ -10,9 +10,7 @@ import errorMiddleware from './middlwares/error-middleware';
 import rootRouter from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
-import { login } from './controllers/oauth';
-import alive from './controllers/health-check';
-import { jwtStrategy, authenticate } from './strategy/jwt.strategy';
+import { jwtStrategy } from './strategy/jwt.strategy';
 import nonExistentRequestHandler from './middlwares/non-existent-request-handler';
 
 const limiter = rateLimit({
@@ -45,9 +43,6 @@ app.use(express.json());
 // берет код подтверждения - отдает токен
 
 app.use(requestLogger);
-app.get('/healthcheck', alive);
-app.post('/auth', login);
-app.use(authenticate);
 app.use(rootRouter);
 
 app.use(nonExistentRequestHandler);
