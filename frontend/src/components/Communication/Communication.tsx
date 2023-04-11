@@ -1,11 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styles from './Communication.module.scss';
 import { EXAMPLE_MESSAGES } from '../../utils/constants';
 
 export const Communication: FC = () => {
-
   return (
-    
     <button className={styles.communication}
       type='button'
     >

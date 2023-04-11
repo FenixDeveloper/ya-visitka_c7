@@ -10,7 +10,11 @@
         cursor: pointer;
     }
 
-    .communication__circle {
+    &:hover &__circle {
+        background: #FF00A8;
+    }
+
+    &__circle {
         margin-top: -20px;
         margin-left: 10px;
         display: flex;
@@ -18,11 +22,12 @@
         align-items: center;
         width: 20px;
         height: 20px;
-        background: #FF00A8;
+        background: #100C34;
         border-radius: 40px;
+        transition: .2s ease;
     }
 
-    .communication__counter {
+    &__counter {
         margin: 0;
         padding: 0;
         font-weight: 500;
