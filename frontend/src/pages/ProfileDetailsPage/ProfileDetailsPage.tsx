@@ -7,11 +7,8 @@ import githubIcon from '../../assets/icons/github.svg'
 import { Blogs } from '../../components/Blogs/Blogs';
 import { Communication } from '../../components/Communication/Communication';
 
-interface IProps {
-  typePage: typeof DEFAULT_PAGE | typeof ROMANTIC_PAGE | typeof COCKY_PAGE;
-}
 
-export const ProfileDetailsPage: FC<IProps> = ({ typePage }) => {
+export const ProfileDetailsPage: FC = () => {
   const { user } = React.useContext(ProfileContext);
 
   return (
@@ -42,22 +39,22 @@ export const ProfileDetailsPage: FC<IProps> = ({ typePage }) => {
         <div className={styles.profileDetails__avatarBox}>
           <img className={
             `${styles.profileDetails__avatar}
-             ${typePage === ROMANTIC_PAGE && styles.profileDetails__avatar_romantic}`
+             ${user.pageStyle === ROMANTIC_PAGE && styles.profileDetails__avatar_romantic}`
           }
           src={`${user.avatar}`} 
           alt={`Аватар пользователя ${user.name}`} 
           />
-          <div className={`${typePage === 'COCKY_PAGE' && styles.profileDetails__maskAvatar}`}></div>
+          <div className={`${user.pageStyle === COCKY_PAGE && styles.profileDetails__maskAvatar}`}></div>
         </div>
         <div className={styles.profileDetails__decriptionBox}>
           <div className={styles.profileDetails__communicationBox}>
             <Communication />
           </div>
           <div className={styles.profileDetails__quotesBox}>
-            <div className={`${styles.profileDetails__quotesIcon} ${typePage !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
-            <div className={`${styles.profileDetails__quotesIcon} ${typePage !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
+            <div className={`${styles.profileDetails__quotesIcon} ${user.pageStyle !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
+            <div className={`${styles.profileDetails__quotesIcon} ${user.pageStyle  !== DEFAULT_PAGE && styles.profileDetails__quotesIcon_pink}`}></div>
           </div>
-          <p className={`${styles.profileDetails__descriptionText} ${typePage !== DEFAULT_PAGE && styles.profileDetails__descriptionText_notDefault}`}>
+          <p className={`${styles.profileDetails__descriptionText} ${user.pageStyle  !== DEFAULT_PAGE && styles.profileDetails__descriptionText_notDefault}`}>
             Делай, что должно и будь, что будет.
           </p>
         </div>
