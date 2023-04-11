@@ -1,4 +1,10 @@
-import { Model, Document } from 'mongoose';
+import { Model, Document, ObjectId } from 'mongoose';
+
+export interface IStudent {
+  _id: ObjectId;
+  name: string;
+  email: string;
+}
 
 export interface IBlock {
   text?: string;
@@ -36,6 +42,24 @@ export interface IReaction {
   target: string | null;
   text?: string;
   emotion?: string;
+}
+
+export interface IСomment {
+  from: {
+    name: string;
+    email: string;
+  };
+  target: string | null;
+  text: string;
+}
+
+export interface IEmotion {
+  from: {
+    name: string;
+    email: string;
+  };
+  target: string | null;
+  emotion: string;
 }
 
 export interface IUser {
