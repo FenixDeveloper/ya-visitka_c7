@@ -85,5 +85,6 @@
 - [Антон Тимохин ](https://github.com/AtimoO) 
 - [Антон Адуйский](https://github.com/AntonAduisky) 
 - [Артём Руденко](https://github.com/Artrudjob)
+- [Eвгений Кузнецов](https://github.com/ZheniaEU)
 
 [В начало](#top)
