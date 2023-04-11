@@ -5,13 +5,25 @@ import { DEFAULT_PAGE, ROMANTIC_PAGE, COCKY_PAGE } from '../../utils/constants';
 
 interface IProps {
     typeComponent: typeof DEFAULT_PAGE | typeof ROMANTIC_PAGE | typeof COCKY_PAGE;
+    index: number;
     title: string;
     urlImage: string;
     text: string;
 }
 
-export const Blog: FC<IProps> = ({ typeComponent, title, urlImage, text }) => {
+export const Blog: FC<IProps> = ({ typeComponent, index, title, urlImage, text }) => {
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const getImage = () => {
+    if (urlImage.length === 0 && index === 0) {
+      return (windowWidth >= 760) ? <div className={styles.blog__image}></div> : <div></div>
+    } else if (urlImage.length === 0 && index === 1) {
+      return (windowWidth >= 760) ? <div className={styles.blog__image}></div> : <div></div>
+    } else if (urlImage.length > 0) {
+      return <img className={styles.blog__image} src={urlImage} alt='Изображение пользователя'/>
+    } else {
+      return <div></div>
+    }
+  }
 
   useEffect(() => {
     function updateWindowWidth() {
@@ -33,11 +45,7 @@ export const Blog: FC<IProps> = ({ typeComponent, title, urlImage, text }) => {
         `}
       ></div>  
       <h2 className={styles.blog__title}>{title}</h2>
-      {urlImage.length !== 0 ?
-        <img className={styles.blog__image} src={urlImage} alt='Изображение пользователя'/> 
-        :
-        (windowWidth >= 760) ? <div className={styles.blog__image}></div> : <div></div>
-      }
+      {getImage()}
       <p className={styles.blog__text}>{text}</p>
     </div>
   )

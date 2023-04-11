@@ -12,6 +12,7 @@ export const Blogs: FC = () => {
       {EXAMPLE_USER_BLOGS.map((item, index) => {
         return (
           <Blog typeComponent={user.pageStyle}
+            index={index}
             title={item.title.toUpperCase()} 
             urlImage={item.urlImage} 
             text={item.text} 
