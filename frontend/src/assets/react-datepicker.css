@@ -167,6 +167,8 @@
 .react-datepicker__month-container {
   float: left;
   width: 100%;
+  position: relative;
+  z-index: 4;
 }
 
 .react-datepicker__year {

@@ -16,7 +16,16 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   const [isVisible, setIsVisible] = React.useState(false);
   const years = getListYears(1920);
 
+  function closeList(e: any) {
+    const array = Array.from(document.querySelectorAll(`.${styles.list__item}`));
+    if (!array.includes(e.target)) {
+      setIsVisible(false);
+    }
+    document.removeEventListener('mousedown', closeList)
+  }
+
   function handleClick() {
+    document.addEventListener('mousedown', closeList)
     setIsVisible(!isVisible);
   }
 
@@ -62,10 +71,10 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <div className={styles.select}>
-          <button className={isVisible ? styles.button_active : styles.button} onClick={handleClick}>{valueSelectPattern}</button>
+          <button className={isVisible ? `${styles.button} ${styles.button_active}` : styles.button} onClick={handleClick}>{valueSelectPattern}</button>
           {isVisible && <ul className={styles.list}>
             {arrValues.map((item, index) => (
-              <li className={styles.list__item} onClick={() => changeSelectedOptionPattern(item)} key={item}>{item}</li>
+              <li className={styles.list__item} onClick={() => changeSelectedOptionPattern(item)} key={index}>{item}</li>
             ))}
           </ul>}
           <input className={styles.select__input} type='text' name={name} value={valueSelectPattern} onChange={changeValueSelectPattern} />
@@ -79,7 +88,7 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
       <>
         {label && <label className={styles.input__label}>{label}</label>}
         <div className={styles.select}>
-          <button className={isVisible ? styles.button_active : styles.button} onClick={handleClick}>{valueSelectCity}</button>
+          <button className={isVisible ? `${styles.button} ${styles.button_active}` : styles.button} onClick={handleClick}>{valueSelectCity}</button>
           {isVisible && <ul className={styles.list}>
             {arrValues.map((item, index) => (
               <li className={styles.list__item} onClick={() => changeSelectedOptionCity(item)} key={index}>{item}</li>
@@ -147,9 +156,9 @@ export const Input: FC<IInputProps> = ({ type = 'text', name, label, arrValues =
   } else if (type === 'avatar') {
     return (
       <div className={styles.input__container}>
-        {label && <label className={styles.input__label_avatar}>{label}</label>}
-        {caption && <span className={styles.input__caption_avatar}>{caption}</span>}
-        {avatar && <input type='file' className={styles.avatar_loaded} style={{background: `url('${avatar}') no-repeat center/cover`}}
+        {label && <label className={`${styles.input__label} ${styles.input__label_avatar}`}>{label}</label>}
+        {caption && <span className={`${styles.input__caption} ${styles.input__caption_avatar}`}>{caption}</span>}
+        {avatar && <input type='file' className={`${styles.avatar} ${styles.avatar_loaded}`} style={{background: `url('${avatar}') no-repeat center/cover`}}
           onChange={uploadAvatar} />}
         {!avatar && <input type='file' className={styles.avatar} onChange={uploadAvatar} />}
         {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}

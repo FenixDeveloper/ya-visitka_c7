@@ -27,6 +27,7 @@ export const ProfileEditPage: FC = () => {
   const [fileHobbyErrorMessage, setFileHobbyErrorMessage] = React.useState('');
   const [fileHomeErrorMessage, setFileHomeErrorMessage] = React.useState('');
   const [isValid, setIsValid] = React.useState(true);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   const handleGithubLink = async (nickname: string) => {
     if (nickname === '') {
@@ -70,6 +71,10 @@ export const ProfileEditPage: FC = () => {
   const changeReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReason(e.target.value);
     setReasonErrorMessage(e.target.value ? validation.checkLength(e.target.value, 5, 300) : '');
+  }
+
+  function handleClick() {
+    setIsVisible(!isVisible);
   }
 
   const uploadFileHobby = (event: React.ChangeEvent<HTMLInputElement>) => {
