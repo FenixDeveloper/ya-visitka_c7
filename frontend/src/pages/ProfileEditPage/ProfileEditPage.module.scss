@@ -2,13 +2,15 @@
 
 .container {
   padding-bottom: 96px;
+  margin-top: -7px;
 
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 810px) {
     padding-bottom: 88px;
+    margin-top: -16px;
   }
 
   @media screen and (max-width: 500px) {
-    padding-top: 10px;
+    padding-top: 8px;
   }
 }
 
