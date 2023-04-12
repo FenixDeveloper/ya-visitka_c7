@@ -37,7 +37,7 @@ export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504],
               iconContentOffset: [15, 15],
               iconImageHref: MapIcon,
               hideIconOnBalloonOpen: false,
-              balloonOffset: [88, 40]
+              balloonOffset: [88, 46]
             }}
             modules={['geoObject.addon.balloon']}
             properties={{ balloonContent: renderToString(<Balloon name={student.name} city={student.city} preview={student.preview} />) }}

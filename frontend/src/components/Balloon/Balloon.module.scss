@@ -1,34 +1,81 @@
+@import '../../modules/variables.scss';
+
 .balloon {
   display: flex;
   height: 54px;
+}
+
+.image {
+  border-radius: 100%;
+  min-height: 24px;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 3px 0 0 6px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  margin: 3px 6px 2px 4px;
+  font-family: $font-family;
+  font-weight: $text_map_font-weight;
+  font-size: $text_map_font-size;
+  line-height: $text_map_line-height;
+  white-space: nowrap;
+}
+
+.city {
+  margin: 0 6px 0 4px;
+  font-family: $font-family;
+  font-weight: $text_map_font-weight;
+  font-size: $text_map_font-size;
+  line-height: $text_map_line-height;
+  color: $color-text-light;
+  white-space: nowrap;
+}
+
+// убрал хвостик у балуна
+.ymaps-2-1-79-balloon__tail {
+  visibility: hidden;
+}
+
+// убрал крестик у балуна
+.ymaps-2-1-79-balloon__close {
+  display: none;
+}
+
+// далее 3 селектора кнопки скрола изменяют, все изменения на глаз и приближены к макету
+.ymaps-2-1-79-zoom__scale {
+  visibility: hidden;
+}
+
+.ymaps-2-1-79-zoom__plus {
+  margin-left: -5px;
+  margin-top: 130px;
+  scale: 1.5;
+}
+
+.ymaps-2-1-79-zoom__minus {
+  margin-left: -5px;
+  scale: 1.5;
+}
+
+
+.ymaps-2-1-79-balloon__content {
+  display: flex;
+  width: 100% !important;
+  min-height: 54px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.ymaps-2-1-79-balloon_layout_normal {
+  min-height: 54px !important;
   border-radius: 6px;
-
-  .image {
-    border-radius: 100%;
-    width: 24px;
-    height: 24px;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-  }
-
-  .name {
-    margin: 0;
-    font-family: 'IBM Plex Sans';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-  }
-
-  .city {
-    margin: 0;
-  }
+  overflow: hidden;
 }
