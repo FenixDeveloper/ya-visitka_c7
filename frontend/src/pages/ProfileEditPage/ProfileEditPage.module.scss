@@ -1,0 +1,30 @@
+@use '../../modules/mixins.scss';
+
+.container {
+  padding-bottom: 96px;
+  margin-top: -7px;
+
+  @media screen and (max-width: 810px) {
+    padding-bottom: 88px;
+    margin-top: -16px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding-top: 8px;
+  }
+}
+
+.form {
+  width: 440px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 500px) {
+    width: 272px;
+  }
+}
+
+.caption {
+  @include mixins.text();
+  display: block;
+  margin: 16px 0;
+}
