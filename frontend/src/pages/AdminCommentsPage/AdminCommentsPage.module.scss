@@ -1,0 +1,24 @@
+@import '../../modules/mixins.scss';
+@import '../../modules/variables.scss';
+
+.linkSection {
+  margin: 48px 0;
+  display: flex;
+  column-gap: 80.5px;
+}
+
+.link_active {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: $color-text-dark;
+  @include h3_desktop()
+}
+
+.link_no_active {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: $color-text-light;
+  @include h3_desktop()
+}
