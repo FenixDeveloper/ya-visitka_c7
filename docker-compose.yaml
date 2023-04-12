@@ -32,6 +32,16 @@ services:
     networks:
       - internal-networks
 
+  frontend:
+    container_name: 'visitka-frontend'
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - '8081:80'
+    networks:
+      - internet
+
 networks:
   internal-networks:
     driver: bridge
