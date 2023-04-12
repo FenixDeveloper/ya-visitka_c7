@@ -193,12 +193,19 @@
 
 ## Запуск проекта
 
-* Склонировать репозиторий и перейти в папку с проектном
+* Склонировать репозиторий
 ```bash
 git clone https://github.com/FenixDeveloper/ya-visitka_c7.git
 ```
+
+* Перейти в папку с проектном
 ```bash
 cd ya-visitka_c7/backend
+```
+
+* Перейти в ветку develop
+```bash
+git checkout develop
 ```
 
 * Установить зависимости
