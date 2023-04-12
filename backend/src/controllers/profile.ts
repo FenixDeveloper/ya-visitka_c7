@@ -48,7 +48,7 @@ export const patchProfile = (
   const profileData: IUser = req.body;
 
   userSchema
-    .findOneAndUpdate({ id }, profileData, { new: true })
+    .findOneAndUpdate({ _id: id }, profileData, { new: true })
     .orFail(new NotFoundError(ErrorMessages.UserNotFound))
     .then((updatedProfile) => {
       res.status(StatusCodes.OK).json(updatedProfile);
