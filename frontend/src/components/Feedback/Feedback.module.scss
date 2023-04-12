@@ -1,0 +1,118 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.feedback__modal {
+  width: 100%;
+  position: absolute;
+  max-height: calc(100% - 112px);
+  padding: 12px;
+  background-color: $backgroud-white;
+  border-radius: 4px;
+  border: 1px solid $color-silver;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 48px minmax(24px, min-content);
+}
+
+.feedback__container_text {
+  display: flex;
+  flex-direction: column;
+  overflow-y: overlay;
+  max-height: 100%;
+  margin-bottom: 12px;
+
+  /* ширина всей полосы прокрутки */
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* цвет зоны отслеживания */
+  &::-webkit-scrollbar-track {
+    background: $color-silver;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px; /* округлось бегунка */
+    border: 3px solid $color-text-light; /* отступ вокруг бегунка */
+  }
+}
+
+.feedback__text_style {
+  position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-top: 1px solid $color-text-dark;
+
+  &:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
+.feedback__text {
+  @include text_feedback;
+  margin: 0;
+  word-break: break-word;
+}
+
+.feedback__input {
+  @include text_feedback_placeholder;
+  margin: 0 0 12px;
+  padding: 8px;
+  width: 100%;
+  height: 36px;
+  border: none;
+  box-sizing: border-box;
+  background: $color-text-superlight;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+
+  &::placeholder {
+    color: $color-text-light;
+  }
+
+  &:focus {
+    color: $color-text-dark;
+    background-color: $backgroud-white;
+    border-color: $color-text-dark;
+    box-shadow: 0 0 0 1px $color-text-dark;
+    outline: 0;
+  }
+}
+
+.feedback__icons {
+  width: 100%;
+  max-height: 52px;
+  min-height: 24px;
+  display: flex;
+  column-gap: 2px;
+  row-gap: 4px;
+  flex-wrap: wrap;
+}
+
+.feedback__icon {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding: 4px;
+  transition: border 0.2s ease-in-out;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: 20px;
+    border: 1px solid $color-neon-pink;
+  }
+
+  &_active {
+    border-radius: 20px;
+    border: 1px solid $color-neon-pink;
+  }
+}
+
+.feedback__icon_count {
+  margin: 0 0 0 2px;
+  @include reaction_count;
+  color: $color-neon-pink;
+}
