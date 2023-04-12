@@ -1,0 +1,791 @@
+openapi: 3.0.0
+servers:
+  - description: Yandex.Practicum Mock
+    url: https://visitki.practicum-team.ru/api
+info:
+  description: Yandex.Practicum business card internal project API
+  version: "1.1.0"
+  title: Business Card API
+  contact:
+    email: aleksei-mart@yandex-team.ru
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: curator
+    description: Secured curator-only calls
+  - name: student
+    description: Operations available to regular students
+  - name: files
+    description: Adding and receiving files
+  - name: authorization
+    description: Authorization
+
+paths:
+  /api/users:
+    post:
+      tags: [curator]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/BaseFields'
+                  - $ref: '#/components/schemas/UserAccount'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+    get:
+      tags: [curator]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    minimum: 0
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      allOf:
+                        - $ref: '#/components/schemas/BaseFields'
+                        - $ref: '#/components/schemas/UserAccount'
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                              nullable: true
+
+  /api/users/{id}:
+    put:
+      tags: [curator]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: objectid
+            example: 507f1f77bcf86cd799439011
+          description: the user id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/BaseFields'
+                  - $ref: '#/components/schemas/UserAccount'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/comments:
+    get:
+      tags: [curator]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/searchParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    minimum: 0
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      allOf:
+                        - $ref: '#/components/schemas/Comment'
+                        - type: object
+                          properties:
+                            to:
+                              $ref: '#/components/schemas/UserRef'
+  /api/comments/{id}:
+    delete:
+      tags: [curator]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: objectid
+            example: 507f1f77bcf86cd799439011
+          description: the reaction id value from user.reactions[]._id
+      responses:
+        '200':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/profiles:
+    get:
+      tags: [student]
+      security:
+        - bearerAuth: []
+      description: by default return profiles from same cohort as requested user or nothing
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - in: query
+          name: cohort
+          schema:
+            type: string
+          description: cohort number for filter profiles for curator
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    minimum: 0
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      allOf:
+                        - $ref: '#/components/schemas/BaseFields'
+                        - $ref: '#/components/schemas/UserAccount'
+                        - type: object
+                          properties:
+                            profile:
+                              $ref: '#/components/schemas/ShortProfile'
+                            reactions:
+                              type: number
+                              minimum: 0
+                              example: 1
+
+  /api/profiles/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: objectid
+          example: 507f1f77bcf86cd799439011
+        description: the user id
+
+    get:
+      tags: [student]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/BaseFields'
+                  - $ref: '#/components/schemas/UserWithProfile'
+                  - type: object
+                    properties:
+                      reactions:
+                        type: number
+                        minimum: 0
+                        example: 1
+                      quoteReactions:
+                        type: number
+                        minimum: 0
+                        example: 2
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags: [student]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  $ref: '#/components/schemas/Profile'
+                info:
+                  $ref: '#/components/schemas/InfoItems'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/BaseFields'
+                  - $ref: '#/components/schemas/UserWithProfile'
+                  - type: object
+                    properties:
+                      reactions:
+                        type: number
+                        minimum: 0
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/profiles/{id}/reactions:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: objectid
+          example: 507f1f77bcf86cd799439011
+        description: the user id
+
+    get:
+      tags: [student]
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: number
+                    minimum: 0
+                    example: 1
+                  items:
+                    type: array
+                    items:
+                      anyOf:
+                        - $ref: '#/components/schemas/Comment'
+                        - $ref: '#/components/schemas/Like'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      tags: [student]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    target:
+                      type: string
+                      enum: [hobby,status,job,edu,quote]
+                      nullable: true
+                    text:
+                      type: string
+                  required:
+                    - target
+                    - text
+                - type: object
+                  properties:
+                    target:
+                      type: string
+                      enum: [hobby,status,job,edu,quote]
+                      nullable: true
+                    emotion:
+                      type: string
+                  required:
+                    - target
+                    - emotion
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /api/files:
+    post:
+      tags:
+        - files
+      summary: Add files
+      description: This can only be done by the logged in user.
+      operationId: addFiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                hobby:
+                  type: string
+                  format: binary
+                status:
+                  type: string
+                  format: binary
+                job:
+                  type: string
+                  format: binary
+                education:
+                  type: string
+                  format: binary
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Files'
+
+  /api/files/{filename}:
+    get:
+      tags:
+        - files
+      summary: Get file by filename
+      description: ''
+      operationId: getFileByFilename
+      parameters:
+        - name: filename
+          in: path
+          description: 'The name that needs to be fetched'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A file
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid filename supplied
+        '404':
+          description: File not found
+
+  /api/auth:
+    post:
+      tags: [ authorization ]
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Auth'
+      responses:
+       '200':
+         description: OK
+         content:
+           application/json:
+             schema:
+              type: object
+              properties:
+                token:
+                  type: string
+       '401':
+         $ref: '#/components/responses/Unauthorized'
+
+  /api/auth/get-user:
+    get:
+      tags: [authorization]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUser'
+        '401':
+         $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    BadRequest:
+      description: Client sent invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: The client does not have access rights to the content
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    searchParam:
+      in: query
+      name: search
+      required: false
+      schema:
+        type: string
+        minimum: 3
+      description: Query to filter search results.
+    offsetParam:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: The number of items to skip before starting to collect the result set.
+    limitParam:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+      description: The numbers of items to return.
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: error name string
+
+    BaseFields:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: objectid
+          example: 507f1f77bcf86cd799439011
+        createdAt:
+          type: number
+          format: unixtime
+          example: 1671899493440
+          description: unix time in miliseconds
+        updatedAt:
+          type: number
+          format: unixtime
+          example: 1671899493440
+          description: unix time in miliseconds
+
+    UserAccount:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        cohort:
+          type: string
+          example: web+123
+      required:
+        - email
+        - cohort
+
+    ShortProfile:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ivan Ivanov
+        photo:
+          type: string
+          format: uri
+          example: https://placehold.co/600
+        city:
+          type: object
+          nullable: true
+          properties:
+            name:
+              type: string
+              example: Россия, Москва
+            geocode:
+              type: array
+              items:
+                type: number
+              example: [55.73433517114847,37.59017466910319]
+
+    Profile:
+      allOf:
+        - $ref: '#/components/schemas/ShortProfile'
+        - type: object
+          properties:
+            birthday:
+              type: string
+              format: date
+            quote:
+              type: string
+            telegram:
+              type: string
+            github:
+              type: string
+            template:
+              type: string
+
+    InfoBlocks:
+      type: object
+      properties:
+        hobby:
+          $ref: '#/components/schemas/InfoBlock'
+        status:
+          $ref: '#/components/schemas/InfoBlock'
+        job:
+          $ref: '#/components/schemas/InfoBlock'
+        edu:
+          $ref: '#/components/schemas/InfoBlock'
+
+    InfoItems:
+      type: object
+      properties:
+        hobby:
+          $ref: '#/components/schemas/InfoItem'
+        status:
+          $ref: '#/components/schemas/InfoItem'
+        job:
+          $ref: '#/components/schemas/InfoItem'
+        edu:
+          $ref: '#/components/schemas/InfoItem'
+
+
+
+    UserWithProfile:
+      allOf:
+        - $ref: '#/components/schemas/UserAccount'
+        - type: object
+          properties:
+            profile:
+              $ref: '#/components/schemas/Profile'
+            info:
+              $ref: '#/components/schemas/InfoBlocks'
+
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserWithProfile'
+        - type: object
+          properties:
+            reactions:
+              type: array
+              items:
+                oneOf:
+                  - $ref: '#/components/schemas/Comment'
+                  - $ref: '#/components/schemas/Like'
+
+    UserRef:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: objectid
+          example: 507f1f77bcf86cd799439011
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        cohort:
+          type: string
+          example: web+123
+
+    Reaction:
+      type: object
+      properties:
+        _id:
+          type: string
+          format: objectid
+          example: 507f1f77bcf86cd799439011
+        from:
+          $ref: '#/components/schemas/UserRef'
+        target:
+          type: string
+          enum: [hobby,status,job,edu,quote]
+          nullable: true
+
+    Comment:
+      allOf:
+        - $ref: '#/components/schemas/Reaction'
+        - type: object
+          properties:
+            text:
+              type: string
+          required:
+            - text
+
+    Like:
+      allOf:
+        - $ref: '#/components/schemas/Reaction'
+        - type: object
+          properties:
+            emotion:
+              type: string
+          required:
+            - emotion
+
+    InfoItem:
+      type: object
+      properties:
+        text:
+          type: string
+          default: ""
+        image:
+          type: string
+          format: uri
+          default: null
+          nullable: true
+
+    InfoBlock:
+      allOf:
+        - $ref: '#/components/schemas/InfoItem'
+        - type: object
+          properties:
+            reactions:
+              type: number
+              minimum: 0
+
+    Files:
+      type: object
+      properties:
+        avatar:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+        hobby:
+          type: string
+          example: f0790d564efca6c397639e68a6bdb7a4
+        status:
+          type: string
+          example: f5ed1b02a01d4602f36b5b36636a6149
+        job:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+        education:
+          type: string
+          example: 54885b63cac481f45b7dfc5c944ff623
+      xml:
+        name: file
+
+    Auth:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+        - code
+
+    AuthUser:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        cohort:
+          type: string
+        photo:
+          type: string
+        role:
+          type: string
