@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
 import styles from './ProfileDetailsPage.module.scss';
-import { GITHUB_URL, TELEGRAM_URL } from '../../utils/constants';
 import { ProfileContext } from '../../services/profileContext';
 import telegramIcon from '../../assets/icons/telegram.svg';
 import githubIcon from '../../assets/icons/github.svg'
 import { Blogs } from '../../components/Blogs/Blogs';
 import { Communication } from '../../components/Communication/Communication';
-import { Feedback } from '../../components/Feedback/Feedback';
-
 
 export const ProfileDetailsPage: FC = () => {
   const [profileState, setProfileState] = React.useContext(ProfileContext);

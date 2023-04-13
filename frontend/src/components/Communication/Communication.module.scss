@@ -13,7 +13,6 @@
   width: 32px;
   height: 32px;
   
-  
   &:hover {
     cursor: pointer;
   }
@@ -45,8 +44,8 @@
 
 .feedback {
   position: absolute;
-  top: 37px;
-  right: 0;
+  top: 46px;
+  right: -14px;
   z-index: 1;
   width: 440px;
   
@@ -57,5 +56,4 @@
   @media screen and (max-width: 600px) {
     width: 272px;
   }
-  
 }

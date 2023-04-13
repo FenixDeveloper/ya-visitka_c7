@@ -2,229 +2,238 @@
 @use '../../modules/mixins.scss';
 
 .profileDetails {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-    &__container {
-        width: 94.5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  &__container {
+    width: 94.5%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__infoBox {
+    margin-top: 150px;
+    width: 443px;
+  }
+
+  &__title {
+    @include mixins.h1_desktop();
+    margin: 0 0 96px 0;
+  }
+
+  &__iconBox {
+    display: flex;
+    gap: 23px;
+    margin-top: 23px;
+  }
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__text {
+    color: variables.$color-text-dark;
+    @include mixins.text();
+    margin: 0;
+  }
+
+  &__avatarBox {
+    position: relative;
+    display: flex;
+  }
+
+  &__avatar {
+    width: 440px;
+    height: 440px;
+    object-fit: cover;
+
+    &_romantic {
+      border-radius: 360px;
+    }
+  }
+
+  &__maskAvatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 440px;
+    height: 440px;
+    background-image: url(../../assets/icons/mask.png);
+    background-size: cover;
+    z-index: 1;
+  }
+
+  &__decriptionBox {
+    position: relative;
+    height: 258px;
+    align-Self: flex-end;
+  }
+
+  &__communicationBox {
+    position: absolute;
+    top: -32px;
+    right: -1px;
+  }
+
+  &__descriptionText {
+    @include mixins.h2_desktop();
+    width: 325px;
+    margin: 7px 0 0 0;
+  }
+
+  &__descriptionText_notDefault {
+    color: variables.$color-neon-pink;
+  }
+
+  &__quotesBox {
+    display: flex;
+  }
+
+  &__quotesIcon {
+    background-image: url(../../assets/icons/quotes.svg);
+    width: 26px;
+    height: 45px;
+    margin-right: 10px;
+  }
+
+  &__quotesIcon_pink {
+    background-image: url(../../assets/icons/quotespink.svg);
+  }
+
+  &__containerBlogs {
+    width: 94.5%;
+    margin: 74px auto 96px auto;
+  }
+
+  @media screen and (max-width: 1400px) {
+    &__title {
+      @include mixins.h1_tablet();
     }
 
     &__infoBox {
-        margin-top: 150px;
-        max-width: 443px;
-        width: 443px;
-    }
-
-    &__title {
-        @include mixins.h1_desktop();
-        font-family: 'IBM Plex Sans';
-        margin: 0 0 97px 0;
-    }
-
-    &__iconBox {
-        display: flex;
-    }
-
-    &__iconLink {
-        margin-top: 10px;
-        margin-right: 25px;
-    }
-
-    &__icon {
-        width: 30px;
-        height: 30px;
-    }
-
-    &__text {
-        color: variables.$color-text-dark;
-        font-size: variables.$text_font-size;
-        font-weight: variables.$text_font-weight;
-        line-height: variables.$text_line-height;
-    }
-
-    &__avatarBox {
-        position: relative;
-        display: flex;
+      margin-top: 90px;
+      width: 295px;
     }
 
     &__avatar {
-        max-width: 440px;
-        width: 440px;
-        max-height: 440px;
-        height: 440px;
-        object-fit: cover;
-
-        &_romantic {
-            border-radius: 360px;
-        }
+      width: 342px;
+      height: 342px;
     }
 
     &__maskAvatar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 440px;
-        height: 440px;
-        background-image: url(../../assets/icons/mask.png);
-        background-size: cover;
-        z-index: 1;
+      width: 342px;
+      height: 342px;
+    }
+  }
+
+  @media screen and (max-width: 1124px) {
+    &__container {
+      display: grid;
+      grid-template-areas: 
+      'infoBox avatar'
+      'decription decription';
+      gap: 58px;
+    }
+
+    &__infoBox {
+      margin-top: 94px;
+      grid-area: infoBox;
+    }
+
+    &__avatarBox {
+      grid-area: avatar;
+      margin-right: 11px;
     }
 
     &__decriptionBox {
-        position: relative;
-        height: 258px;
-        align-Self: flex-end;
+      height: auto;
+      width: 342px;
+      grid-area: decription;
+      justify-self: end;
+      margin-right: 11px;
     }
 
     &__communicationBox {
-        position: absolute;
-        top: -32px;
-        right: -13px;
-    }
-
-    &__descriptionText {
-        @include mixins.h2_desktop();
-        width: 325px;
-        margin: 7px 0 0 0;
-    }
-
-    &__descriptionText_notDefault {
-        color: #FF00A8;
-    }
-
-    &__quotesBox {
-        display: flex;
-    }
-
-    &__quotesIcon {
-        background-image: url(../../assets/icons/quotes.svg);
-        width: 26px;
-        height: 45px;
-        margin-right: 10px;
-    }
-
-    &__quotesIcon_pink {
-        background-image: url(../../assets/icons/quotespink.svg);
+      top: -33px;
+      right: 0;
     }
 
     &__containerBlogs {
-        width: 94.5%;
-        margin: 70px auto 56px auto;
+      margin: 34px 30px 81px;
     }
 
-    @media screen and (max-width: 1400px) {
-        &__title {
-            @include mixins.h1_tablet();
-        }
-
-        &__infoBox {
-            margin-top: 90px;
-            width: 295px;
-        }
-
-        &__avatar {
-            max-width: 342px;
-            width: 342px;
-            max-height: 342px;
-            height: 342px;
-        }
-
-        &__maskAvatar {
-            width: 342px;
-            height: 342px;
-        }
+    &__title {
+      margin-bottom: 91px;
     }
 
-    @media screen and (max-width: 1124px) {
-        &__container {
-            display: grid;
-            grid-template-areas: 
-            "infoBox avatar"
-            "decription decription";
-            row-gap: 62px;
-        }
+    &__iconBox {
+      margin-top: 29px;
+    }
+  }
 
-        &__infoBox {
-            margin-top: 100px;
-            margin-left: 10px;
-            grid-area: infoBox;
-        }
-
-        &__avatarBox {
-            grid-area: avatar;
-        }
-
-        &__decriptionBox {
-            height: auto;
-            width: 342px;
-            grid-area: decription;
-            justify-self: end;
-        }
-
-        &__communicationBox {
-            top: -40px;
-            right: -5px;
-        }
-
-        &__containerBlogs {
-            margin: 30px;
-        }
+  @media screen and (max-width: 760px) {
+    &__container {
+      grid-template-areas: 
+        'infoBox'
+        'avatar'
+        'decription';
+      row-gap: 62px;
+      justify-content: center;
+      row-gap: 25px;
     }
 
-    @media screen and (max-width: 760px) {
-        &__container {
-            grid-template-areas: 
-            "infoBox"
-            "avatar"
-            "decription";
-            row-gap: 62px;
-            justify-content: center;
-            row-gap: 25px;
-        }
-
-        &__infoBox {
-            margin-top: 10px;
-            margin-left: 10px;
-            grid-area: infoBox;
-        }
-
-        &__title {
-            @include mixins.h1_mobile();
-            margin-bottom: 21px;
-        }
-
-        &__avatarBox {
-            width: 272px;
-            justify-self: center;
-        }
-
-        &__avatar {          
-            width: 272px;
-            height: 272px;
-        }
-
-        &__maskAvatar {
-            width: 272px;
-            height: 272px;
-        }
-
-        &__decriptionBox {
-            margin-top: 50px;
-            margin-left: 10px;
-            max-width: 342px;
-            width: 100%;
-            min-width: 272px;
-            justify-self: start;
-        }
-
-        &__containerBlogs {
-            margin-bottom: 104px;
-        }
+    &__infoBox {
+      margin-top: 10px;
+      margin-left: 10px;
+      grid-area: infoBox;
     }
+
+    &__title {
+      @include mixins.h1_mobile();
+      margin-bottom: 21px;
+    }
+
+    &__avatarBox {
+      width: 272px;
+      justify-self: center;
+      margin-top: 8px;
+    }
+
+    &__avatar {
+      width: 272px;
+      height: 272px;
+    }
+
+    &__maskAvatar {
+      width: 272px;
+      height: 272px;
+    }
+
+    &__decriptionBox {
+      margin-top: 43px;
+      margin-left: 10px;
+      width: 255px;
+      justify-self: start;
+    }
+
+    &__containerBlogs {
+      margin: 30px 0 104px 0;
+    }
+
+    &__iconBox {
+      margin-top: 24px;
+    }
+
+    &__descriptionText {
+      width: 255px;
+    }
+
+    &__communicationBox {
+      top: -35px;
+      right: -10px;
+    }
+  }
 }

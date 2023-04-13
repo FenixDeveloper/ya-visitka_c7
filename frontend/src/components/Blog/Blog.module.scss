@@ -13,6 +13,16 @@
     position: absolute;
     top: 8px;
     right: 14px;
+
+    @media screen and (max-width: 780px) {
+      top: 5px;
+      right: 9px;
+    }
+
+    @media screen and (max-width: 400px) {
+      top: 9px;
+      right: 12px;
+    }
   }
 
   &__line {
@@ -47,6 +57,10 @@
     margin: 15px 0 0 0;
     @include mixins.text();
     color: variables.$color-text-dark;
+
+    @media screen and (max-width: 400px) {
+      width: 272px;
+    }
   }
 
   @media screen and (max-width: 1024px) {
@@ -58,5 +72,10 @@
     min-width: 272px;
     width: 100%;
     margin-left: 10px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 272px;
+    margin-left: 0;
   }
 }
