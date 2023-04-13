@@ -4,7 +4,8 @@
 .feedback__modal {
   width: 100%;
   position: absolute;
-  max-height: calc(100% - 112px);
+  // max-height: calc(100% - 112px);
+  max-height: 400px;
   padding: 12px;
   background-color: $backgroud-white;
   border-radius: 4px;

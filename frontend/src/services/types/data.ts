@@ -28,6 +28,18 @@ export interface IInputProps {
   caption?: string;
 }
 
+export interface IBlogProps {
+  typeComponent: 'серьезный' | 'романтичный' | 'дерзкий';
+  index: number;
+  title: string;
+  urlImage: string;
+  text: string;
+}
+
+export interface ICommunicationProps {
+  arrСomments: { message: string }[];
+}
+
 export interface IUserRequest {
   email: string;
   cohort?: string;

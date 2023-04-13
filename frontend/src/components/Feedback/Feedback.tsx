@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react';
 import { FormEvent } from 'react';
 import Emoji from '../Emoji/Emoji';
 import { EMOJI } from '../../utils/constants';
-
 import styles from './Feedback.module.scss';
 
 export const Feedback: FC = () => {
