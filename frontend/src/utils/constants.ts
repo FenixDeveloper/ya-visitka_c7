@@ -141,7 +141,6 @@ export const MONTHS = [
   'Декабрь',
 ];
 
-
 export const VALIDATION_ERRORS = {
   FIELD_LENGTH: (minLength: number, maxLength: number) =>
     `Длина поля должна быть не менее ${minLength} и не более ${maxLength} символов`,
