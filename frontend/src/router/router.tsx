@@ -35,7 +35,7 @@ export const router = createBrowserRouter(
       {/* // ? стр. профиля студунта */}
       <Route path='profiles/:profileId' element={
         <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
-          <ProfileDetailsPage typePage='DEFAULT_PAGE' />
+          <ProfileDetailsPage />
         </ProtectedRoute>} />
       {/* // ? стр. редактирования профиля */}
       <Route path='edit' element={

@@ -1,0 +1,61 @@
+@use '../../modules/variables.scss';
+@use '../../modules/mixins.scss';
+
+.container {
+  position: relative;
+}
+
+.communication {
+  border: none; 
+  outline: none;
+  background-image: url(../../assets/icons/chat.svg);
+  background-color: inherit;
+  width: 32px;
+  height: 32px;
+  
+  
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover &__circle {
+    background: variables.$color-neon-pink;
+  }
+  
+  &__circle {
+    margin-top: -20px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background: variables.$color-text-dark;
+    border-radius: 40px;
+    transition: .2s ease;
+  }
+  
+  &__counter {
+    margin: 0;
+    padding: 0;
+    @include mixins.reaction_count();
+    color: variables.$backgroud-white;
+  }
+}
+
+.feedback {
+  position: absolute;
+  top: 37px;
+  right: 0;
+  z-index: 1;
+  width: 440px;
+  
+  @media screen and (max-width: 900px) {
+    width: 342px;
+  }
+  
+  @media screen and (max-width: 600px) {
+    width: 272px;
+  }
+  
+}
