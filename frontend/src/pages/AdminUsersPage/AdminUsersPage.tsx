@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styles from './AdminUsersPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Student } from '../../components/Student/Student';
@@ -6,8 +6,22 @@ import { EXAMPLE_USER_ARRAY } from '../../utils/constants';
 import { Button } from '../../components/Button/Button';
 
 export const AdminUsersPage: FC = () => {
+  const [query, setQuery] = useState('');
+  const [studentsData, setStudentsData] = useState(EXAMPLE_USER_ARRAY);
+  const [filterResult, setFilterResult] = useState(studentsData);
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const results = studentsData.filter(student => {
+      if (e.target.value === '') return studentsData
+      return (student.cohort.toLowerCase().includes(e.target.value.toLowerCase()) 
+      || student.email.toLowerCase().includes(e.target.value.toLowerCase()) 
+      || student.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    });
+    setFilterResult(results);
+    setQuery(e.target.value);
+  }
 
-  const students = EXAMPLE_USER_ARRAY.map((user, i) => {
+  const students = filterResult.map((user, i) => {
     return (<Student key={i} cohort={user.cohort} name={user.name} email={user.email}/>)
   })
 
@@ -40,7 +54,8 @@ export const AdminUsersPage: FC = () => {
           <input 
             className={styles.filter_input}
             type="text" 
-            onKeyDown={() => console.log('pressed')}
+            onChange={handleChange}
+            value={query}
             placeholder="По имени или фамилии или почте или номеру когорты (введите любой из этих параметров)"
           />
           <div className={styles.table_header}>
