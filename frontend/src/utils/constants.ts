@@ -11,3 +11,4 @@ export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрел
 
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com/';
+export const CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556';
