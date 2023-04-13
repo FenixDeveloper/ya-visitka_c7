@@ -11,21 +11,21 @@ const App: FC = () => {
     pattern: 'серьезный',
     birthday: new Date(1990, 0, 7),
     city: 'Петровск (Саратовская область)',
-    telegram: '', 
+    telegram: '',
     github: '',
-    quote: '', 
+    quote: '',
     fileHobby: '',
-    hobby: '', 
+    hobby: '',
     fileHome: '',
-    relationship: '', 
-    bio: '', 
+    relationship: '',
+    bio: '',
     reason: '',
     formBirthday: new Date(1990, 0, 7),
     formPattern: 'серьезный',
     formFileHobby: '',
     formFileHome: '',
-    formSity: 'Петровск (Саратовская область)',
-    formAvatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp'
+    formCity: 'Петровск (Саратовская область)',
+    formAvatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp',
   });
 
   return (

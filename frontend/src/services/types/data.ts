@@ -9,7 +9,7 @@ export interface UserData {
 }
 
 export interface IButtonProps {
-  size?: 'large' | 'medium' | 'small',
+  size?: 'large' | 'medium' | 'small';
   onClick?: () => void | ((e: SyntheticEvent) => void);
   children?: React.ReactNode;
   disabled?: boolean;
@@ -34,8 +34,8 @@ export interface IUserRequest {
 }
 
 export interface ITokens {
-  accessToken: string,
-  refreshToken: string
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface IProfile {
