@@ -1,0 +1,52 @@
+@import '../../modules/variables.scss';
+@import '../../modules//mixins.scss';
+
+.item {
+    display: grid;
+    grid-template-columns: 20.6% 26.7% 29.6%;
+    border-bottom: 1px $color-placeholder solid;
+    margin: 12px 0 0 0;
+    padding: 0;
+    gap: 31.5px;
+}
+
+.cohort_wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.cohort_link {
+//   border: solid black;
+//   border-width: 0 3px 3px 0;
+//   display: inline-block;
+//   padding: 3px;
+//   transform: rotate(-45deg);
+//   -webkit-transform: rotate(-45deg);
+    text-decoration: none;
+    padding-bottom: 11px;
+}
+
+.cohort {
+    margin: 0;
+    padding-bottom: 11px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.email {
+    margin: 0;
+    padding-bottom: 11px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.name {
+    margin: 0;
+    padding-bottom: 11px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

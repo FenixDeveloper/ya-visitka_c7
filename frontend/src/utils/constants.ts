@@ -4,7 +4,7 @@ export const EXAMPLE_CURRENT_USER: { _id: string, name: string, avatar?: string,
   _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
-  status: UserStatus.Student
+  status: UserStatus.Curator
 };
 
 export const EXAMPLE_DEFAUT_ARR = ['Петровск (Саратовская область)', 'Петровск-Забайкальский (Забайкальский край)',
@@ -51,3 +51,26 @@ export const EMOJI = [
   { symbol: '😍️', alt: 'улыбающееся лицо с глазами-сердечками', acitve: false, counter: 9 },
   { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
 ]
+
+export const EXAMPLE_USER_ARRAY: {cohort: string, name: string, email: string}[] = [
+  {
+    cohort: '1234',
+    name: 'Vasya Pupkin',
+    email: 'vasyap@yandex.ru'
+  },
+  {
+    cohort: '1234',
+    name: 'Petya Petkin',
+    email: 'petyap@yandex.ru'
+  },
+  {
+    cohort: '4321',
+    name: 'Ivan Ivanov',
+    email: 'ivani@yandex.ru'
+  },
+  {
+    cohort: '4321',
+    name: 'Konstantin Konstantinov',
+    email: 'kostyak@yandex.ru'
+  },
+];
