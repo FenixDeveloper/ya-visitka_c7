@@ -23,7 +23,8 @@ type YandexMapProps = {
 export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504], zoom = 7, students }) => {
   return (
     <YMaps>
-      <Map defaultState={{ center, zoom }} className={styles.mapContainer} >
+      <Map defaultState={{ center, zoom }} className={styles.mapContainer}
+        options={{ minZoom: 2, maxZoom: 17 }}>
         <ZoomControl options={{ position: { top: 200, right: 15 } }} />
         {students.map((student) => (
           <Placemark

@@ -14,8 +14,8 @@ export const Balloon: FC<BalloonProps> = ({ name, city, preview }) => {
         <div className={styles.balloon}>
           <img className={styles.image} src={preview} alt={name} />
           <div className={styles.content}>
-            <p className={styles.name}>{name}</p>
-            <p className={styles.city}>{city}</p>
+            <p className={styles.text}>{name}</p>
+            <p className={`${styles.text} ${styles.text_type_city}`}>{city}</p>
           </div>
         </div>
       )}

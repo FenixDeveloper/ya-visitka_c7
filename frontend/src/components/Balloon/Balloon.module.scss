@@ -1,42 +1,38 @@
-@import '../../modules/variables.scss';
+@import "../../modules/variables.scss";
 
 .balloon {
   display: flex;
-  height: 54px;
+  gap: 4px;
+  height: 49px;
+  padding: 3.5px 6px;
 }
 
 .image {
   border-radius: 100%;
-  min-height: 24px;
-  min-width: 24px;
   width: 24px;
   height: 24px;
-  padding: 0;
-  margin: 3px 0 0 6px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
-.name {
-  margin: 3px 6px 2px 4px;
+.text {
+  margin: 0;
   font-family: $font-family;
   font-weight: $text_map_font-weight;
   font-size: $text_map_font-size;
   line-height: $text_map_line-height;
+  color: $color-text-dark;
   white-space: nowrap;
 }
 
-.city {
-  margin: 0 6px 0 4px;
-  font-family: $font-family;
-  font-weight: $text_map_font-weight;
-  font-size: $text_map_font-size;
-  line-height: $text_map_line-height;
+.text_type_city {
+  font-size: 14px;
+  line-height: 16px;
   color: $color-text-light;
-  white-space: nowrap;
 }
 
 // убрал хвостик у балуна
@@ -52,13 +48,18 @@
 .ymaps-2-1-79-balloon__content {
   display: flex;
   width: 100% !important;
-  min-height: 54px !important;
+  min-height: 49px !important;
   margin: 0 !important;
   padding: 0 !important;
+  border-radius: 6px;
 }
 
 .ymaps-2-1-79-balloon_layout_normal {
-  min-height: 54px !important;
+  min-height: 49px !important;
   border-radius: 6px;
   overflow: hidden;
+}
+
+.ymaps-2-1-79-map ymaps:before {
+  border-radius: 6px;
 }
