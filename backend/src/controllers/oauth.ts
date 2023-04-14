@@ -10,13 +10,6 @@ import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
 import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
-// const yandex = {
-//   CALLBACK_URL: 'http://127.0.0.1:3000/auth/yandex/callback',
-//   OATH_URL: 'https://oauth.yandex.ru/authorize?response_type=code',
-//   TOKEN_URL: 'https://oauth.yandex.ru/token',
-//   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
-// };
-
 const getUserProfileYandex = async (code: string) => {
   try {
     const response = await fetch(TOKEN_URL, {
