@@ -65,7 +65,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
           name: userProfile.name,
           email: user.email,
           cohort: user.cohort,
-          photo: user.profile?.photo,
           role: 'student',
         };
 
@@ -96,10 +95,10 @@ export const getUser = (req: Request, res: Response, next: NextFunction) => {
     const { role, email } = jwt.decode(token) as IUserPayload;
     if (role === 'student') {
       const {
-        _id, name, cohort, photo,
+        _id, name, cohort
       } = jwt.decode(token) as IUserPayload;
       return res.send({
-        _id, name, email, cohort, role, photo,
+        _id, name, email, cohort, role
       });
     }
 

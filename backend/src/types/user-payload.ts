@@ -3,7 +3,6 @@ export interface IUserPayload {
   email: string;
   role: string;
   name?: string;
-  photo?: string;
   cohort?: string;
 }
 
