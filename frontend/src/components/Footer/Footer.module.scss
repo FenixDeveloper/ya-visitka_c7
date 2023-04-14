@@ -8,6 +8,7 @@
   width: 100%;
   box-sizing: border-box;
   border-top: 1px solid rgba(16, 12, 52, 0.3); // уникальное значение
+  flex: 0 0 72px;
 
   @media screen and (max-width: 780px) {
     padding: 24px 32px;
