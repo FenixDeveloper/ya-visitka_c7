@@ -1,12 +1,15 @@
 import passport from 'passport';
 import { VerifiedCallback, ExtractJwt, Strategy } from 'passport-jwt';
+import * as process from 'process';
 import User from '../models/User';
-import { CURATOR_LIST } from '../config/config';
+import { CURATOR_LIST, JWT_SECRET } from '../config/config';
 import { IUserPayload } from '../types/user-payload';
+
+const { NODE_ENV } = process.env;
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'secret',
+  secretOrKey: NODE_ENV === 'production' ? JWT_SECRET : 'secret',
 };
 
 export const jwtStrategy = new Strategy(
@@ -21,14 +24,14 @@ export const jwtStrategy = new Strategy(
       const user = {
         id: jwtPayload._id,
         role: jwtPayload.role,
-        email: email,
+        email,
       };
       return done(null, user);
     }
     if (curator) {
       const user = {
         role: jwtPayload.role,
-        email: email,
+        email,
       };
       return done(null, user);
     }

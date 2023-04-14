@@ -1,22 +1,25 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import process from 'process';
 import User from '../models/User';
-import { CLIENT_ID, CLIENT_SECRET, CURATOR_LIST } from '../config/config';
+import {
+  CLIENT_ID, CLIENT_SECRET, CURATOR_LIST, JWT_SECRET, TOKEN_URL, PROFILE_URL,
+} from '../config/config';
 import UnauthorizedError from '../errors/unauthorized-error';
 import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
 import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
-const yandex = {
-  CALLBACK_URL: 'http://127.0.0.1:3000/auth/yandex/callback',
-  OATH_URL: 'https://oauth.yandex.ru/authorize?response_type=code',
-  TOKEN_URL: 'https://oauth.yandex.ru/token',
-  PROFILE_URL: 'https://login.yandex.ru/info?format=json',
-};
+// const yandex = {
+//   CALLBACK_URL: 'http://127.0.0.1:3000/auth/yandex/callback',
+//   OATH_URL: 'https://oauth.yandex.ru/authorize?response_type=code',
+//   TOKEN_URL: 'https://oauth.yandex.ru/token',
+//   PROFILE_URL: 'https://login.yandex.ru/info?format=json',
+// };
 
 const getUserProfileYandex = async (code: string) => {
   try {
-    const response = await fetch(yandex.TOKEN_URL, {
+    const response = await fetch(TOKEN_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -31,7 +34,7 @@ const getUserProfileYandex = async (code: string) => {
     /* eslint-disable camelcase */
     const { access_token } = await response.json();
     if (!access_token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
-    const userResponse = await fetch(yandex.PROFILE_URL, {
+    const userResponse = await fetch(PROFILE_URL, {
       headers: { Authorization: `OAuth${access_token}` },
     });
 
@@ -47,7 +50,13 @@ const getUserProfileYandex = async (code: string) => {
   }
 };
 
-const getToken = (user: IUserPayload) => jwt.sign(user, 'secret', { expiresIn: '7d' });
+const { NODE_ENV } = process.env;
+
+const getToken = (user: IUserPayload) => jwt.sign(
+  user,
+  NODE_ENV === 'production' ? JWT_SECRET : 'secret',
+  { expiresIn: '7d' },
+);
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -55,9 +64,9 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
     const userProfile = await getUserProfileYandex(code);
 
-    const email = userProfile.email.toLowerCase()
+    const email = userProfile.email.toLowerCase();
 
-    User.findOne({ email: email }).then((user) => {
+    User.findOne({ email }).then((user) => {
       let token;
       if (user) {
         const student: IUserPayload = {
@@ -74,12 +83,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       if (isCurator) {
         const curator: IUserPayload = {
           _id: null,
-          email: email,
+          email,
           role: 'curator',
         };
         token = getToken(curator);
       }
-      if(!token) throw new NotFoundError(ErrorMessages.UserNotFound);
+      if (!token) throw new NotFoundError(ErrorMessages.UserNotFound);
       res.send({ token });
     }).catch(next);
   } catch (error) {
@@ -90,15 +99,16 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
+    console.log(token)
     if (!token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
 
     const { role, email } = jwt.decode(token) as IUserPayload;
     if (role === 'student') {
       const {
-        _id, name, cohort
+        _id, name, cohort,
       } = jwt.decode(token) as IUserPayload;
       return res.send({
-        _id, name, email, cohort, role
+        _id, name, email, cohort, role,
       });
     }
 
