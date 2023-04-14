@@ -15,7 +15,7 @@ export const jwtStrategy = new Strategy(
     const { email } = jwtPayload;
 
     const student = await User.findOne({ email });
-    const curator = CURATOR_LIST.includes(email!);
+    const curator = CURATOR_LIST.split(',').includes(email!);
 
     if (student) {
       const user = {
