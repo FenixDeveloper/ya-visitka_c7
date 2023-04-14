@@ -26,6 +26,7 @@
 	}
 
 	&__buttonText {
+		width: 439px;
 		margin: 0;
 		padding: 0;
 		font-family: "IBM Plex Sans";
@@ -53,6 +54,10 @@
 			font-size: $h1_mobile_font-size;
 			margin-top: 100px;
 			margin-bottom: 32px;
+		}
+
+		&__buttonBox {
+			width: 272px;
 		}
 	}
 }

@@ -1,0 +1,165 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.content {
+  position: relative;
+  max-width: 325px;
+}
+
+.navlink {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 325px;
+  z-index: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navlink:hover .photo {
+  outline: 2px $color-neon-pink solid;
+  outline-offset: -2px;
+}
+
+.navlink:hover .name {
+  color: $color-neon-pink;
+}
+
+.content:hover .chatButton {
+  opacity: 1;
+}
+
+.photo {
+  margin-bottom: 11px;
+  min-height: 325px;
+}
+
+.chatButton {
+  opacity: 0;
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 16px;
+  right: 16px;
+  background-color: transparent;
+  border: none;
+  z-index: 5;
+  cursor: pointer;
+}
+
+.chatButton:focus-visible {
+  outline: none;
+}
+
+.chatIcon {
+  height: 25.33px;
+  width: 25.33px;
+}
+
+.count {
+  position: absolute;
+  right: -5px;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  height: 19px;
+  border-radius: 40%;
+  background-color: $color-text-dark;
+  color: $color-text-superlight;
+  @include reaction_count();
+  margin: 0;
+}
+
+.countOver99 {
+  right: -10px;
+  min-width: 28px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  column-gap: 5px;
+}
+
+.name {
+  margin: 0;
+  color: $color-text-dark;
+  @include h4_desktop();
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.city {
+  margin: 0;
+  @include text;
+  color: $color-text-light;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.name:hover {
+  color: $color-neon-pink;
+}
+
+.messageCounter {
+  margin: 0;
+  @include text;
+  color: $color-text-light;
+}
+
+.feedback {
+  position: absolute;
+  width: 321px;
+  margin: 4px 2px;
+  top: 44px;
+  z-index: 1;
+  height: 100%;
+
+  &__container {
+    position: relative;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .content {
+    max-width: 342px;
+  }
+
+  .navlink {
+    max-width: 342px;
+  }
+
+  .feedback {
+    width: 338px;
+  }
+
+  .photo {
+    min-height: 342px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .content {
+    max-width: 272px;
+  }
+
+  .navlink {
+    max-width: 272px;
+  }
+
+  .feedback {
+    width: 278px;
+  }
+
+  .photo {
+    min-height: 272px;
+  }
+}

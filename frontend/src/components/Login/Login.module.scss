@@ -1,7 +1,5 @@
 @use '../../modules/mixins.scss';
-@import "../../index.scss";
-@import "../../modules/variables.scss";
-
+@use '../../modules/variables.scss';
 
 .container {
   position: relative;
@@ -9,7 +7,7 @@
   width: 328px;
 
   @media screen and (max-width: 768px) {
-    width: 312px;
+    width: 100%;
   }
 }
 
@@ -18,14 +16,12 @@
   right: 0;
   top: 0;
   border-radius: 0 0 10px 10px;
-  box-shadow: 0px 8px 16px 0px $shadow-dark;
+  box-shadow: 0px 8px 16px 0px variables.$color-shadow-dark;
   @include mixins.text();
-
   display: flex;
   flex-direction: column;
   gap: 16px;
-
-  background-color: $white;
+  background-color: variables.$backgroud-white;
   z-index: 1;
 
   &__wrapper {
@@ -55,6 +51,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    object-fit: cover;
   }
 
   &__text {
@@ -67,6 +64,7 @@
 
   @media screen and (max-width: 576px) {
     justify-content: flex-end;
+
     &__text {
       display: none;
     }
@@ -84,18 +82,17 @@
 .link {
   display: flex;
   align-items: center;
-
   width: 248px;
   height: 36px;
-  background-color: $white;
+  background-color: variables.$backgroud-white;
   border-radius: 4px;
   padding-left: 36px;
-  color: $text-dark;
+  color: variables.$color-text-dark;
   transition: background-color 0.15s ease-in;
   text-decoration: none;
 
   &:hover {
-    background-color: $btn-hover;
+    background-color: variables.$color-text-superlight;
   }
 }
 
@@ -104,18 +101,17 @@
   align-items: center;
   width: 248px;
   height: 36px;
-  background-color: $white;
+  background-color: variables.$backgroud-white;
   border-radius: 4px;
   padding-left: 36px;
-  color: $text-dark;
+  color: variables.$color-text-dark;
   transition: background-color 0.15s ease-in;
   text-decoration: none;
   cursor: pointer;
   @include mixins.text();
   border: none;
-  font-family: "IBM Plex Sans";
 
   &:hover {
-    background-color: $btn-hover;
+    background-color: variables.$color-text-superlight;
   }
 }

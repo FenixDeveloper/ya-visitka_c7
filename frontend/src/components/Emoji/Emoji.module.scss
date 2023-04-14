@@ -1,0 +1,11 @@
+@import '../../modules/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: $text_feedback_font-size;
+  cursor: pointer;
+}

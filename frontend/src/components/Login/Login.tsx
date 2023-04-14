@@ -1,29 +1,26 @@
-import React, { FC } from "react";
-import defaulAvatar from "../../assets/icons/default-avatar.svg";
-import styles from "./Login.module.scss";
-import { NavLink } from "react-router-dom";
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
+import defaulAvatar from '../../assets/icons/default-avatar.svg';
+import styles from './Login.module.scss';
+import { ProfileContext } from '../../services/profileContext';
 
-interface User {
-  user: {
-    name: string;
-    avatar?: string;
-  };
-}
-
-const Login: FC<User> = ({ user }) => {
+const Login: FC = () => {
   const [active, setActive] = React.useState<boolean>(false);
-  const closePopupStyle = !active ? styles.popup_open_closed : "";
+  const closePopupStyle = !active ? styles.popup_open_closed : '';
+
+  const [profileState, setProfileState] = React.useContext(ProfileContext);
+  const { user } = profileState;
 
   const handlerClickPopup = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       setActive(false);
     }
   };
 
   React.useEffect(() => {
-    document.addEventListener("keydown", handlerClickPopup);
+    document.addEventListener('keydown', handlerClickPopup);
 
-    return () => document.removeEventListener("keydown", handlerClickPopup);
+    return () => document.removeEventListener('keydown', handlerClickPopup);
   }, []);
 
   return (
@@ -40,10 +37,10 @@ const Login: FC<User> = ({ user }) => {
           </div>
           {active && (
             <div className={styles.links}>
-              <NavLink to="#1" className={styles.link}>
+              <NavLink to={`/profiles/${user._id}`} className={styles.link}>
                 Профиль
               </NavLink>
-              <button type="button" className={styles.btn}>
+              <button type='button' className={styles.btn}>
                 Выйти
               </button>
             </div>
@@ -53,4 +50,5 @@ const Login: FC<User> = ({ user }) => {
     </article>
   );
 };
+
 export default Login;

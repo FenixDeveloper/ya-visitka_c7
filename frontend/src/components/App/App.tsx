@@ -1,20 +1,37 @@
-import React, { FC } from "react";
-import styles from "./App.module.css";
-import { RouterProvider } from "react-router-dom";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import { testUser } from "../../utils/constants";
-import { router } from "../../router/router";
+import React, { FC } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
+import { router } from '../../router/router';
+import { ProfileContext } from '../../services/profileContext';
 
 const App: FC = () => {
+  const [profileState, setProfileState] = React.useState({
+    user: EXAMPLE_CURRENT_USER,
+    avatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp',
+    pattern: 'серьезный',
+    birthday: new Date(1990, 0, 7),
+    city: 'Петровск (Саратовская область)',
+    telegram: 'devhumor_tg', 
+    github: 'FenixDeveloper',
+    quote: '', 
+    fileHobby: '',
+    hobby: '',
+    fileHome: '',
+    relationship: '',
+    bio: '',
+    reason: '',
+    formBirthday: new Date(1990, 0, 7),
+    formPattern: 'серьезный',
+    formFileHobby: '',
+    formFileHome: '',
+    formCity: 'Петровск (Саратовская область)',
+    formAvatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp',
+  });
+
   return (
-    <div className={styles.App}>
-      <Header user={testUser} />
-      <main className={styles.App__main}>
-        <RouterProvider router={router} />
-      </main>
-      <Footer />
-    </div>
+    <ProfileContext.Provider value={[profileState, setProfileState]}>
+      <RouterProvider router={router} />
+    </ProfileContext.Provider>
   );
 };
 
