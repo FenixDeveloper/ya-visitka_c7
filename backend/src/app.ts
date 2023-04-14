@@ -35,19 +35,18 @@ app.use(helmet());
 app.use(express.json());
 
 // вместо фронтенда, для получения кода подтверждения
-app.get('/auth/yandex', (req, res) => {
-  res.redirect('https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556');
-});
+// app.get('/auth/yandex', (req, res) => {
+//   res.redirect('https://oauth.yandex.ru/authorize?response_type=code&client_id=6588f39ea0274d599d3c60fb10c53556');
+// });
 
 // где можно получить код -> /auth/yandex/callback;
-// берет код подтверждения - отдает токен
 
-//app.use(requestLogger);
+app.use(requestLogger);
 app.use(rootRouter);
 
 app.use(nonExistentRequestHandler);
 
-//app.use(errorLogger);
+app.use(errorLogger);
 app.use(errors());
 app.use(errorMiddleware);
 
