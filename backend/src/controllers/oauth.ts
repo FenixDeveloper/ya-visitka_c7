@@ -67,7 +67,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
         token = getToken(student);
       }
-      const isCurator = CURATOR_LIST.includes(userProfile.email!);
+      const isCurator = CURATOR_LIST.split(',').includes(userProfile.email!);
 
       if (isCurator) {
         const curator: IUserPayload = {
