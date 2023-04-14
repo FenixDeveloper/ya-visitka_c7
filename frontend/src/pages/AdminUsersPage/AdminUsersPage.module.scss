@@ -37,6 +37,7 @@
 
 .students {
     width: 1015px;
+    position: relative;
 }
 
 .filter_text {
@@ -46,6 +47,7 @@
 }
 
 .filter_input {
+    display: flex;
     @include text();
     width: 100%;
     height: 48px;
@@ -56,6 +58,23 @@
     outline: none;
     cursor: pointer;
 }
+
+.filter_clear {
+    border: none;
+	padding: 0;
+    cursor: pointer;
+	outline: inherit;
+    background: url('../../assets/icons/exit.svg');
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+}
+
 
 .table_header {
     display: grid;

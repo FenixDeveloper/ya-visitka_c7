@@ -13,7 +13,7 @@ export const EXAMPLE_DEFAUT_ARR = ['Петровск (Саратовская о�
 export const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
   'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
-export const BASE_URL = 'https://visitki.practicum-team.ru/api';
+export const BASE_URL = 'http://localhost:4000/api';
 
 export const GITHUB_URL = 'https://api.github.com';
 export const DEFAULT_PAGE = 'DEFAULT_PAGE';
@@ -52,23 +52,27 @@ export const EMOJI = [
   { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
 ]
 
-export const EXAMPLE_USER_ARRAY: {cohort: string, name: string, email: string}[] = [
+export const EXAMPLE_USER_ARRAY: {id: string, cohort: string, name: string, email: string}[] = [
   {
+    id: '1',
     cohort: '1234',
     name: 'Vasya Pupkin',
     email: 'vasyap@yandex.ru'
   },
   {
+    id: '2',
     cohort: '1234',
     name: 'Petya Petkin',
     email: 'petyap@yandex.ru'
   },
   {
+    id: '3',
     cohort: '4321',
     name: 'Ivan Ivanov',
     email: 'ivani@yandex.ru'
   },
   {
+    id: '4',
     cohort: '4321',
     name: 'Konstantin Konstantinov',
     email: 'kostyak@yandex.ru'

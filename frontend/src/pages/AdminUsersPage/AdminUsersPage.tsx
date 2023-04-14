@@ -1,28 +1,62 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
+import api from '../../utils/api-config';
 import styles from './AdminUsersPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Student } from '../../components/Student/Student';
 import { EXAMPLE_USER_ARRAY } from '../../utils/constants';
 import { Button } from '../../components/Button/Button';
+import { IStudentsData } from '../../services/types/data';
+
 
 export const AdminUsersPage: FC = () => {
-  const [query, setQuery] = useState('');
-  const [studentsData, setStudentsData] = useState(EXAMPLE_USER_ARRAY);
-  const [filterResult, setFilterResult] = useState(studentsData);
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const results = studentsData.filter(student => {
-      if (e.target.value === '') return studentsData
-      return (student.cohort.toLowerCase().includes(e.target.value.toLowerCase()) 
-      || student.email.toLowerCase().includes(e.target.value.toLowerCase()) 
-      || student.name.toLowerCase().includes(e.target.value.toLowerCase()))
-    });
-    setFilterResult(results);
-    setQuery(e.target.value);
+  const [query, setQuery] = useState<string>('');
+  const [studentsData, setStudentsData] = useState<IStudentsData[]>([]);
+  const [filterResult, setFilterResult] = useState<IStudentsData[]>([]);
+
+  useEffect( () => {
+    const fetchUsers = async () => {
+      await api.getUsers('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNtdGhPZlZhbHVlQHlhbmRleC5ydSIsInJvbGUiOiJjdXJhdG9yIiwiaWF0IjoxNjgxNDcxNjE0LCJleHAiOjE2ODIwNzY0MTR9.pAZhCpunPy7S8kz3RNheSoZKyj7tZi-Y78wYaycf82Y', 0, 20, '')
+        .then(data => {
+          setStudentsData(data.items)
+          setFilterResult(data.items)})
+    }
+    fetchUsers();
+  }, []);
+
+  //отбор студентов по критерию фильтрации
+  const filterStudent = (student: IStudentsData, substring: string) => {
+    if (student.name === undefined) {
+      if (student.cohort.toLowerCase().includes(substring.toLowerCase())
+          || student.email.toLowerCase().includes(substring.toLowerCase())
+      ) {
+        return true;
+      }
+    } else {
+      if (student.cohort.toLowerCase().includes(substring.toLowerCase())
+    || student.email.toLowerCase().includes(substring.toLowerCase())
+    || student.name.toLowerCase().includes(substring.toLowerCase())) {
+        return true;
+      }
+    } 
+    return false;
   }
 
-  const students = filterResult.map((user, i) => {
-    return (<Student key={i} cohort={user.cohort} name={user.name} email={user.email}/>)
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const result = studentsData
+      .filter(student => {
+        if (e.target.value === '') {
+          return studentsData
+        }
+        return filterStudent(student, e.target.value);
+      });
+    setQuery(e.target.value);
+    setFilterResult(result);
+    
+  }
+
+  const students = filterResult.map((user) => {
+    return (<Student key={user._id} cohort={user.cohort} name={user.name ? user.name : ''} email={user.email} id={user._id}/>)
   })
 
   return (
@@ -54,10 +88,19 @@ export const AdminUsersPage: FC = () => {
           <input 
             className={styles.filter_input}
             type="text" 
+            //value={query}
             onChange={handleChange}
-            value={query}
             placeholder="По имени или фамилии или почте или номеру когорты (введите любой из этих параметров)"
           />
+          {query !== '' &&
+          <button 
+            className={styles.filter_clear} 
+            type='reset' 
+            onClick={() => {
+              setQuery('');
+              setFilterResult(studentsData)
+            }} 
+          />}
           <div className={styles.table_header}>
             <p className={styles.table_header_text}>Номер когорты</p>
             <p className={styles.table_header_text}>E-mail</p>

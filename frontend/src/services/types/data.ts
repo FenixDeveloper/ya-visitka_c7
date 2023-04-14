@@ -76,3 +76,12 @@ export enum UserStatus {
   Student = 'STUDENT',
   Curator = 'CURATOR',
 }
+
+export interface IStudentsData {
+  _id: string,
+  email: string,
+  cohort: string,
+  createdAt: number,
+  updatedAt: number,
+  name?: string,
+}
