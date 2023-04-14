@@ -85,3 +85,8 @@ export interface IStudentsData {
   updatedAt: number,
   name?: string,
 }
+
+export enum UpdateField {
+  COHORT = 'cohort',
+  EMAIL = 'email',
+}

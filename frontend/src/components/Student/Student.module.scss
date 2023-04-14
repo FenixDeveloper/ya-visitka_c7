@@ -3,13 +3,18 @@
 
 .item {
     display: grid;
-    grid-template-columns: 20.6% 26.7% 29.6%;
+    grid-template-columns: 20.6% 26.7% 29.6% 1fr;
     border-bottom: 1px $color-placeholder solid;
     margin: 0 0 0 0;
     padding: 0;
     gap: 31.5px;
     align-items: center;
     height: 48px;
+    color: $color-text-dark;
+}
+
+.item_uploaded {
+    color: $color-blue;
 }
 
 .cohort_wrapper {
@@ -20,13 +25,8 @@
 }
 
 .cohort_link {
-//   border: solid black;
-//   border-width: 0 3px 3px 0;
-//   display: inline-block;
-//   padding: 3px;
-//   transform: rotate(-45deg);
-//   -webkit-transform: rotate(-45deg);
     text-decoration: none;
+    color: inherit;
 }
 
 .cohort {
@@ -38,6 +38,7 @@
     border: 1px solid $color-text-dark;
     height: 32px;
     max-width: 80px;
+    color: inherit;
 }
 
 .cohort[readonly] {
@@ -53,6 +54,7 @@
     border-radius: 4px;
     border: 1px solid $color-text-dark;
     height: 32px;
+    color: inherit;
 }
 
 .email[readonly] {
@@ -62,10 +64,18 @@
 
 .name {
     @include text();
-    color: $color-text-dark;
     margin: 0;
     text-decoration: none;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    color: inherit;
 }
+
+.deleteButton {
+    margin: 0 10px 0 auto;
+    padding: 0;
+    background:none;
+    border: 0;
+    cursor: pointer;
+  }

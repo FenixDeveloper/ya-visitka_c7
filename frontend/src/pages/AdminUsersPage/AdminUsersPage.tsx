@@ -1,17 +1,19 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import api from '../../utils/api-config';
 import styles from './AdminUsersPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Student } from '../../components/Student/Student';
-import { EXAMPLE_USER_ARRAY } from '../../utils/constants';
 import { Button } from '../../components/Button/Button';
 import { IStudentsData } from '../../services/types/data';
-
+import { read, utils } from 'xlsx';
+import { v4 as uuidv4 } from 'uuid';
 
 export const AdminUsersPage: FC = () => {
   const [query, setQuery] = useState<string>('');
   const [studentsData, setStudentsData] = useState<IStudentsData[]>([]);
   const [filterResult, setFilterResult] = useState<IStudentsData[]>([]);
+  const [studentsToUpload, setStudentsToUpload] = useState<{email: string, cohort: string, id: string}[]>([]);
+  const inputFile = useRef<HTMLInputElement | null>(null);
 
   useEffect( () => {
     const fetchUsers = async () => {
@@ -40,7 +42,6 @@ export const AdminUsersPage: FC = () => {
     } 
     return false;
   }
-
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const result = studentsData
@@ -52,12 +53,65 @@ export const AdminUsersPage: FC = () => {
       });
     setQuery(e.target.value);
     setFilterResult(result);
+  }
+
+  const onUploadFileButtonClick = () => {
+    if (inputFile.current) {
+      inputFile.current.click();
+    }
+  };
+
+  const handleFileAsync = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    const file = target.files !== null ? target.files[0] : null;
+    const reader = new FileReader();
+    reader.onload = function() {
+      const data = reader.result;
+      const workbook = read(data);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];      
+      const arrayOfRows = utils.sheet_to_json(sheet, { header: 1 }) as [string, string][];
+      const students = arrayOfRows.map((row) => {
+        return {email: row[0], cohort: row[1], id: uuidv4()}
+      })
+      setStudentsToUpload(students);
+    };
+    reader.readAsArrayBuffer(file as Blob);
+  }
+
+  const handleDeleteClick = (id: string) => {
+    setStudentsToUpload(studentsToUpload.filter((student) => {
+      return student.id !== id
+    }));
+  }
+
+  const handleUpdate = (id: string, fromFile: boolean) => {
     
   }
 
-  const students = filterResult.map((user) => {
-    return (<Student key={user._id} cohort={user.cohort} name={user.name ? user.name : ''} email={user.email} id={user._id}/>)
-  })
+  const students = filterResult.map((student) => {
+    return (<Student 
+      key={student._id}
+      cohort={student.cohort}
+      name={student.name ? student.name : ''}
+      email={student.email}
+      id={student._id}
+      fromFile={false}
+      handleUpdate={() => handleUpdate(student._id, false)}
+    />)
+  });
+
+  const uploadCandidates = studentsToUpload.map((student) => {
+    return (<Student 
+      key={student.id}
+      cohort={student.cohort}
+      name='' email={student.email}
+      id={student.id}
+      fromFile={true}
+      handleDelete={() => handleDeleteClick(student.id)}
+      handleUpdate={() => handleUpdate(student.id, true)}
+    />)
+  });
 
   return (
     <section className={styles.section}>
@@ -107,13 +161,19 @@ export const AdminUsersPage: FC = () => {
             <p className={styles.table_header_text}>Имя и фамилия студента</p>
           </div>
           <ul className={styles.students_list}>
+            {uploadCandidates}
             {students}
           </ul>
         </div>
         <div className={styles.upload}>
           <h2 className={styles.upload_heading}>Добавить студентов</h2>
           <p className={styles.upload_text}>Чтобы добавить новых студентов, загрузите csv или xlsx файл: первая колонка должна содержать email студентов, вторая колонка — номер когорты.</p>
-          <Button size='small' >Выберите файл</Button>
+          <input 
+            ref={inputFile} 
+            type="file" 
+            className={styles.file_input}
+            onChange={handleFileAsync} />
+          <Button size='small' onClick={onUploadFileButtonClick} >Выберите файл</Button>
         </div>
       </div>
     </section>

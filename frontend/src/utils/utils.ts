@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { ITokens } from '../services/types/data';
 
 export const getListYears = (startYear: number) => {
@@ -21,4 +22,12 @@ export const setTokens = (tokens: ITokens) => {
 export const logout = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
+}
+
+export function usePrevious<Type>(value: Type): Type | undefined {
+  const ref = useRef<Type | undefined>();
+  useEffect(() => {
+    ref.current = value;
+  },[value]);
+  return ref.current;
 }
