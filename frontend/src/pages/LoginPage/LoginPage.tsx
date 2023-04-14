@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Button } from '../../components/Button/Button';
 import LoginPageStyles from './LoginPage.module.scss';
-import { clientID } from '../../utils/constants';
+import { CLIENT_ID } from '../../utils/constants';
 
 export const LoginPage: FC = () => {
 
@@ -24,7 +24,7 @@ export const LoginPage: FC = () => {
             С кем я учусь?
         </h1>
         <a className={LoginPageStyles.loginPage__buttonBox}
-          href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${clientID}`}
+          href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}`}
         >
           <Button size={windowWidth <= 576 ? 'medium' : 'large'} 
             htmlType='button'
