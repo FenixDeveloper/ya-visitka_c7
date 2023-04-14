@@ -1,0 +1,67 @@
+@import "../../modules/variables.scss";
+
+.balloon {
+  display: flex;
+  gap: 4px;
+  height: 49px;
+  padding: 3.5px 6px;
+}
+
+.image {
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.text {
+  margin: 0;
+  font-family: $font-family;
+  font-weight: $text_map_font-weight;
+  font-size: $text_map_font-size;
+  line-height: $text_map_line-height;
+  color: $color-text-dark;
+  white-space: nowrap;
+}
+
+.text_type_city {
+  font-size: 14px;
+  line-height: 16px;
+  color: $color-text-light;
+}
+
+// убрал хвостик у балуна
+.ymaps-2-1-79-balloon__tail {
+  visibility: hidden;
+}
+
+// убрал крестик у балуна
+.ymaps-2-1-79-balloon__close {
+  display: none;
+}
+
+.ymaps-2-1-79-balloon__content {
+  display: flex;
+  width: 100% !important;
+  min-height: 49px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 6px;
+}
+
+.ymaps-2-1-79-balloon_layout_normal {
+  min-height: 49px !important;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ymaps-2-1-79-map ymaps,
+.ymaps-2-1-79-map ymaps:after,
+.ymaps-2-1-79-map ymaps:before {
+  border-radius: 6px;
+}
