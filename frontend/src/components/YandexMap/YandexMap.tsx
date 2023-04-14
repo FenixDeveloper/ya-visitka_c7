@@ -20,12 +20,11 @@ type YandexMapProps = {
   students: Student[];
 };
 
-export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504], zoom = 10, students }) => {
-
+export const YandexMap: FC<YandexMapProps> = ({ center = [55.753215, 37.622504], zoom = 7, students }) => {
   return (
     <YMaps>
       <Map defaultState={{ center, zoom }} className={styles.mapContainer} >
-        <ZoomControl options={{ position: { top: 200, right: 10 } }} />
+        <ZoomControl options={{ position: { top: 200, right: 15 } }} />
         {students.map((student) => (
           <Placemark
             key={student.id}

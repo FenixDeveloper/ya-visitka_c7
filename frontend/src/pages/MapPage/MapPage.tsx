@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { YandexMap } from '../../components/YandexMap/YandexMap';
-import styles from './MapPage.module.css';
 
-const students = [
+const mockStudents = [
   {
     id: 1,
     name: 'Иван Иванов',
@@ -19,10 +18,8 @@ const students = [
   },
 ];
 
-export const MapPage: FC = () => {
-  return (
-    <div className={styles.app}>
-      <YandexMap students={students} />
-    </div>
-  );
+type MapPageProps = {
+  students?: typeof mockStudents;
 };
+
+export const MapPage: FC<MapPageProps> = ({ students = mockStudents }) => <YandexMap students={students} />;

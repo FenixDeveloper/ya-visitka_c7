@@ -14,3 +14,35 @@
     height: calc(100vh - 152px);
   }
 }
+
+.ymaps-2-1-79-zoom__scale {
+  visibility: hidden;
+}
+
+.ymaps-2-1-79-zoom__plus {
+  margin-top: 100px;
+  transform: scale(1.5);
+  position: relative;
+  z-index: 2;
+}
+
+.ymaps-2-1-79-zoom__minus {
+  margin-bottom: 20px;
+  transform: scale(1.5);
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .ymaps-2-1-79-zoom__plus {
+    margin-top: 50px;
+    margin-right: 20px;
+    position: relative;
+  }
+
+  .ymaps-2-1-79-zoom__minus {
+    margin-bottom: 70px;
+    margin-right: 20px;
+    position: relative;
+  }
+}
