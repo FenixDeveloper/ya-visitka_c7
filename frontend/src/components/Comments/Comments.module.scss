@@ -2,19 +2,24 @@
 @import '../../modules/mixins.scss';
 
 
-.tableHead {
-  display: grid;
-  grid-template-columns: 70px 100px 190px 190px 180px 192px;
-  column-gap: 24px;
-  align-items: center;
-  margin-top: 60px;
-  min-height: 48px;
-  color: $color-placeholder;
-  border-bottom: 1px solid $color-placeholder;
-}
+
 .tableRow {
   display: grid;
-  grid-template-columns: 70px 100px 190px 190px 160px 442px;
+  grid-template-columns: 70px 100px 190px 190px 160px 442px 24px;
   column-gap: 24px;
   border-bottom: 1px solid $color-blue;
+}
+
+
+.tableData {
+  min-height: 24px;
+  @include text();
+  color: $color-text-dark
+}
+.deleteButton {
+  margin: 0;
+  padding: 0;
+  background:none;
+  border: 0;
+  cursor: pointer;
 }
