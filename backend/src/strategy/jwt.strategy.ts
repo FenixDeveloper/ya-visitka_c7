@@ -12,23 +12,23 @@ const opts = {
 export const jwtStrategy = new Strategy(
   opts,
   (async (jwtPayload: IUserPayload, done: VerifiedCallback) => {
-    const { email } = jwtPayload;
+    const email = jwtPayload.email.toLowerCase();
 
     const student = await User.findOne({ email });
-    const curator = CURATOR_LIST.split(',').includes(email!);
+    const curator = CURATOR_LIST.toLowerCase().split(',').includes(email);
 
     if (student) {
       const user = {
         id: jwtPayload._id,
         role: jwtPayload.role,
-        email: jwtPayload.email,
+        email: email,
       };
       return done(null, user);
     }
     if (curator) {
       const user = {
         role: jwtPayload.role,
-        email: jwtPayload.email,
+        email: email,
       };
       return done(null, user);
     }
