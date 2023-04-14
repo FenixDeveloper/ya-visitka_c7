@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import ErrorMessages from '../helpers/error-messages';
 import StatusCodes from '../helpers/status-codes';
 import User from '../models/User';
+import { NotFoundError } from '../errors';
 
 export const getComments = (req: Request, res: Response, next: NextFunction) => {
   const { offset = 0, limit = 20, search = '' } = req.query;
@@ -99,14 +100,11 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
     );
 
     if (updateResult.modifiedCount === 1) {
-      res.status(StatusCodes.OK).json();
+      res.sendStatus(StatusCodes.OK);
     } else {
-      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NotFound });
+      next(new NotFoundError(ErrorMessages.NotFound));
     }
   } catch (err) {
-    if (err instanceof Error && err.name === 'CastError') {
-      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NotFound });
-    }
     next(err);
   }
 };
