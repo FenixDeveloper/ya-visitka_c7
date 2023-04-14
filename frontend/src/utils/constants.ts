@@ -116,7 +116,7 @@ export const EXAMPLE_CURRENT_USER: {
   _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
-  status: UserStatus.Student,
+  status: UserStatus.STUDENT,
   pattern: 'серьезный'
 };
 

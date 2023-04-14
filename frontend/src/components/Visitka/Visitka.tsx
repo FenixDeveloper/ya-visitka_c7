@@ -34,12 +34,12 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
         <div className={styles.userInfo}>
           <p className={styles.name}>{name}</p>
           <p className={styles.city}>{city}</p>
-          {userStatus === UserStatus.Curator && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
+          {userStatus === UserStatus.CURATOR && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
 
         </div>
       </NavLink>
       <button className={styles.chatButton} onClick={openFeedback}>
-        <img className={styles.chatIcon} src={chatIcon} />
+        <img className={styles.chatIcon} src={chatIcon} alt='Нажмите для добавления реакции' />
         {feedbackTextArrLength>0 && (
           <div className={`${feedbackTextArrLength > 99 ? styles.countOver99 : ''} ${styles.count}`}>
             <p className={styles.number}>{feedbackTextArrLength > 99 ? '99+' : feedbackTextArrLength}</p>

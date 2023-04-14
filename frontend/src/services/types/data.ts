@@ -11,7 +11,7 @@ export interface UserData {
 export interface IButtonProps {
   size?: 'large' | 'medium' | 'small';
   onClick?: () => void | ((e: SyntheticEvent) => void);
-  children?: React.ReactNode;
+  children: React.ReactNode;
   disabled?: boolean;
   htmlType?: 'button' | 'submit' | 'reset';
 }
@@ -85,6 +85,6 @@ export interface IProfile {
 }
 
 export enum UserStatus {
-  Student = 'STUDENT',
-  Curator = 'CURATOR',
+  STUDENT = 'Student',
+  CURATOR = 'Curator',
 }
