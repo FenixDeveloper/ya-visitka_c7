@@ -15,8 +15,8 @@ export const ProfileEditPage: FC = () => {
   const [relationship, setRelationship] = React.useState<string>(profileState.relationship);
   const [bio, setBio] = React.useState<string>(profileState.bio);
   const [reason, setReason] = React.useState<string>(profileState.reason);
-  const [fileHobbyValue, setFileHobbyValue] = React.useState('');
-  const [fileHomeValue, setFileHomeValue] = React.useState('');
+  const [fileHobbyValue, setFileHobbyValue] = React.useState<File>();
+  const [fileHomeValue, setFileHomeValue] = React.useState<File>();
   const [githubErrorMessage, setGithubErrorMessage] = React.useState('');
   const [telegramErrorMessage, setTelegramErrorMessage] = React.useState('');
   const [quoteErrorMessage, setQuoteErrorMessage] = React.useState('');
@@ -75,12 +75,12 @@ export const ProfileEditPage: FC = () => {
   };
 
   const uploadFileHobby = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.value;
-    setFileHobbyValue(file);
-    //setFileHobbyErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
-    console.log(file);
-
-    if (file) {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setFileHobbyValue(file);
+      setFileHobbyErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
+      console.log(file);
+    
       const data = new FormData();
       data.append('file', file);
       // axios.post('/files', data)...
@@ -89,12 +89,12 @@ export const ProfileEditPage: FC = () => {
   };
 
   const uploadFileHome = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.value;
-    setFileHomeValue(file);
-    //setFileHomeErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
-    console.log(file);
+    if (event.target.files) {
+      const file = event.target.files[0];
+      setFileHomeValue(file);
+      setFileHomeErrorMessage(file ? validation.checkPhotoSize(file, 25165824) : '');
+      console.log(file);
 
-    if (file) {
       const data = new FormData();
       data.append('file', file);
       // axios.post('/files', data)...
@@ -110,9 +110,9 @@ export const ProfileEditPage: FC = () => {
     github: string,
     pattern: string,
     quote: string,
-    fileHobby: string,
+    fileHobby: File,
     hobby: string,
-    fileHome: string,
+    fileHome: File,
     relationship: string,
     bio: string,
     reason: string,
@@ -134,7 +134,6 @@ export const ProfileEditPage: FC = () => {
       bio,
       reason,
     });
-    console.log(profileState.sity, profileState.birthday, profileState.avatar);
   };
 
   React.useEffect(() => {
