@@ -1,8 +1,8 @@
 @use './assets/fonts/fonts.scss';
 @use './modules/variables.scss';
 @import './assets/normalize.css';
-@import './components/Balloon/Balloon.module.scss';
-@import './components/YandexMap/YandexMap.module.scss';
+@import './components/balloon/balloon.module.scss';
+@import './components/yandex-map/yandex-map.module.scss';
 
 body {
   margin: 0;
