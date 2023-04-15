@@ -69,12 +69,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         email,
       };
       token = getToken(student);
-      const name = userProfile.name;
+      const { name } = userProfile;
       await User.updateOne(
-        {_id: user._id},
-        {"$set": {"profile.name": name} },
+        { _id: user._id },
+        { $set: { 'profile.name': name } },
       ).orFail(new NotFoundError(ErrorMessages.UserNotFound))
-      .catch((err) => {next(err)})
+        .catch((err) => { next(err); });
     }
 
     if (isCurator) {

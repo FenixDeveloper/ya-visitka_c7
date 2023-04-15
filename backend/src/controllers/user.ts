@@ -8,8 +8,8 @@ export async function getUsers(
   res: Response,
   next: NextFunction,
 ) {
-  const { offset = 0, limit = 20, search = ''} = req.query;  
-  const searchRegex = new RegExp(String(search), "i");
+  const { offset = 0, limit = 20, search = '' } = req.query;
+  const searchRegex = new RegExp(String(search), 'i');
   const searchQuery = search?.length
     ? [{ email: searchRegex }, { cohort: searchRegex }, { 'profile.name': searchRegex }]
     : [{}];
@@ -39,7 +39,7 @@ export async function getUsers(
 export async function createUser(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const { email, cohort } = req.body;
