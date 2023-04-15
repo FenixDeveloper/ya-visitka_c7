@@ -70,14 +70,11 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       };
       token = getToken(student);
       const name = userProfile.name;
-      await User.findByIdAndUpdate(
-        user._id,
-        { name },
-        {
-          new: true,
-          runValidators: true,
-        }
-      )
+      await User.updateOne(
+        {_id: user._id},
+        {"$set": {"profile.name": name} },
+      ).orFail(new NotFoundError(ErrorMessages.UserNotFound))
+      .catch((err) => {next(err)})
     }
 
     if (isCurator) {
