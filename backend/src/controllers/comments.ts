@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { isValidObjectId } from 'mongoose';
 import ErrorMessages from '../helpers/error-messages';
 import StatusCodes from '../helpers/status-codes';
 import User from '../models/User';
-import { NotFoundError } from '../errors';
+import { BadRequestError, NotFoundError } from '../errors';
 
 export const getComments = (req: Request, res: Response, next: NextFunction) => {
   const { offset = 0, limit = 20, search = '' } = req.query;
@@ -92,6 +93,10 @@ export const getComments = (req: Request, res: Response, next: NextFunction) => 
 
 export const deleteComment = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
+
+  if (!id || !isValidObjectId(id)) {
+    next(new BadRequestError(ErrorMessages.BadRequest));
+  }
 
   try {
     const updateResult = await User.updateOne(
