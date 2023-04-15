@@ -6,8 +6,10 @@ import { Visitka } from '../../components/visitka/visitka';
 import { EXAMPLE_DEFAUT_ARR, EXAMPLE_VISITKAS } from '../../utils/constants';
 import Preloader from '../../components/preloader/preloader';
 import styles from './main-page.module.scss';
+import { ProfileContext } from '../../services/profile-context';
 
 export const MainPage: React.FC = () => {
+  const [profileState, setProfileState] = React.useContext(ProfileContext);
   const [visitka, setVisitka] = useState(EXAMPLE_VISITKAS[0]);
   const selectedCity = visitka.city;
   // const [data, setData] = useState([]);
@@ -36,17 +38,16 @@ export const MainPage: React.FC = () => {
     <section className={styles.wrapper}>
       <nav className={styles.navigation}>
         <div className={styles.select}>
-          {/* <input
+          <Input
             type="select"
-            // arrValues={EXAMPLE_DEFAUT_ARR}
-            value={selectedCity}
-            onChange={handleCityChange}
-          /> */}
-          <select onChange={handleCityChange}>
+            arrValues={EXAMPLE_DEFAUT_ARR}
+            value={profileState.cityMain}
+          />
+          {/* <select onChange={handleCityChange}>
             {EXAMPLE_DEFAUT_ARR.map((item, i) => (
               <option key={i}>{item}</option>
             ))}
-          </select>
+          </select> */}
         </div>
         <NavLink className={styles.map} to="/map">
           Посмотреть на карте

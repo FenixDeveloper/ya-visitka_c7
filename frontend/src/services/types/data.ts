@@ -26,6 +26,7 @@ export interface IInputProps {
   value?: string;
   errorMessage?: string;
   caption?: string;
+  isMainPage?: boolean;
 }
 
 export interface IBlogProps {

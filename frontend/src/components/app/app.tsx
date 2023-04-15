@@ -26,6 +26,7 @@ const App: FC = () => {
     formFileHome: null,
     formCity: 'Петровск (Саратовская область)',
     formAvatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp',
+    cityMain: 'Петровск (Саратовская область)'
   });
 
   return (
