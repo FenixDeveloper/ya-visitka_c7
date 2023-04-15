@@ -50,7 +50,6 @@ export const Input: FC<IInputProps> = ({
     setValueSelectCityMain(item);
     setIsVisible(false);
     setProfileState({ ...profileState, cityMain: item });
-    console.log('here')
   }
 
   function changeSelectedOptionPattern(item: string) {
