@@ -4,12 +4,12 @@ import { isCohortValid, isEmailValid, isUrlValid } from './validate-url';
 const joiEmail = Joi.string().email().required().custom(isEmailValid);
 const joiCohort = Joi.string().max(20).custom(isCohortValid);
 const joiId = Joi.string().length(24).hex().required();
-const joiOffset = Joi.number().integer().positive().default(0);
-const joiLimit = Joi.number().integer().positive().default(20);
-const joiSearch = Joi.string().default('');
+const joiOffset = Joi.number().integer().positive();
+const joiLimit = Joi.number().integer().positive();
+const joiSearch = Joi.string();
 const joiInfoItem = Joi.object().keys({
-  text: Joi.string().max(1500),
-  image: Joi.string().custom(isUrlValid),
+  text: Joi.alternatives().try(Joi.string().max(1500), Joi.string().empty('')),
+  image: Joi.string().custom(isUrlValid).allow(null),
 });
 
 const joiEmotion = Joi.object()
@@ -63,16 +63,16 @@ export const updateProfileValidator = celebrate({
     .keys({
       profile: Joi.object().keys({
         name: Joi.string(),
-        photo: Joi.string().custom(isUrlValid),
-        city: {
+        photo: Joi.string().custom(isUrlValid).allow(null),
+        city: Joi.object().allow(null).keys({
           name: Joi.string(),
           geocode: Joi.array().length(2).items(Joi.number(), Joi.number()),
-        },
-        birthday: Joi.date().iso(),
+        }),
+        birthday: Joi.date().iso().allow(null),
         quote: Joi.string().max(200),
-        telegram: Joi.string(),
-        github: Joi.string(),
-        template: Joi.string(),
+        telegram: Joi.string().allow(null),
+        github: Joi.string().allow(null),
+        template: Joi.string().allow(null),
       }),
       info: Joi.object().keys({
         hobby: joiInfoItem,
