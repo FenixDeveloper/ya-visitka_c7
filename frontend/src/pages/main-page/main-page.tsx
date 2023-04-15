@@ -7,30 +7,29 @@ import { EXAMPLE_DEFAUT_ARR, EXAMPLE_VISITKAS } from '../../utils/constants';
 import Preloader from '../../components/preloader/preloader';
 import styles from './main-page.module.scss';
 import { ProfileContext } from '../../services/profile-context';
+import { useGetAccessTokenByQueryCode } from './hooks';
+import { log } from 'console';
 
 export const MainPage: React.FC = () => {
-  const [profileState, setProfileState] = React.useContext(ProfileContext);
-  const [visitka, setVisitka] = useState(EXAMPLE_VISITKAS[0]);
-  const selectedCity = visitka.city;
+  useGetAccessTokenByQueryCode()
+
+  const [profileState] = React.useContext(ProfileContext);
   // const [data, setData] = useState([]);
   const [filteredVisitkas, setFilteredVisitkas] = useState(EXAMPLE_VISITKAS);
   const [loading, setLoading] = useState(true);
 
+
   React.useEffect(() => {
     // axios.get('/users');
-    // setData
-    if (selectedCity) {
+    // setData 
+    if (profileState.cityMain) {
       setTimeout(() => {
-        setFilteredVisitkas(EXAMPLE_VISITKAS.filter((item) => item.city === selectedCity));
+        setFilteredVisitkas(EXAMPLE_VISITKAS.filter((item) => item.city.toLowerCase() === profileState.cityMain.toLowerCase()));
         setLoading(false);
       }, 1000);
     }
-  }, [selectedCity, visitka]);
+  }, [profileState.cityMain]);
 
-  const handleCityChange = (e: any): void => {
-    console.log('events', e);
-    setVisitka((prevState: any) => ({ ...prevState, city: e.target.value }));
-  };
 
   return loading ? (
     <Preloader />
@@ -44,11 +43,6 @@ export const MainPage: React.FC = () => {
             value={profileState.cityMain}
             isMainPage
           />
-          {/* <select onChange={handleCityChange}>
-            {EXAMPLE_DEFAUT_ARR.map((item, i) => (
-              <option key={i}>{item}</option>
-            ))}
-          </select> */}
         </div>
         <NavLink className={styles.map} to="/map">
           Посмотреть на карте
