@@ -175,12 +175,9 @@ class Api {
     formData.append('job', body.job);
     formData.append('education', body.education);
     formData.append('avatar', body.avatar);
-    
+
     return fetch(`${this._baseUrl}/files`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       body: formData,
     }).then((res) => this._parseResponse(res));
   }
