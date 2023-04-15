@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import defaulAvatar from '../../assets/icons/default-avatar.svg';
 import styles from './login.module.scss';
 import { ProfileContext } from '../../services/profile-context';
+import { logout } from '../../utils/utils';
 
 const Login: FC = () => {
   const [active, setActive] = React.useState<boolean>(false);
@@ -40,7 +41,7 @@ const Login: FC = () => {
               <NavLink to={`/profiles/${user._id}`} className={styles.link}>
                 Профиль
               </NavLink>
-              <button type='button' className={styles.btn}>
+              <button type='button' className={styles.btn} onClick={logout}>
                 Выйти
               </button>
             </div>
