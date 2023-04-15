@@ -1,11 +1,8 @@
 import passport from 'passport';
 import { VerifiedCallback, ExtractJwt, Strategy } from 'passport-jwt';
-import * as process from 'process';
 import User from '../models/User';
-import { CURATOR_LIST, JWT_SECRET } from '../config/config';
+import { CURATOR_LIST, JWT_SECRET, NODE_ENV } from '../config/config';
 import { IUserPayload } from '../types/user-payload';
-
-const { NODE_ENV } = process.env;
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

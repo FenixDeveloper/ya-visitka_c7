@@ -1,9 +1,8 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import process from 'process';
 import User from '../models/User';
 import {
-  CLIENT_ID, CLIENT_SECRET, CURATOR_LIST, JWT_SECRET, TOKEN_URL, PROFILE_URL,
+  CLIENT_ID, CLIENT_SECRET, CURATOR_LIST, JWT_SECRET, TOKEN_URL, PROFILE_URL, NODE_ENV,
 } from '../config/config';
 import UnauthorizedError from '../errors/unauthorized-error';
 import NotFoundError from '../errors/not-found-error';
@@ -42,8 +41,6 @@ const getUserProfileYandex = async (code: string) => {
     throw new UnauthorizedError(ErrorMessages.Unauthorized);
   }
 };
-
-const { NODE_ENV } = process.env;
 
 const getToken = (user: IUserPayload) => jwt.sign(
   user,
