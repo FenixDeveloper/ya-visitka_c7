@@ -42,6 +42,7 @@ export const MainPage: React.FC = () => {
             type="select"
             arrValues={EXAMPLE_DEFAUT_ARR}
             value={profileState.cityMain}
+            isMainPage
           />
           {/* <select onChange={handleCityChange}>
             {EXAMPLE_DEFAUT_ARR.map((item, i) => (
