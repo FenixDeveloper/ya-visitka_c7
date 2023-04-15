@@ -13,14 +13,25 @@ enum ReactionType {
   Emotion = 'Emotion',
 }
 
-export const getProfiles = (
+export const getProfiles = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const { offset = 0, limit = 20, cohort } = req.query;
+  const { email, role } = req?.user as IReqUser;
+  const { offset = 0, limit = 20, cohort: cohortQuery } = req.query;
+  let cohort;
 
-  User.find({ cohort })
+  if (role === 'student') {
+    const student = await User.findOne({ email })
+      .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+      .catch(next);
+    cohort = student?.cohort;
+  } else if (role === 'curator') {
+    cohort = cohortQuery;
+  }
+
+  User.find(cohort ? { cohort } : {})
     .skip(Number(offset))
     .limit(Number(limit))
     .then((users) => {
@@ -50,7 +61,7 @@ export const patchProfile = (
   next: NextFunction,
 ) => {
   const { id } = req.params;
-  const user = req.user as IReqUser;
+  const user = req?.user as IReqUser;
 
   const profileData: IUser = req.body;
 
@@ -68,7 +79,10 @@ export const patchProfile = (
       res.status(StatusCodes.OK).json(updatedProfile);
     })
     .catch((err) => {
-      if (err.name === ErrorNames.VALIDATION_ERROR || err.name === ErrorNames.CAST_ERROR) {
+      if (
+        err.name === ErrorNames.VALIDATION_ERROR
+        || err.name === ErrorNames.CAST_ERROR
+      ) {
         next(new BadRequestError(ErrorMessages.BadRequest));
       }
       next(err);
@@ -81,7 +95,7 @@ export const postProfileReaction = async (
   next: NextFunction,
 ) => {
   const { id: targetId } = req.params;
-  const { id: senderId } = req.user as IReqUser;
+  const { id: senderId } = req?.user as IReqUser;
   const reactionBody = req.body;
 
   const user = await User.findById(senderId)
@@ -111,7 +125,10 @@ export const postProfileReaction = async (
       res.status(StatusCodes.OK).json();
     })
     .catch((err) => {
-      if (err.name === ErrorNames.VALIDATION_ERROR || err.name === ErrorNames.CAST_ERROR) {
+      if (
+        err.name === ErrorNames.VALIDATION_ERROR
+        || err.name === ErrorNames.CAST_ERROR
+      ) {
         next(new BadRequestError(ErrorMessages.BadRequest));
       }
       next(err);
