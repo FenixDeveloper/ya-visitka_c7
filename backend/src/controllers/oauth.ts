@@ -58,50 +58,58 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const userProfile = await getUserProfileYandex(code);
 
     const email = userProfile.email.toLowerCase();
+    const isCurator = CURATOR_LIST.toLowerCase().split(',').includes(email);
+    const user = await User.findOne({ email });
 
-    User.findOne({ email }).then((user) => {
-      let token;
-      if (user) {
-        const student: IUserPayload = {
-          _id: user._id,
-          name: userProfile.name,
-          email: user.email,
-          cohort: user.cohort,
-          role: 'student',
-        };
+    let token;
+    if (user) {
+      const student: IUserPayload = {
+        _id: user._id,
+        role: 'student',
+        email,
+      };
+      token = getToken(student);
+      const name = userProfile.name;
+      await User.findByIdAndUpdate(
+        user._id,
+        { name },
+        {
+          new: true,
+          runValidators: true,
+        }
+      )
+    }
 
-        token = getToken(student);
-      }
-      const isCurator = CURATOR_LIST.toLowerCase().split(',').includes(email);
-      if (isCurator) {
-        const curator: IUserPayload = {
-          _id: null,
-          email,
-          role: 'curator',
-        };
-        token = getToken(curator);
-      }
-      if (!token) throw new NotFoundError(ErrorMessages.UserNotFound);
-      res.send({ token });
-    }).catch(next);
+    if (isCurator) {
+      const curator: IUserPayload = {
+        _id: null,
+        role: 'curator',
+        email,
+      };
+      token = getToken(curator);
+    }
+
+    if (!token) throw new NotFoundError(ErrorMessages.UserNotFound);
+    res.send({ token });
   } catch (error) {
     next(error);
   }
 };
 
-export const getUser = (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith('Bearer ')) throw new UnauthorizedError(ErrorMessages.Unauthorized);
     const token = authorization.replace('Bearer ', '');
 
-    const { role, email } = jwt.decode(token) as IUserPayload;
+    const { _id, role, email } = jwt.decode(token) as IUserPayload;
     if (role === 'student') {
-      const {
-        _id, name, cohort,
-      } = jwt.decode(token) as IUserPayload;
+      const student = await User.findById(_id);
+      const name = student?.profile.name;
+      const photo = student?.profile.photo;
+      const cohort = student?.cohort;
       return res.send({
-        _id, name, email, cohort, role,
+        _id, name, photo, email, cohort, role,
       });
     }
 
