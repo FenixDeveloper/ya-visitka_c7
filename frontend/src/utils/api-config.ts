@@ -16,9 +16,10 @@ class Api {
   // Получение токена из кода подтверждения
   getToken(code: string) {
     return fetch(`${this._baseUrl}/token`, {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
+        'Access-Control-Allow-Origin': 'http://localhost:3000'
       },
       body: JSON.stringify({ code }),
     }).then((res) => this._parseResponse(res));
@@ -204,4 +205,4 @@ class Api {
   }
 }
 
-export default new Api(BASE_URL);
+export const api = new Api(BASE_URL);
