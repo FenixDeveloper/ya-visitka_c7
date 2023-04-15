@@ -42,12 +42,7 @@ export interface ICommunicationProps {
 
 export interface IUserRequest {
   email: string;
-  cohort?: string;
-}
-
-export interface ITokens {
-  accessToken: string;
-  refreshToken: string;
+  cohort: string;
 }
 
 export interface IProfile {
@@ -67,19 +62,19 @@ export interface IProfile {
   info: {
     hobby: {
       text: string;
-      image: null;
+      image: null | string;
     };
     status: {
       text: string;
-      image: null;
+      image: null | string;
     };
     job: {
       text: string;
-      image: null;
+      image: null | string;
     };
     edu: {
       text: string;
-      image: null;
+      image: null | string;
     };
   };
 }
