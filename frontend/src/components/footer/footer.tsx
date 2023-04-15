@@ -5,7 +5,7 @@ const Footer: FC = () => {
   return (
     <footer className={styles.footer}>
       <p className={styles.footer__copyright}>
-        © Визитки
+        &#169; Визитки
       </p>
       <p className={styles.footer__author}>
         Яндекс Практикум
