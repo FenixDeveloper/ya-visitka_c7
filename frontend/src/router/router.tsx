@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { RootPage } from '../pages/RootPage/RootPage';
-import { MainPage } from '../pages/MainPage/MainPage';
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
-import { LoginPage } from '../pages/LoginPage/LoginPage';
-import { ProfileDetailsPage } from '../pages/ProfileDetailsPage/ProfileDetailsPage';
-import { MapPage } from '../pages/MapPage/MapPage';
-import { ProfileEditPage } from '../pages/ProfileEditPage/ProfileEditPage';
-import { AdminCommentsPage } from '../pages/AdminCommentsPage/AdminCommentsPage';
-import { AdminUsersPage } from '../pages/AdminUsersPage/AdminUsersPage';
-import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
+import { RootPage } from '../pages/rootPage1/rootPage1';
+import { MainPage } from '../pages/mainPage1/mainPage1';
+import { NotFoundPage } from '../pages/notFoundPage1/notFoundPage1';
+import { LoginPage } from '../pages/loginPage1/loginPage1';
+import { ProfileDetailsPage } from '../pages/profileDetailsPage1/profileDetailsPage1';
+import { MapPage } from '../pages/mapPage1/mapPage1';
+import { ProfileEditPage } from '../pages/profileEditPage1/profileEditPage1';
+import { AdminCommentsPage } from '../pages/adminCommentsPage1/adminCommentsPage1';
+import { AdminUsersPage } from '../pages/adminUsersPage1/adminUsersPage1';
+import { ProtectedRoute } from '../components/protectedRoute1/protectedRoute1';
 import { UserStatus } from '../services/types/data';
 
 export const router = createBrowserRouter(
