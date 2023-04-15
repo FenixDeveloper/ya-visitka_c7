@@ -1,4 +1,4 @@
-import { IProfile, IUserRequest } from '../services/types/data';
+import { IFile, IProfile, IUserRequest } from '../services/types/data';
 import { BASE_URL, GITHUB_URL } from './constants';
 
 class Api {
@@ -165,6 +165,34 @@ class Api {
       },
       body: JSON.stringify(body),
     }).then((res) => this._parseResponse(res));
+  }
+
+  // FILES
+  postAddFiles(body: IFile) {
+    const formData = new FormData();
+    formData.append('hobby', body.hobby);
+    formData.append('status', body.status);
+    formData.append('job', body.job);
+    formData.append('education', body.education);
+    formData.append('avatar', body.avatar);
+    
+    return fetch(`${this._baseUrl}/files`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    }).then((res) => this._parseResponse(res));
+  }
+
+  getFile(nameFile: string) {
+    return fetch(`${this._baseUrl}/files/${nameFile}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+    }
+    ).then((res) => this._parseResponse(res));
   }
 
   checkExistUserGitHub(nickname: string) {

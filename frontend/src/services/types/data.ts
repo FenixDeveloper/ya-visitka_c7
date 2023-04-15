@@ -79,6 +79,14 @@ export interface IProfile {
   };
 }
 
+export interface IFile {
+  hobby: string;
+  status: string;
+  job: string;
+  education: string;
+  avatar: string;
+}
+
 export enum UserStatus {
   Student = 'STUDENT',
   Curator = 'CURATOR',
