@@ -91,7 +91,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
   try {
-    // const token = req.headers.authorization?.split(' ')[1];
     const { authorization } = req.headers;
     if (!authorization || !authorization.startsWith('Bearer ')) throw new UnauthorizedError(ErrorMessages.Unauthorized);
     const token = authorization.replace('Bearer ', '');
