@@ -74,7 +74,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         { _id: user._id },
         { $set: { 'profile.name': name } },
       ).orFail(new NotFoundError(ErrorMessages.UserNotFound))
-        .catch((err) => { next(err); });
+        .catch(next);
     }
 
     if (isCurator) {
@@ -105,16 +105,15 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
       const name = student?.profile.name;
       const photo = student?.profile.photo;
       const cohort = student?.cohort;
-      return res.send({
+      res.send({
         _id, name, photo, email, cohort, role,
       });
     }
 
     if (role === 'curator') {
-      return res.send({ email, role });
+      res.send({ email, role });
     }
   } catch (error) {
     next(error);
   }
-  return false;
 };
