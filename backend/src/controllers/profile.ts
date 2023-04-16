@@ -32,7 +32,7 @@ export const getProfile = async (
 
   userSchema
     .findById(id)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((user) => {
       res.status(StatusCodes.OK).json(user);
     })
@@ -49,7 +49,7 @@ export const patchProfile = (
 
   userSchema
     .findOneAndUpdate({ _id: id }, profileData, { new: true })
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((updatedProfile) => {
       res.status(StatusCodes.OK).json(updatedProfile);
     })
@@ -67,7 +67,7 @@ export const postProfileReaction = async (
 
   const user = await userSchema
     .findById(senderId)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((userData) => userData)
     .catch(next);
 
@@ -89,7 +89,7 @@ export const postProfileReaction = async (
       { $addToSet: { reactions: reaction } },
       { new: true },
     )
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then(() => {
       res.status(StatusCodes.OK).json();
     })
@@ -106,7 +106,7 @@ export const getProfileReactions = (
 
   userSchema
     .findById(userId)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((userData) => {
       const reactions = userData.reactions.slice(Number(offset), Number(offset) + Number(limit));
       res.status(StatusCodes.OK).json(reactions);

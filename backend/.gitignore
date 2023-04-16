@@ -16,3 +16,7 @@ node_modules
 
 # Typescript build
 dist
+
+.env
+
+.idea

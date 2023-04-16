@@ -101,11 +101,11 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
     if (updateResult.modifiedCount === 1) {
       res.status(StatusCodes.OK).json();
     } else {
-      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NotFound });
+      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NOT_FOUND });
     }
   } catch (err) {
     if (err instanceof Error && err.name === 'CastError') {
-      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NotFound });
+      res.status(StatusCodes.NOT_FOUND).json({ error: ErrorMessages.NOT_FOUND });
     }
     next(err);
   }

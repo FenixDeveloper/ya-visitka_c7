@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 import { join } from 'path';
 
 config({
-  path: join(__dirname, '../../', '.env'),
+  path: join(__dirname, '..', '..', '.env'),
 });
 
 const {

@@ -26,15 +26,15 @@ const getUserProfileYandex = async (code: string) => {
       client_secret: CLIENT_SECRET,
     }),
   });
-  const { access_token } = await response.json();
-  if (!access_token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  const { access_token: accessToken } = await response.json();
+  if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
   const userResponse = await fetch(yandex.PROFILE_URL, {
-    headers: { Authorization: `OAuth${access_token}` },
+    headers: { Authorization: `OAuth${accessToken}` },
   });
 
   const userProfile = await userResponse.json();
-  if (!userProfile) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
   const user: IUserPayload = {
     email: userProfile.default_email,
@@ -47,7 +47,7 @@ const getToken = (user: IUserPayload) => jwt.sign(user, 'secret', { expiresIn: '
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   const { code } = req.body;
-  if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
   const userProfile = await getUserProfileYandex(code);
 
@@ -80,25 +80,29 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       res.send({ token });
     })
     .catch(() => {
-      next(new UnauthorizedError(ErrorMessages.Unauthorized));
+      next(new UnauthorizedError(ErrorMessages.UNAUTHORIZED));
     });
 };
 
 export const getUser = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
-  const { role, email } = jwt.decode(token) as IUserPayload;
-  if (role === 'student') {
-    const {
-      _id, name, cohort, photo,
-    } = jwt.decode(token) as IUserPayload;
-    return res.send({
-      _id, name, email, cohort, role, photo,
-    });
-  }
+    const { role, email } = jwt.decode(token) as IUserPayload;
+    if (role === 'student') {
+      const {
+        _id, name, cohort, photo,
+      } = jwt.decode(token) as IUserPayload;
+      res.send({
+        _id, name, email, cohort, role, photo,
+      });
+    }
 
-  if (role === 'curator') {
-    return res.send({ email, role });
+    if (role === 'curator') {
+      res.send({ email, role });
+    }
+  } catch (err) {
+    next(err);
   }
 };

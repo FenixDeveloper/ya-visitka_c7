@@ -1,14 +1,10 @@
-/* eslint-disable no-unused-vars */
 import {
-  Request, Response, Express, NextFunction,
+  Request, Response, NextFunction,
 } from 'express';
 import path from 'path';
 import fs from 'fs';
+import { TFiles, TInfoTypes } from '../types/upload-files';
 import BadRequestError from '../errors/bad-request-error';
-
-type TInfoTypes = 'hobby' | 'status' | 'job' | 'education' | 'avatar';
-
-type TFiles = { [key in TInfoTypes]: Express.Multer.File[] };
 
 // eslint-disable-next-line import/prefer-default-export
 export const uploadFiles = (

@@ -6,3 +6,7 @@ export interface IUserPayload {
   cohort?: string;
   role?: string;
 }
+
+export interface IUser {
+  role?: string;
+}
