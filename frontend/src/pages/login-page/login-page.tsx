@@ -21,21 +21,21 @@ export const LoginPage: FC = () => {
   return (
     <section className={LoginPageStyles.loginPage}>
       <h1 className={LoginPageStyles.loginPage__title}>
-            С кем я учусь?
+        С кем я учусь?
       </h1>
       <a className={LoginPageStyles.loginPage__buttonBox}
-        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}`}
+        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=http://localhost:3000`}
       >
-        <Button size={windowWidth <= 576 ? 'medium' : 'large'} 
+        <Button size={windowWidth <= 576 ? 'medium' : 'large'}
           htmlType='button'
         >
           <p className={LoginPageStyles.loginPage__buttonText}>
-              Войти с Яндекс ID
+            Войти с Яндекс ID
           </p>
         </Button>
       </a>
       <p className={`${LoginPageStyles.loginPage__errorText} ${errorActive && LoginPageStyles.loginPage__errorText_active}`}>
-          ЧТО-ТО ПОШЛО НЕ ТАК, ПОПРОБУЙТЕ ЕЩЕ РАЗ
+        ЧТО-ТО ПОШЛО НЕ ТАК, ПОПРОБУЙТЕ ЕЩЕ РАЗ
       </p>
     </section>
   );

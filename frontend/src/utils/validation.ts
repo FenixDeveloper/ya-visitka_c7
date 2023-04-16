@@ -1,5 +1,5 @@
 import { VALIDATION, IMAGE_TYPES, VALIDATION_ERRORS } from './constants';
-import apiConfig from './api-config';
+import { api } from './api-config';
 
 interface ValidationStaticType {
   checkLength(field: string, minLength: number, maxLength: number): string;
@@ -33,7 +33,7 @@ class Validation {
 
   static async isExistUserGithub(nickname: string): Promise<string> {
     try {
-      await apiConfig.checkExistUserGitHub(nickname);
+      await api.checkExistUserGitHub(nickname);
       return '';
     } catch (error) {
       return VALIDATION_ERRORS.GITHUB_USER_NOT_FOUND;

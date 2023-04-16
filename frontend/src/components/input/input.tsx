@@ -17,9 +17,11 @@ export const Input: FC<IInputProps> = ({
   value,
   errorMessage,
   caption,
+  isMainPage
 }) => {
   const [profileState, setProfileState] = React.useContext(ProfileContext);
-  const [valueSelectCity, setValueSelectCity] = React.useState(value ? value : arrValues[0]);
+  const [valueSelectCityProfile, setValueSelectCityProfile] = React.useState(value ? value : arrValues[0]);
+  const [valueSelectCityMain, setValueSelectCityMain] = React.useState(value ? value : arrValues[0]);
   const [valueSelectPattern, setValueSelectPattern] = React.useState(value ? value : arrValues[0]);
   const [avatar, setAvatar] = React.useState(profileState.avatar);
   const [isVisible, setIsVisible] = React.useState(false);
@@ -38,10 +40,16 @@ export const Input: FC<IInputProps> = ({
     setIsVisible(!isVisible);
   }
 
-  function changeSelectedOptionCity(item: string) {
-    setValueSelectCity(item);
+  function changeSelectedOptionCityProfile(item: string) {
+    setValueSelectCityProfile(item);
     setIsVisible(false);
-    setProfileState({ ...profileState, formSity: item });
+    setProfileState({ ...profileState, formCity: item });
+  }
+
+  function changeSelectedOptionCityMain(item: string) {
+    setValueSelectCityMain(item);
+    setIsVisible(false);
+    setProfileState({ ...profileState, cityMain: item });
   }
 
   function changeSelectedOptionPattern(item: string) {
@@ -58,9 +66,14 @@ export const Input: FC<IInputProps> = ({
     setValueSelectPattern(e.target.value);
   };
 
-  const changeValueSelectCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeValueSelectCityProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e, 'change');
-    setValueSelectCity(e.target.value);
+    setValueSelectCityProfile(e.target.value);
+  };
+
+  const changeValueSelectCityMain = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e, 'change');
+    setValueSelectCityMain(e.target.value);
   };
 
   const uploadAvatar = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,38 +123,73 @@ export const Input: FC<IInputProps> = ({
       </>
     );
   } else if (type === 'select' && arrValues !== PATTERN_ARR) {
-    return (
-      <>
-        {label && <label className={styles.input__label}>{label}</label>}
-        <div className={styles.select}>
-          <button
-            className={isVisible ? `${styles.button} ${styles.button_active}` : styles.button}
-            onClick={handleClick}>
-            {valueSelectCity}
-          </button>
-          {isVisible && (
-            <ul className={styles.list}>
-              {arrValues.map((item, index) => (
-                <li
-                  className={styles.list__item}
-                  onClick={() => changeSelectedOptionCity(item)}
-                  key={index}>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          )}
-          <input
-            className={styles.select__input}
-            type="text"
-            name={name}
-            value={valueSelectCity}
-            onChange={changeValueSelectCity}
-          />
-        </div>
-        {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
-      </>
-    );
+    if (isMainPage) {
+      return (
+        <>
+          {label && <label className={styles.input__label}>{label}</label>}
+          <div className={styles.select}>
+            <button
+              className={isVisible ? `${styles.button} ${styles.button_active}` : styles.button}
+              onClick={handleClick}>
+              {valueSelectCityMain}
+            </button>
+            {isVisible && (
+              <ul className={styles.list}>
+                {arrValues.map((item, index) => (
+                  <li
+                    className={styles.list__item}
+                    onClick={() => changeSelectedOptionCityMain(item)}
+                    key={index}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <input
+              className={styles.select__input}
+              type="text"
+              name={name}
+              value={valueSelectCityMain}
+              onChange={changeValueSelectCityMain}
+            />
+          </div>
+          {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {label && <label className={styles.input__label}>{label}</label>}
+          <div className={styles.select}>
+            <button
+              className={isVisible ? `${styles.button} ${styles.button_active}` : styles.button}
+              onClick={handleClick}>
+              {valueSelectCityProfile}
+            </button>
+            {isVisible && (
+              <ul className={styles.list}>
+                {arrValues.map((item, index) => (
+                  <li
+                    className={styles.list__item}
+                    onClick={() => changeSelectedOptionCityProfile(item)}
+                    key={index}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <input
+              className={styles.select__input}
+              type="text"
+              name={name}
+              value={valueSelectCityProfile}
+              onChange={changeValueSelectCityProfile}
+            />
+          </div>
+          {errorMessage && <span className={styles.input__error}>{errorMessage}</span>}
+        </>
+      );
+    }
   } else if (type === 'file') {
     return (
       <>
