@@ -76,3 +76,20 @@ export enum UserStatus {
   Student = 'STUDENT',
   Curator = 'CURATOR',
 }
+
+export interface IStudentsData {
+  _id: string,
+  email: string,
+  cohort: string,
+  createdAt: number,
+  updatedAt: number,
+  name: string,
+}
+
+export interface ICommentData {
+  _id: string,
+  from: Omit<IStudentsData, 'createdAt' | 'updatedAt' >;
+  target: string;
+  text: string;
+  to: Omit<IStudentsData, 'createdAt' | 'updatedAt' >;
+}
