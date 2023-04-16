@@ -31,8 +31,8 @@ export const uploadFiles = (
     );
 
   res.send(JSON.stringify(result));
-  const filePath = path.resolve('uploads');
-  res.download(filePath, JSON.stringify(result));
+  // const filePath = path.resolve('uploads');
+  // res.download(filePath, JSON.stringify(result));
 };
 
 export const getFile = (
