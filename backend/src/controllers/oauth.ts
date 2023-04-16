@@ -1,108 +1,116 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
-import { CLIENT_ID, CLIENT_SECRET, CURATOR_LIST } from '../config/config';
+import {
+  CLIENT_ID, CLIENT_SECRET, CURATOR_LIST, JWT_SECRET, TOKEN_URL, PROFILE_URL, NODE_ENV,
+} from '../config/config';
 import UnauthorizedError from '../errors/unauthorized-error';
+import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
-import { IUserPayload } from '../types/user-payload';
-
-const yandex = {
-  CALLBACK_URL: 'http://127.0.0.1:3000/auth/yandex/callback',
-  OATH_URL: 'https://oauth.yandex.ru/authorize?response_type=code',
-  TOKEN_URL: 'https://oauth.yandex.ru/token',
-  PROFILE_URL: 'https://login.yandex.ru/info?format=json',
-};
+import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
 const getUserProfileYandex = async (code: string) => {
-  const response = await fetch(yandex.TOKEN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      grant_type: 'authorization_code',
-      code,
-      client_id: CLIENT_ID,
-      client_secret: CLIENT_SECRET,
-    }),
-  });
-  const { access_token: accessToken } = await response.json();
-  if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  try {
+    const response = await fetch(TOKEN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code,
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+      }),
+    });
+    const { access_token: accessToken } = await response.json();
+    if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+    const userResponse = await fetch(PROFILE_URL, {
+      headers: { Authorization: `OAuth${accessToken}` },
+    });
 
-  const userResponse = await fetch(yandex.PROFILE_URL, {
-    headers: { Authorization: `OAuth${accessToken}` },
-  });
-
-  const userProfile = await userResponse.json();
-  if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-
-  const user: IUserPayload = {
-    email: userProfile.default_email,
-    name: userProfile.first_name,
-  };
-  return user;
+    const userProfile = await userResponse.json();
+    if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+    const user: IUserProfileYandex = {
+      email: userProfile.default_email,
+      name: userProfile.first_name,
+    };
+    return user;
+  } catch (error) {
+    throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  }
 };
 
-const getToken = (user: IUserPayload) => jwt.sign(user, 'secret', { expiresIn: '7d' });
+const getToken = (user: IUserPayload) => jwt.sign(
+  user,
+  NODE_ENV === 'production' ? JWT_SECRET : 'secret',
+  { expiresIn: '7d' },
+);
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
-  const { code } = req.body;
-  if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  try {
+    const { code } = req.body;
+    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+    const userProfile = await getUserProfileYandex(code);
 
-  const userProfile = await getUserProfileYandex(code);
+    const email = userProfile.email.toLowerCase();
+    const isCurator = CURATOR_LIST.toLowerCase().split(',').includes(email);
+    const user = await User.findOne({ email });
 
-  User.findOne({ email: userProfile.email })
-    .then((user) => {
-      let token;
+    let token;
+    if (user) {
+      const student: IUserPayload = {
+        _id: user._id,
+        role: 'student',
+        email,
+      };
+      token = getToken(student);
+      const { name } = userProfile;
+      await User.updateOne(
+        { _id: user._id },
+        { $set: { 'profile.name': name } },
+      ).orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
+        .catch(next);
+    }
 
-      if (user) {
-        const student: IUserPayload = {
-          _id: user._id,
-          name: userProfile.name,
-          email: user.email,
-          cohort: user.cohort,
-          photo: user.profile?.photo,
-          role: 'student',
-        };
+    if (isCurator) {
+      const curator: IUserPayload = {
+        _id: null,
+        role: 'curator',
+        email,
+      };
+      token = getToken(curator);
+    }
 
-        token = getToken(student);
-      }
-      const isCurator = CURATOR_LIST.split(',').includes(userProfile.email!);
-
-      if (isCurator) {
-        const curator: IUserPayload = {
-          email: userProfile.email,
-          role: 'curator',
-        };
-
-        token = getToken(curator);
-      }
-      res.send({ token });
-    })
-    .catch(() => {
-      next(new UnauthorizedError(ErrorMessages.UNAUTHORIZED));
-    });
+    if (!token) throw new NotFoundError(ErrorMessages.USER_NOT_FOUND);
+    res.send({ token });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const getUser = (req: Request, res: Response, next: NextFunction) => {
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+    const { authorization } = req.headers;
+    if (!authorization || !authorization.startsWith('Bearer ')) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+    const token = authorization.replace('Bearer ', '');
 
-    const { role, email } = jwt.decode(token) as IUserPayload;
+    const { _id, role, email } = jwt.decode(token) as IUserPayload;
     if (role === 'student') {
-      const {
-        _id, name, cohort, photo,
-      } = jwt.decode(token) as IUserPayload;
+      const student = await User.findById(_id);
+      const name = student?.profile.name;
+      const photo = student?.profile.photo;
+      const cohort = student?.cohort;
       res.send({
-        _id, name, email, cohort, role, photo,
+        _id, name, photo, email, cohort, role,
       });
     }
 
     if (role === 'curator') {
       res.send({ email, role });
     }
-  } catch (err) {
-    next(err);
+
+  } catch (error) {
+    next(error);
   }
 };

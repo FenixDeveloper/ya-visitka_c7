@@ -39,7 +39,6 @@ app.use(express.json());
 // });
 
 // где можно получить код -> /auth/yandex/callback;
-// берет код подтверждения - отдает токен
 
 app.use(requestLogger);
 app.use('/api', rootRouter);

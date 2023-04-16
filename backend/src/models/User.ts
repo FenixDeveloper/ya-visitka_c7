@@ -91,7 +91,7 @@ const studentSchema = new Schema<IStudent>(
     email: {
       type: String,
     },
-    _id: { type: mongoose.SchemaTypes.ObjectId, ref: 'User' },
+    _id: { type: mongoose.SchemaTypes.ObjectId, ref: 'user' },
   },
   { _id: false },
 );
@@ -109,12 +109,6 @@ export const reactionSchema = new Schema(
 
 const userSchema = new Schema<IUser, IUserModel>(
   {
-    createdAt: {
-      type: Number,
-    },
-    updatedAt: {
-      type: Number,
-    },
     email: {
       type: String,
       unique: true,
@@ -141,7 +135,7 @@ const userSchema = new Schema<IUser, IUserModel>(
     },
   },
   {
-    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+    timestamps: true,
   },
 );
 
@@ -182,4 +176,4 @@ userSchema.static('findUserByEmail', function findUserByEmail(email: string) {
 
 userSchema.index({ email: 1 }, { unique: true });
 
-export default model<IUser, IUserModel>('User', userSchema);
+export default model<IUser, IUserModel>('user', userSchema);

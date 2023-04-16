@@ -1,10 +1,12 @@
 export interface IUserPayload {
-  _id?: any;
-  name?: string;
-  email?: string;
-  photo?: string;
-  cohort?: string;
-  role?: string;
+  _id: any;
+  email: string;
+  role: string;
+}
+
+export interface IUserProfileYandex {
+  email: string;
+  name: string;
 }
 
 export interface IUser {

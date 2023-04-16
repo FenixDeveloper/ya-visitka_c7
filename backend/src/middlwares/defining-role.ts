@@ -5,13 +5,17 @@ import ErrorMessages from '../helpers/error-messages';
 import { IUser } from '../types/user-payload';
 
 const isCurator = (req: Request, res: Response, next: NextFunction) => {
-  const { role } = req.user as IUser;
-  if (!role) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  try {
+    const { role } = req.user as IUser;
+    if (!role) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
-  if (role === 'curator') {
-    next();
-  } else {
-    throw new ForbiddenError(ErrorMessages.FORBIDDEN);
+    if (role === 'curator') {
+      next();
+    } else {
+      throw new ForbiddenError(ErrorMessages.FORBIDDEN);
+    }
+  } catch (error) {
+    next(error);
   }
 };
 
