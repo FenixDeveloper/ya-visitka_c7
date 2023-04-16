@@ -1,7 +1,6 @@
-import React, { FC, SyntheticEvent } from 'react';
+import React, { FC } from 'react';
 import styles from './Comments.module.scss';
 import trash from '../../assets/icons/trash.svg';
-
 
 type TComments = {
   cohort: string;
@@ -10,7 +9,7 @@ type TComments = {
   recipient: string;
   from: string;
   text: string;
-  onClick?: (() => void) | ((e: SyntheticEvent) => void);
+  handleDelete?: () => void;
 };
 
 export const Comments: FC<TComments> = ({
@@ -20,7 +19,7 @@ export const Comments: FC<TComments> = ({
   recipient,
   from,
   text,
-  onClick
+  handleDelete
 }) => {
   return (
     <>
@@ -31,7 +30,7 @@ export const Comments: FC<TComments> = ({
         <p className={styles.tableData}>{recipient}</p>
         <p className={styles.tableData}>{from}</p>
         <p className={styles.tableData}>{text}</p>
-        <button className={styles.deleteButton}onClick={onClick}>
+        <button className={styles.deleteButton}onClick={handleDelete}>
           <img src={trash} alt='Нажать для удаления' />
         </button>
       </div>
