@@ -58,7 +58,16 @@
 }
 
 .email[readonly] {
-    border: none;
+    border: 1px solid transparent;
+    outline: none;
+}
+
+.email_invalid {
+    border: 1px solid $color-error;
+}
+
+.email_invalid[readonly] {
+    border: 1px solid $color-error;;
     outline: none;
 }
 

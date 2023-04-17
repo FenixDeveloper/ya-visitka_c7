@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     margin: 0 40px;
+    height: calc(100vh - 123px - 72px);
 }
 
 .navigation {
@@ -33,11 +34,13 @@
     display: flex;
     flex-direction: row;
     margin-top: 48px;
+    height: 100%;
 }
 
 .students {
     width: 1015px;
     position: relative;
+    height: 100%;
 }
 
 .filter_text {
@@ -96,7 +99,7 @@
     margin: 0;
     padding: 0 24px 0 0;
     overflow-y: scroll;
-    max-height: 64vh;
+    max-height: calc(70% - 72px);
 }
 
 .students_list::-webkit-scrollbar {
@@ -164,4 +167,10 @@
     color: $color-blue;
     width: 140px;
     height: 44px;
+}
+
+.button_submit[disabled] {
+    border: 1px solid $color-placeholder;
+    cursor: default;
+    color: $color-placeholder;
 }

@@ -7,6 +7,7 @@ import { Button } from '../../components/Button/Button';
 import { TStudent, TStudentsDataFull } from '../../services/types/data';
 import { read, utils } from 'xlsx';
 import { v4 as uuidv4 } from 'uuid';
+import { validation } from '../../utils/validation';
 
 export const AdminUsersPage: FC = () => {
   const [query, setQuery] = useState<string>('');
@@ -15,6 +16,7 @@ export const AdminUsersPage: FC = () => {
   const [students, setStudents] = useState<TStudent[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<TStudent[]>([]);
   const [studentsToUpload, setStudentsToUpload] = useState<TStudent[]>([]);
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(false);
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   const bearerToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNtdGhPZlZhbHVlQHlhbmRleC5ydSIsInJvbGUiOiJjdXJhdG9yIiwiaWF0IjoxNjgxNDcxNjE0LCJleHAiOjE2ODIwNzY0MTR9.pAZhCpunPy7S8kz3RNheSoZKyj7tZi-Y78wYaycf82Y';
@@ -31,7 +33,8 @@ export const AdminUsersPage: FC = () => {
               email: student.email,
               cohort: student.cohort,
               id: student._id,
-              fromFile: false
+              fromFile: false,
+              validationError: false,
             };
           });
           setFilteredStudents(studentsFromAPI)
@@ -47,6 +50,16 @@ export const AdminUsersPage: FC = () => {
       setConfirmationIsOpen(false)
     }
   }, [studentsToUpload]);
+
+  useEffect(() => {
+    const virtualStudents = students.filter(student => student.fromFile === true);
+    const validationErrors = virtualStudents.some((student) => student.validationError);
+    if (validationErrors) {
+      setSaveButtonDisabled(true);
+    } else {
+      setSaveButtonDisabled(false);
+    }
+  }, [students]);
 
 
   //отбор студентов по критерию фильтрации
@@ -96,9 +109,21 @@ export const AdminUsersPage: FC = () => {
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];      
       const arrayOfRows = utils.sheet_to_json(sheet, { header: 1 }) as [string, string][];
-      const studentsFromFile = arrayOfRows.map((row) => {
-        return {email: row[0], cohort: row[1].toString(), id: uuidv4(), name: '', fromFile: true}
+      const filteredArrayOfRows = arrayOfRows.filter((row) => {
+        if (row[0]) {
+          return true;
+        } else {
+          return false;
+        }
       })
+      const studentsFromFile = filteredArrayOfRows.map((row) => {        
+        const validationErrorMessage = validation.isEmail(row[0].toString());
+        if (validationErrorMessage !== '') {
+          return {email: row[0].toString(), cohort: row[1].toString(), id: uuidv4(), name: '', fromFile: true, validationError: true}
+        } else {
+          return {email: row[0].toString(), cohort: row[1].toString(), id: uuidv4(), name: '', fromFile: true, validationError: false}
+        }
+      });
       setStudentsToUpload(studentsFromFile);
       setStudents([...students].concat(studentsFromFile));
       setFilteredStudents([...filteredStudents.concat(studentsFromFile)]);
@@ -207,6 +232,7 @@ export const AdminUsersPage: FC = () => {
         email={student.email}
         id={student.id}
         fromFile={student.fromFile}
+        validationError={student.validationError}
         handleUpdate={handleUpdate}
         handleDelete={() => handleStudentDeleteClick(student.id)}
       />)
@@ -222,6 +248,7 @@ export const AdminUsersPage: FC = () => {
         email={student.email}
         id={student.id}
         fromFile={student.fromFile}
+        validationError={student.validationError}
         handleUpdate={handleUpdate}
       />)
     }
@@ -304,6 +331,7 @@ export const AdminUsersPage: FC = () => {
                 type='button'
                 className={styles.button_submit}
                 onClick={handleSave}
+                disabled={saveButtonDisabled}
               >Сохранить</button>
             </div>
           </>}

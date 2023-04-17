@@ -100,6 +100,7 @@ export type TStudent = {
   name: string;
   id: string;
   fromFile: boolean;
+  validationError: boolean;
 }
 
 export type TStudentProps = TStudent & {

@@ -1,14 +1,13 @@
 import React, { FC, useState } from 'react';
 import styles from './Student.module.scss';
 import { NavLink } from 'react-router-dom';
-import api from '../../utils/api-config';
-import { TStudent, TStudentProps, UpdateField } from '../../services/types/data';
+import { TStudentProps, UpdateField } from '../../services/types/data';
 import { usePrevious } from '../../utils/utils';
 import trash from '../../assets/icons/trash.svg';
 import { validation } from '../../utils/validation';
 
 
-export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, handleDelete, handleUpdate }) => {
+export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, validationError, handleDelete, handleUpdate }) => {
 
   const [inputReadOnlyState, setInputReadOnlyState] = useState({ 
     cohort: true,
@@ -43,13 +42,13 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
 
   const handleUpdateOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, updateField: UpdateField) => {
     const target = e.target as HTMLInputElement;
-    const validationError = validation.isEmail(target.value);
-    if (validationError !== '') {
-      console.log(validationError);
-      return;
-    }
     if (e.key === 'Enter') {
       if (updateField === UpdateField.EMAIL) {
+        const validationError = validation.isEmail(target.value);
+        if (validationError !== '') {
+          console.log(validationError);
+          return;
+        }
         if (previousEmail && target.value.toLowerCase() === previousEmail.toLowerCase()) {
           setInputReadOnlyState({...inputReadOnlyState, email: true});
           return;
@@ -61,13 +60,21 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
           return;
         }
       }
-      handleUpdate({id, cohort: inputValue.cohort, email: inputValue.email, fromFile, name });
+      handleUpdate({id, cohort: inputValue.cohort, email: inputValue.email, fromFile, name, validationError });
       if (updateField === UpdateField.COHORT) {
         setInputReadOnlyState({...inputReadOnlyState, cohort: true});
       }
       if (updateField === UpdateField.EMAIL) {
         setInputReadOnlyState({...inputReadOnlyState, email: true});
       }
+    }
+  }
+
+  const setEmailStyle = (validationError: boolean) => {
+    if (validationError) {
+      return styles.email + ' ' + styles.email_invalid
+    } else {
+      return styles.email
     }
   }
 
@@ -90,7 +97,7 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
           onClick={handleClick}/>
       </div>
       <input 
-        className={styles.email}
+        className={setEmailStyle(validationError)}
         id='email'
         readOnly={inputReadOnlyState.email}
         type='email'
