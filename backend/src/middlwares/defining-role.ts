@@ -1,4 +1,5 @@
 import { Response, Request, NextFunction } from 'express';
+import Roles from '../helpers/roles';
 import UnauthorizedError from '../errors/unauthorized-error';
 import ForbiddenError from '../errors/forbidden-error';
 import ErrorMessages from '../helpers/error-messages';
@@ -9,7 +10,7 @@ const isCurator = (req: Request, res: Response, next: NextFunction) => {
     const { role } = req.user as IUserRole;
     if (!role) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
 
-    if (role === 'curator') {
+    if (role === Roles.CURATOR) {
       next();
     } else {
       throw new ForbiddenError(ErrorMessages.FORBIDDEN);

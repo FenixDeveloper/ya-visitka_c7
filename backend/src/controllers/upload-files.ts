@@ -4,7 +4,7 @@ import {
 import path from 'path';
 import fs from 'fs';
 import BadRequestError from '../errors/bad-request-error';
-import { TFiles, TInfoTypes } from '../types/filest';
+import { TFiles, TInfoTypes } from '../types/files';
 import ErrorMessages from '../helpers/error-messages';
 
 export const uploadFiles = (
@@ -27,9 +27,9 @@ export const uploadFiles = (
       },
     );
 
-  res.send(JSON.stringify(result));
   const filePath = path.resolve('uploads');
   res.download(filePath, JSON.stringify(result));
+  res.send(JSON.stringify(result));
 };
 
 export const getFile = (
@@ -41,7 +41,7 @@ export const getFile = (
     const { filename } = req.params;
     const filePath = path.resolve('uploads', filename);
     if (!fs.existsSync(filePath)) {
-      throw new BadRequestError(ErrorMessages.NotFound);
+      throw new BadRequestError(ErrorMessages.NOT_FOUND);
     }
     res.sendFile(filePath);
   } catch (error) {

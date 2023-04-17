@@ -1,5 +1,7 @@
+import { Types } from 'mongoose';
+
 export interface IUserPayload {
-  _id: any;
+  _id: Types.ObjectId | null;
   email: string;
   role: string;
 }

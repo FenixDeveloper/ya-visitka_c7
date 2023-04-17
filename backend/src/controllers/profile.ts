@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import Roles from '../helpers/roles';
 import { IUser } from '../types/user-model';
 import User from '../models/User';
 import StatusCodes from '../helpers/status-codes';
@@ -22,12 +23,12 @@ export const getProfiles = async (
   const { offset = 0, limit = 20, cohort: cohortQuery } = req.query;
   let cohort;
 
-  if (role === 'student') {
+  if (role === Roles.STUDENT) {
     const student = await User.findOne({ email })
       .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
       .catch(next);
     cohort = student?.cohort;
-  } else if (role === 'curator') {
+  } else if (role === Roles.CURATOR) {
     cohort = cohortQuery;
   }
 
