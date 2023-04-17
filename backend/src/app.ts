@@ -11,7 +11,6 @@ import rootRouter from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import { jwtStrategy } from './strategy/jwt.strategy';
-import nonExistentRequestHandler from './middlwares/non-existent-request-handler';
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -42,9 +41,7 @@ app.use(express.json());
 // где можно получить код -> /auth/yandex/callback;
 
 app.use(requestLogger);
-app.use(rootRouter);
-
-app.use(nonExistentRequestHandler);
+app.use('/api', rootRouter);
 
 app.use(errorLogger);
 app.use(errors());
@@ -54,7 +51,7 @@ async function main() {
   await mongoose.connect(DB_URL);
 }
 
-main().catch((err) => console.log(err));
+main().catch((err) => console.error(err));
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

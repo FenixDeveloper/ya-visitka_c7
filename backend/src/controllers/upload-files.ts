@@ -1,14 +1,11 @@
 import {
-  Request, Response, Express, NextFunction,
+  Request, Response, NextFunction,
 } from 'express';
 import path from 'path';
 import fs from 'fs';
 import BadRequestError from '../errors/bad-request-error';
+import { TFiles, TInfoTypes } from '../types/filest';
 import ErrorMessages from '../helpers/error-messages';
-
-type TInfoTypes = 'hobby' | 'status' | 'job' | 'education' | 'avatar';
-
-type TFiles = { [key in TInfoTypes]: Express.Multer.File[] };
 
 export const uploadFiles = (
   req: Request<{}, {}, { files: TFiles }>,

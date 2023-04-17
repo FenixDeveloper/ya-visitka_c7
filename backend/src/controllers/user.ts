@@ -49,10 +49,10 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
     })
     .catch((err) => {
       if (err.code === StatusCodes.CONFLICT_ERROR_CODE_MONGODB) {
-        next(new ConflictError(ErrorMessages.EmailConflict));
+        next(new ConflictError(ErrorMessages.EMAIL_CONFLICT));
       }
       if (err.name === ErrorNames.VALIDATION_ERROR) {
-        next(new BadRequestError(ErrorMessages.BadRequest));
+        next(new BadRequestError(ErrorMessages.BAD_REQUEST));
       }
       next(err);
     });
@@ -63,7 +63,7 @@ export const updateUser = (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
 
   if (!id || !isValidObjectId(id)) {
-    next(new BadRequestError(ErrorMessages.BadRequest));
+    next(new BadRequestError(ErrorMessages.BAD_REQUEST));
   }
 
   User.findByIdAndUpdate(id, { email, cohort }, {
@@ -72,14 +72,14 @@ export const updateUser = (req: Request, res: Response, next: NextFunction) => {
       email: 1, cohort: 1, updatedAt: 1, createdAt: 1,
     },
     runValidators: true,
-  }).orFail(new NotFoundError(ErrorMessages.UserNotFound))
+  }).orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((user) => res.send(user))
     .catch((err) => {
       if (
         err.name === ErrorNames.VALIDATION_ERROR
         || err.name === ErrorNames.CAST_ERROR
       ) {
-        next(new BadRequestError(ErrorMessages.BadRequest));
+        next(new BadRequestError(ErrorMessages.BAD_REQUEST));
       }
       next(err);
     });
