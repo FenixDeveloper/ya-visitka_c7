@@ -10,7 +10,7 @@ export const cohortRegex = /^[A-Za-z0-9+_\-]+$/;
 
 export const isUrlValid = (url: string): string | never => {
   if (!urlRegex.test(url)) {
-    throw new BadRequestError(ErrorMessages.BadRequest);
+    throw new BadRequestError(ErrorMessages.BAD_REQUEST);
   }
 
   return url;
@@ -18,7 +18,7 @@ export const isUrlValid = (url: string): string | never => {
 
 export const isEmailValid = (email: string): string | never => {
   if (!emailRegex.test(email)) {
-    throw new BadRequestError(ErrorMessages.BadRequest);
+    throw new BadRequestError(ErrorMessages.BAD_REQUEST);
   }
 
   return email;
@@ -26,7 +26,7 @@ export const isEmailValid = (email: string): string | never => {
 
 export const isCohortValid = (cohort: string): string | never => {
   if (!cohortRegex.test(cohort)) {
-    throw new BadRequestError(ErrorMessages.BadRequest);
+    throw new BadRequestError(ErrorMessages.BAD_REQUEST);
   }
 
   return cohort;

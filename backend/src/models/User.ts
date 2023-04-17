@@ -168,7 +168,7 @@ export const Emotion = docArray.discriminator<IEmotion>(
 userSchema.static('findUserByEmail', function findUserByEmail(email: string) {
   return this.findOne({ email }).then((user) => {
     if (!user) {
-      throw new NotFoundError(ErrorMessages.NotFound);
+      throw new NotFoundError(ErrorMessages.NOT_FOUND);
     }
     return user;
   });

@@ -23,22 +23,21 @@ const getUserProfileYandex = async (code: string) => {
         client_secret: CLIENT_SECRET,
       }),
     });
-    /* eslint-disable camelcase */
-    const { access_token } = await response.json();
-    if (!access_token) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+    const { access_token: accessToken } = await response.json();
+    if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const userResponse = await fetch(PROFILE_URL, {
-      headers: { Authorization: `OAuth${access_token}` },
+      headers: { Authorization: `OAuth${accessToken}` },
     });
 
     const userProfile = await userResponse.json();
-    if (!userProfile) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+    if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const user: IUserProfileYandex = {
       email: userProfile.default_email,
       name: userProfile.first_name,
     };
     return user;
   } catch (error) {
-    throw new UnauthorizedError(ErrorMessages.Unauthorized);
+    throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
   }
 };
 
@@ -51,7 +50,7 @@ const getToken = (user: IUserPayload) => jwt.sign(
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.body;
-    if (!code) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const userProfile = await getUserProfileYandex(code);
 
     const email = userProfile.email.toLowerCase();
@@ -70,7 +69,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       await User.updateOne(
         { _id: user._id },
         { $set: { 'profile.name': name } },
-      ).orFail(new NotFoundError(ErrorMessages.UserNotFound))
+      ).orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
         .catch(next);
     }
 
@@ -83,7 +82,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       token = getToken(curator);
     }
 
-    if (!token) throw new NotFoundError(ErrorMessages.UserNotFound);
+    if (!token) throw new NotFoundError(ErrorMessages.USER_NOT_FOUND);
     res.send({ token });
   } catch (error) {
     next(error);
@@ -93,7 +92,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { authorization } = req.headers;
-    if (!authorization || !authorization.startsWith('Bearer ')) throw new UnauthorizedError(ErrorMessages.Unauthorized);
+    if (!authorization || !authorization.startsWith('Bearer ')) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const token = authorization.replace('Bearer ', '');
 
     const { _id, role, email } = jwt.decode(token) as IUserPayload;

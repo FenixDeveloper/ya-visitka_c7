@@ -24,7 +24,7 @@ export const getProfiles = async (
 
   if (role === 'student') {
     const student = await User.findOne({ email })
-      .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+      .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
       .catch(next);
     cohort = student?.cohort;
   } else if (role === 'curator') {
@@ -48,7 +48,7 @@ export const getProfile = async (
   const { id } = req.params;
 
   User.findById(id)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((user) => {
       res.status(StatusCodes.OK).json(user);
     })
@@ -66,7 +66,7 @@ export const patchProfile = (
   const profileData: IUser = req.body;
 
   if (id !== user.id) {
-    next(new ForbiddenError(ErrorMessages.Forbidden));
+    next(new ForbiddenError(ErrorMessages.FORBIDDEN));
     return;
   }
 
@@ -74,7 +74,7 @@ export const patchProfile = (
     new: true,
     runValidators: true,
   })
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((updatedProfile) => {
       res.status(StatusCodes.OK).json(updatedProfile);
     })
@@ -83,7 +83,7 @@ export const patchProfile = (
         err.name === ErrorNames.VALIDATION_ERROR
         || err.name === ErrorNames.CAST_ERROR
       ) {
-        next(new BadRequestError(ErrorMessages.BadRequest));
+        next(new BadRequestError(ErrorMessages.BAD_REQUEST));
       }
       next(err);
     });
@@ -99,7 +99,7 @@ export const postProfileReaction = async (
   const reactionBody = req.body;
 
   const user = await User.findById(senderId)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((userData) => userData)
     .catch(next);
 
@@ -120,7 +120,7 @@ export const postProfileReaction = async (
     { $addToSet: { reactions: reaction } },
     { new: true, runValidators: true },
   )
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then(() => {
       res.status(StatusCodes.OK).json();
     })
@@ -129,7 +129,7 @@ export const postProfileReaction = async (
         err.name === ErrorNames.VALIDATION_ERROR
         || err.name === ErrorNames.CAST_ERROR
       ) {
-        next(new BadRequestError(ErrorMessages.BadRequest));
+        next(new BadRequestError(ErrorMessages.BAD_REQUEST));
       }
       next(err);
     });
@@ -144,7 +144,7 @@ export const getProfileReactions = (
   const { id: userId } = req.params;
 
   User.findById(userId)
-    .orFail(new NotFoundError(ErrorMessages.UserNotFound))
+    .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
     .then((userData) => {
       const reactions = userData.reactions.slice(
         Number(offset),

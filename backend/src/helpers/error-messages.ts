@@ -1,12 +1,12 @@
 const ErrorMessages = {
-  BadRequest: 'Переданы некорректные данные',
-  Forbidden: 'Доступ запрещен',
-  NotFound: 'Запрашиваемый ресурс не найден',
-  Unauthorized: 'Пользователь не авторизован',
-  InternalServerError: 'Произошла внутренняя ошибка',
+  BAD_REQUEST: 'Переданы некорректные данные',
+  FORBIDDEN: 'Доступ запрещен',
+  NOT_FOUND: 'Запрашиваемый ресурс не найден',
+  UNAUTHORIZED: 'Пользователь не авторизован',
+  INTERNAL_SERVER_ERROR: 'Произошла внутренняя ошибка',
   OK: 'success',
-  EmailConflict: 'Почта уже зарегистрирована',
-  UserNotFound: 'Пользователь не найден',
+  EMAIL_CONFLICT: 'Почта уже зарегистрирована',
+  USER_NOT_FOUND: 'Пользователь не найден',
 };
 
 export default ErrorMessages;
