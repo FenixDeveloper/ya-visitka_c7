@@ -31,7 +31,7 @@ export const router = createBrowserRouter(
           <MainPage />
         </ProtectedRoute>} />
       {/* // ? стр. авторизации */}
-      <Route path='login' element={<LoginPage />} />
+      <Route path='login' element={<LoginPage redirectUri=''/>} />
       {/* // ? стр. профиля студунта */}
       <Route path='profiles/:profileId' element={
         <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
