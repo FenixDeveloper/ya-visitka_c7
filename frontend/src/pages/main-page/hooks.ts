@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { api } from '../../utils/api-config';
-import { setTokens } from '../../utils/utils';
+import { setToken } from '../../utils/utils';
 
 export const useGetAccessTokenByQueryCode = () => {
   const { search } = useLocation();
@@ -11,7 +11,7 @@ export const useGetAccessTokenByQueryCode = () => {
   useEffect(() => {
     if (queryCode) {
       api.getToken(queryCode).then((data) => {
-        setTokens(data);
+        setToken(data);
       });
     }
   }, [queryCode]);
