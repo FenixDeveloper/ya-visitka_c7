@@ -94,7 +94,17 @@
 
 .students_list {
     margin: 0;
-    padding: 0 28px 0 0;
+    padding: 0 24px 0 0;
+    overflow-y: scroll;
+    max-height: 64vh;
+}
+
+.students_list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.students_list::-webkit-scrollbar-thumb {
+    background-color: $color-placeholder;   
 }
 
 .upload {
@@ -116,4 +126,42 @@
 
 .file_input {
     display: none;
+}
+
+.confirmation_text {
+    margin: 40px 0 0 0;
+    @include text();
+}
+
+.confirmation_buttons {
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.button_delete {
+    border: 1px solid $color-error;
+    border-radius: 4px;
+	padding: 0;
+    background: none;
+    cursor: pointer;
+    @include text_feedback();
+    font-weight: 500;
+    color: $color-error;
+    width: 140px;
+    height: 44px;
+    margin-right: 14px;
+}
+
+.button_submit {
+    border: 1px solid $color-blue;
+    border-radius: 4px;
+	padding: 0;
+    background: none;
+    cursor: pointer;
+    @include text_feedback();
+    font-weight: 500;
+    color: $color-blue;
+    width: 140px;
+    height: 44px;
 }

@@ -2,22 +2,12 @@ import React, { FC, useState } from 'react';
 import styles from './Student.module.scss';
 import { NavLink } from 'react-router-dom';
 import api from '../../utils/api-config';
-import { UpdateField } from '../../services/types/data';
+import { TStudent, TStudentProps, UpdateField } from '../../services/types/data';
 import { usePrevious } from '../../utils/utils';
 import trash from '../../assets/icons/trash.svg';
 
 
-type TStudent = {
-  cohort: string;
-  email: string;
-  name: string;
-  id: string;
-  fromFile: boolean;
-  handleDelete?: () => void;
-  handleUpdate: () => void;
-}; 
-
-export const Student: FC<TStudent> = ({ cohort, email, name, id, fromFile, handleDelete, handleUpdate }) => {
+export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, handleDelete, handleUpdate }) => {
 
   const [inputReadOnlyState, setInputReadOnlyState] = useState({ 
     cohort: true,
@@ -50,7 +40,7 @@ export const Student: FC<TStudent> = ({ cohort, email, name, id, fromFile, handl
     }
   }
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, updateField: UpdateField) => {
+  const handleUpdateOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, updateField: UpdateField) => {
     const target = e.target as HTMLInputElement;
     if (e.key === 'Enter') {
       if (updateField === UpdateField.EMAIL) {
@@ -58,28 +48,20 @@ export const Student: FC<TStudent> = ({ cohort, email, name, id, fromFile, handl
           setInputReadOnlyState({...inputReadOnlyState, email: true});
           return;
         }
-        setInputValue({...inputValue, email: target.value});
       }
       if (updateField === UpdateField.COHORT) {
         if (previousCohort && target.value === previousCohort) {
           setInputReadOnlyState({...inputReadOnlyState, cohort: true});
           return;
         }
-        setInputValue({...inputValue, cohort: target.value});
       }
-      api.putUsers('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNtdGhPZlZhbHVlQHlhbmRleC5ydSIsInJvbGUiOiJjdXJhdG9yIiwiaWF0IjoxNjgxNDcxNjE0LCJleHAiOjE2ODIwNzY0MTR9.pAZhCpunPy7S8kz3RNheSoZKyj7tZi-Y78wYaycf82Y', inputValue, id)
-        .then(student => 
-          setInputValue({
-            cohort: student[0].cohort,
-            email: student[0].email
-          })
-        )
+      handleUpdate({id, cohort: inputValue.cohort, email: inputValue.email, fromFile, name });
       if (updateField === UpdateField.COHORT) {
         setInputReadOnlyState({...inputReadOnlyState, cohort: true});
       }
       if (updateField === UpdateField.EMAIL) {
         setInputReadOnlyState({...inputReadOnlyState, email: true});
-      }      
+      }
     }
   }
 
@@ -97,7 +79,7 @@ export const Student: FC<TStudent> = ({ cohort, email, name, id, fromFile, handl
           readOnly={inputReadOnlyState.cohort}
           type='text'
           value={inputValue.cohort}
-          onKeyDown={(e) => handleKeyDown(e, UpdateField.COHORT)}
+          onKeyDown={(e) => handleUpdateOnEnter(e, UpdateField.COHORT)}
           onChange={handleCohortChange}
           onClick={handleClick}/>
       </div>
@@ -107,7 +89,7 @@ export const Student: FC<TStudent> = ({ cohort, email, name, id, fromFile, handl
         readOnly={inputReadOnlyState.email}
         type='email'
         value={inputValue.email}
-        onKeyDown={(e) => handleKeyDown(e, UpdateField.EMAIL)}
+        onKeyDown={(e) => handleUpdateOnEnter(e, UpdateField.EMAIL)}
         onChange={handleEmailChange}
         onClick={handleClick}/>
       <NavLink 

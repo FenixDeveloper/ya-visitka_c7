@@ -4,7 +4,7 @@ import styles from './AdminUsersPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Student } from '../../components/Student/Student';
 import { Button } from '../../components/Button/Button';
-import { TStudent, TStudentsDataFull } from '../../services/types/data';
+import { TStudent, TStudentsData, TStudentsDataFull } from '../../services/types/data';
 import { read, utils } from 'xlsx';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,45 +12,25 @@ export const AdminUsersPage: FC = () => {
   const [query, setQuery] = useState<string>('');
   const [confirmationIsOpen, setConfirmationIsOpen] = useState<boolean>(false);
   const [studentsData, setStudentsData] = useState<TStudentsDataFull[]>([]);
-  const [students, setStudents] = useState<TStudent[]>([]);
-  const [filteredStudents, setFilteredStudents] = useState<TStudent[]>([]);
-  const [studentsToUpload, setStudentsToUpload] = useState<TStudent[]>([]);
+  const [filteredStudents, setFilteredStudents] = useState<TStudentsData[]>([]);
+  const [filteredStudentsToUpload, setFilteredStudentsToUpload] = useState<TStudentsData[]>([]);
+  const [studentsToUpload, setStudentsToUpload] = useState<TStudentsData[]>([]);
   const inputFile = useRef<HTMLInputElement | null>(null);
 
   const bearerToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IlNtdGhPZlZhbHVlQHlhbmRleC5ydSIsInJvbGUiOiJjdXJhdG9yIiwiaWF0IjoxNjgxNDcxNjE0LCJleHAiOjE2ODIwNzY0MTR9.pAZhCpunPy7S8kz3RNheSoZKyj7tZi-Y78wYaycf82Y';
 
-  
   useEffect( () => {
     const fetchUsers = async () => {
       await api.getUsers(bearerToken, 0, 20, '')
         .then(data => {
-          setStudentsData(data.items);
-          const studentsFromAPI = data.items.map((student: TStudentsDataFull) => {
-            return {
-              name: student.name ? student.name : '',
-              email: student.email,
-              cohort: student.cohort,
-              id: student._id,
-              fromFile: false
-            };
-          });
-          setFilteredStudents(studentsFromAPI)
-          setStudents(studentsFromAPI);          
-        })
-        .catch((err) => console.log(err.message))
+          setStudentsData(data.items)
+          setFilteredStudents(data.items)})
     }
     fetchUsers();
   }, []);
 
-  useEffect(() => {
-    if (studentsToUpload.length === 0) {
-      setConfirmationIsOpen(false)
-    }
-  }, [studentsToUpload]);
-
-
   //отбор студентов по критерию фильтрации
-  const filterStudent = (student: TStudent, substring: string) => {
+  const filterStudent = (student: TStudentsData, substring: string) => {
     if (student.name === undefined) {
       if (student.cohort.toLowerCase().includes(substring.toLowerCase())
           || student.email.toLowerCase().includes(substring.toLowerCase())
@@ -68,16 +48,25 @@ export const AdminUsersPage: FC = () => {
   }
   
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const filterResult = students
+    const filterResult = studentsData
       .filter(student => {
         if (e.target.value === '') {
-          return students;
+          return studentsData
         }
         return filterStudent(student, e.target.value);
       });
+    const typedFilterResult = filterResult.map((student) => {return {cohort: student.cohort, name: student.name, email: student.email, _id: student._id}});
 
+    const virtualFilterResult = studentsToUpload
+      .filter(student => {
+        if (e.target.value === '') {
+          return studentsToUpload
+        }
+        return filterStudent(student, e.target.value);
+      });
     setQuery(e.target.value);
-    setFilteredStudents(filterResult);
+    setFilteredStudentsToUpload(virtualFilterResult);
+    setFilteredStudents(typedFilterResult);
   }
 
   const onUploadFileButtonClick = () => {
@@ -96,12 +85,11 @@ export const AdminUsersPage: FC = () => {
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];      
       const arrayOfRows = utils.sheet_to_json(sheet, { header: 1 }) as [string, string][];
-      const studentsFromFile = arrayOfRows.map((row) => {
-        return {email: row[0], cohort: row[1].toString(), id: uuidv4(), name: '', fromFile: true}
+      const students = arrayOfRows.map((row) => {
+        return {email: row[0], cohort: row[1].toString(), _id: uuidv4(), name: ''}
       })
-      setStudentsToUpload(studentsFromFile);
-      setStudents([...students].concat(studentsFromFile));
-      setFilteredStudents([...filteredStudents.concat(studentsFromFile)]);
+      setStudentsToUpload(students);
+      setFilteredStudentsToUpload(students);
       setConfirmationIsOpen(true);
       target.value = '';
     };
@@ -109,122 +97,99 @@ export const AdminUsersPage: FC = () => {
   }
 
   const handleStudentDeleteClick = (id: string) => {
-    setStudents(students.filter((student) => {
-      return student.id !== id
+    setStudentsToUpload(studentsToUpload.filter((student) => {
+      return student._id !== id
     }));
-    setFilteredStudents(filteredStudents.filter((student) => {
-      return student.id !== id
-    }));
-    setStudentsToUpload(studentsToUpload.filter((student)=> {
-      return student.id !== id
+    setFilteredStudentsToUpload(filteredStudentsToUpload.filter((student) => {
+      return student._id !== id
     }));
   }
 
   const handleUpdate = (student: TStudent) => {
-    const studentsCopy = [...students];
-    const studentToUpdate = studentsCopy.find((user) => user.id === student.id);
-    if (studentToUpdate) {
-      if (student.fromFile) {
+    if (student.fromFile) {
+      const virtualStudents = [...studentsToUpload];
+      const studentToUpdate = virtualStudents.find((user) => user._id === student.id);
+      if (studentToUpdate) {
         studentToUpdate.email = student.email;
         studentToUpdate.cohort = student.cohort;
-      } else {
+        setStudentsToUpload(virtualStudents);
+      }
+    } else {
+      const studentsDataCopy = [...studentsData];
+      const studentToUpdate = studentsDataCopy.find((user) => user._id === student.id);
+      if (studentToUpdate) {
         api.putUsers(bearerToken, {email: student.email, cohort: student.cohort}, student.id)
           .then(student => {
             studentToUpdate.email = student[0].email;
             studentToUpdate.cohort = student[0].cohort;
+            setStudentsData(studentsDataCopy);
           })
       }
-      setStudents(studentsCopy);
-    }    
+    }
   }
 
   const handleClearUploadCandidates = () => {
-    const filteredStudentsCopy = [...filteredStudents];
-    const studentsWithoutUpload = filteredStudentsCopy.filter((student) => student.fromFile === false);
-    setStudents(studentsWithoutUpload);
-    setFilteredStudents(studentsWithoutUpload);
     setStudentsToUpload([]);
-    //setConfirmationIsOpen(false);
+    setFilteredStudentsToUpload([]);
+    setConfirmationIsOpen(false);
   }
 
-  const updateUser = async (accessToken: string, student: TStudent, isExisting: boolean, failedUploadsArr: TStudent[]) => {
-    if (isExisting) {
-      await api.putUsers(accessToken, {email: student.email, cohort: student.cohort}, student.id)
-        .catch((err) => {
-          console.log(err.message); 
-          failedUploadsArr.push(student)
-        });
-    }
-    else {
-      await api.postUsers(accessToken, {email: student.email, cohort: student.cohort})
-        .catch((err) => {
-          console.log(err.message);
-          failedUploadsArr.push(student)
-        });
-    }
-  }
-
-  const handleSave = async () => {
-    const virtualStudents = students.filter(student => student.fromFile === true);
-    const failedToUpload: TStudent[] = [];
-    //массив промисов для отправки данных о студентах построчно
-    const uploadArray = virtualStudents.map((virtualStudent) => {
+  const handleSave = () => {
+    const virtualStudents = [...studentsToUpload];
+    let failedToUpload: TStudentsData[] = [];
+    virtualStudents.forEach(async (virtualStudent) => {
       const studentToEdit = studentsData.find((existingStudent) => {
         return existingStudent.email.toLowerCase() === virtualStudent.email.toLowerCase();
       });
-      const isExisting = !!studentToEdit;
-      return updateUser(bearerToken, virtualStudent, isExisting, failedToUpload);
+      if (studentToEdit) {
+        await api.putUsers(bearerToken, {email: virtualStudent.email, cohort: virtualStudent.cohort}, studentToEdit._id)
+          .catch((err) => {
+            console.log(err.message); 
+            failedToUpload.push(virtualStudent)
+            console.log(failedToUpload);
+          });
+      } else {
+        await api.postUsers(bearerToken, {email: virtualStudent.email, cohort: virtualStudent.cohort})
+          .catch((err) => {
+            console.log(err.message);
+            failedToUpload.push(virtualStudent)
+          });
+      }
     });
-    Promise.allSettled(uploadArray)
-      .then(async responses => {
-        //запрос обновленных данных с сервера
-        await api.getUsers(bearerToken, 0, 20, '')
-          .then(data => {
-            const studentsFromAPI = data.items.map((student: TStudentsDataFull) => {
-              return {
-                name: student.name ? student.name : '',
-                email: student.email,
-                cohort: student.cohort,
-                id: student._id,
-                fromFile: false
-              };
-            })
-            setFilteredStudents(failedToUpload.concat(studentsFromAPI));   
-            setStudents(failedToUpload.concat(studentsFromAPI));
-            if (failedToUpload.length === 0) {
-              setStudentsToUpload([]);
-            }
-          });  
-      });  
+    setFilteredStudentsToUpload(failedToUpload);
+    api.getUsers(bearerToken, 0, 20, '')
+      .then(data => {
+        setStudentsData(data.items)
+        setFilteredStudents(data.items)});
+    //console.log(failedToUpload);
+    if (failedToUpload.length === 0) {
+      setConfirmationIsOpen(false);
+    }
+    failedToUpload = [];    
   }
 
-  const virtualStudentsToRender = filteredStudents.map((student) => {
-    if (student.fromFile) {
-      return (<Student 
-        key={student.id}
-        cohort={student.cohort}
-        name={student.name ? student.name : ''}
-        email={student.email}
-        id={student.id}
-        fromFile={student.fromFile}
-        handleUpdate={handleUpdate}
-        handleDelete={() => handleStudentDeleteClick(student.id)}
-      />)
-    }
+  const students = filteredStudents.map((student) => {
+    return (<Student 
+      key={student._id}
+      cohort={student.cohort}
+      name={student.name ? student.name : ''}
+      email={student.email}
+      id={student._id}
+      fromFile={false}
+      handleUpdate={handleUpdate}
+    />)
   });
 
-  const studentsToRender = filteredStudents.map((student) => {
-    if (student.fromFile === false) {
-      return(<Student 
-        key={student.id}
-        cohort={student.cohort}
-        name={student.name ? student.name : ''}
-        email={student.email}
-        id={student.id}
-        fromFile={student.fromFile}
-        handleUpdate={handleUpdate}
-      />)
-    }
+  const candidatesForUpload = filteredStudentsToUpload.map((student) => {
+    return (<Student 
+      key={student._id}
+      cohort={student.cohort}
+      name='' email={student.email}
+      id={student._id}
+      fromFile={true}
+      handleDelete={() => handleStudentDeleteClick(student._id)}
+      handleUpdate={handleUpdate}
+    />)
   });
 
   return (
@@ -266,7 +231,8 @@ export const AdminUsersPage: FC = () => {
             type='reset' 
             onClick={() => {
               setQuery('')
-              setFilteredStudents(students);
+              setFilteredStudents(studentsData);
+              setFilteredStudentsToUpload(studentsToUpload);
             }} 
           />}
           <div className={styles.table_header}>
@@ -275,8 +241,8 @@ export const AdminUsersPage: FC = () => {
             <p className={styles.table_header_text}>Имя и фамилия студента</p>
           </div>
           <ul className={styles.students_list}>
-            {virtualStudentsToRender}
-            {studentsToRender}
+            {candidatesForUpload}
+            {students}
           </ul>
         </div>
         <div className={styles.upload}>

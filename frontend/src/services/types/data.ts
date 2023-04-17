@@ -77,12 +77,15 @@ export enum UserStatus {
   Curator = 'CURATOR',
 }
 
-export interface IStudentsData {
+export type TStudentsDataFull = TStudentsData & { 
+  createdAt: number,
+  updatedAt: number,
+}
+
+export type TStudentsData = {
   _id: string,
   email: string,
   cohort: string,
-  createdAt: number,
-  updatedAt: number,
   name?: string,
 }
 
@@ -90,3 +93,16 @@ export enum UpdateField {
   COHORT = 'cohort',
   EMAIL = 'email',
 }
+
+export type TStudent = {
+  cohort: string;
+  email: string;
+  name: string;
+  id: string;
+  fromFile: boolean;
+}
+
+export type TStudentProps = TStudent & {
+  handleDelete?: () => void;
+  handleUpdate: (student: TStudent) => void;
+}; 
