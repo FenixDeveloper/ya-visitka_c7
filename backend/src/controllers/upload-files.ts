@@ -5,8 +5,8 @@ import path from 'path';
 import fs from 'fs';
 import BadRequestError from '../errors/bad-request-error';
 import { TFiles, TInfoTypes } from '../types/filest';
+import ErrorMessages from '../helpers/error-messages';
 
-// eslint-disable-next-line import/prefer-default-export
 export const uploadFiles = (
   req: Request<{}, {}, { files: TFiles }>,
   res: Response,
@@ -28,6 +28,8 @@ export const uploadFiles = (
     );
 
   res.send(JSON.stringify(result));
+  const filePath = path.resolve('uploads');
+  res.download(filePath, JSON.stringify(result));
 };
 
 export const getFile = (
@@ -35,10 +37,14 @@ export const getFile = (
   res: Response,
   next: NextFunction,
 ) => {
-  const { filename } = req.params;
-  const filePath = path.resolve('./uploads', filename);
-  if (!fs.existsSync(filePath)) {
-    next(new BadRequestError('Такого файла не существует'));
+  try {
+    const { filename } = req.params;
+    const filePath = path.resolve('uploads', filename);
+    if (!fs.existsSync(filePath)) {
+      throw new BadRequestError(ErrorMessages.NotFound);
+    }
+    res.sendFile(filePath);
+  } catch (error) {
+    next(error);
   }
-  res.sendFile(filePath);
 };
