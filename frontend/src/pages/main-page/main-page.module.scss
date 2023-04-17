@@ -1,0 +1,64 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 32px;
+  }
+
+  @media screen and (max-width: 568px) {
+    padding: 0 24px;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    @media screen and (max-width: 568px) {
+      flex-direction: column-reverse;
+      margin-bottom: 24px;
+
+      a {
+        display: inline-block;
+        width: 325px;
+        padding-bottom: 24px;
+        text-align: end;
+      }
+    }
+  }
+
+  .select {
+    width: 325px;
+  }
+
+  .map {
+    font-size: 16px;
+    line-height: 24px;
+    color: $color-text-dark;
+    text-decoration: none;
+  }
+
+  .container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, 325px);
+    grid-column-gap: 20px;
+    grid-row-gap: 39px;
+    margin-bottom: 40px;
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, 342px);
+    }
+
+    @media screen and (max-width: 568px) {
+      grid-template-columns: repeat(auto-fill, 272px);
+    }
+  }
+}

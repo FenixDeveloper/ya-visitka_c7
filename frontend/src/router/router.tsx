@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { RootPage } from '../pages/RootPage/RootPage';
-import { MainPage } from '../pages/MainPage/MainPage';
-import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
-import { LoginPage } from '../pages/LoginPage/LoginPage';
-import { ProfileDetailsPage } from '../pages/ProfileDetailsPage/ProfileDetailsPage';
-import { MapPage } from '../pages/MapPage/MapPage';
-import { ProfileEditPage } from '../pages/ProfileEditPage/ProfileEditPage';
-import { AdminCommentsPage } from '../pages/AdminCommentsPage/AdminCommentsPage';
-import { AdminUsersPage } from '../pages/AdminUsersPage/AdminUsersPage';
-import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
+import { RootPage } from '../pages/root-page/root-page';
+import { MainPage } from '../pages/main-page/main-page';
+import { NotFoundPage } from '../pages/not-found-page/not-found-page';
+import { LoginPage } from '../pages/login-page/login-page';
+import { ProfileDetailsPage } from '../pages/profile-details-page/profile-details-page';
+import { MapPage } from '../pages/map-page/map-page';
+import { ProfileEditPage } from '../pages/profile-edit-page/profile-edit-page';
+import { AdminCommentsPage } from '../pages/admin-comments-page/admin-comments-page';
+import { AdminUsersPage } from '../pages/admin-users-page/admin-users-page';
+import { ProtectedRoute } from '../components/protected-route/protected-route';
 import { UserStatus } from '../services/types/data';
 
 export const router = createBrowserRouter(
@@ -35,7 +35,7 @@ export const router = createBrowserRouter(
       {/* // ? стр. профиля студунта */}
       <Route path='profiles/:profileId' element={
         <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
-          <ProfileDetailsPage typePage='DEFAULT_PAGE' />
+          <ProfileDetailsPage />
         </ProtectedRoute>} />
       {/* // ? стр. редактирования профиля */}
       <Route path='edit' element={
@@ -48,7 +48,7 @@ export const router = createBrowserRouter(
           <MapPage />
         </ProtectedRoute>} />
       {/* // ? стр. администрации - комментарии */}
-      <Route path='admin/comments' element={
+      <Route path='admin' element={
         <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
           <AdminCommentsPage />
         </ProtectedRoute>} />

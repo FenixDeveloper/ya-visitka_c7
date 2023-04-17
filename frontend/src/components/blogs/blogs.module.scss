@@ -1,0 +1,14 @@
+.blogs {
+  max-width: 950px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px 70px;
+
+  @media screen and (max-width: 1024px) {
+    gap: 32px 20px;
+  }
+
+  @media screen and (max-width: 760px) {
+    justify-content: center;
+  }
+}

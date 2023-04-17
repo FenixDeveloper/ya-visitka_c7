@@ -1,0 +1,176 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 40px;
+    height: calc(100vh - 123px - 72px);
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.link {
+    color: $color-text-light;
+    @include h3_desktop();
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-right: 80.5px;
+}
+
+.link:last-of-type {
+    margin-right: 0;
+}
+
+.link_active {
+    color: $color-text-black;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    margin-top: 48px;
+    height: 100%;
+}
+
+.students {
+    width: 1015px;
+    position: relative;
+    height: 100%;
+}
+
+.filter_text {
+    @include text();
+    color: $color-text-dark;
+    margin: 0 0 4px 0;
+}
+
+.filter_input {
+    display: flex;
+    @include text();
+    width: 100%;
+    height: 48px;
+    border-radius: 4px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    border: 1px solid $color-text-dark;
+    outline: none;
+    cursor: pointer;
+}
+
+.filter_clear {
+    border: none;
+	padding: 0;
+    cursor: pointer;
+	outline: inherit;
+    background: url('../../assets/icons/exit.svg');
+    content: '';
+    display: block;
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    z-index: 2;
+    width: 20px;
+    height: 20px;
+}
+
+
+.table_header {
+    display: grid;
+    grid-template-columns: 20.6% 26.7% 29.6%;
+    margin: 60px 0 0 0;
+    gap: 31.5px;
+    border-bottom: 1px solid $color-placeholder;
+    margin-right: 28px;
+}
+
+.table_header_text {
+    margin: 0;
+    @include text();
+    color: $color-text-light;
+    padding-bottom: 11px;
+}
+
+.students_list {
+    margin: 0;
+    padding: 0 24px 0 0;
+    overflow-y: scroll;
+    max-height: calc(70% - 72px);
+}
+
+.students_list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.students_list::-webkit-scrollbar-thumb {
+    background-color: $color-placeholder;   
+}
+
+.upload {
+    margin-left: 40px;
+    max-width: 285px;
+}
+
+.upload_heading {
+    @include h2_desktop();
+    color: $color-text-dark;
+    margin: 0;
+}
+
+.upload_text {
+    @include text();
+    color: $color-text-dark;
+    margin: 12px 0 20px 0;
+}
+
+.file_input {
+    display: none;
+}
+
+.confirmation_text {
+    margin: 40px 0 0 0;
+    @include text();
+}
+
+.confirmation_buttons {
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.button_delete {
+    border: 1px solid $color-error;
+    border-radius: 4px;
+	padding: 0;
+    background: none;
+    cursor: pointer;
+    @include text_feedback();
+    font-weight: 500;
+    color: $color-error;
+    width: 140px;
+    height: 44px;
+    margin-right: 14px;
+}
+
+.button_submit {
+    border: 1px solid $color-blue;
+    border-radius: 4px;
+	padding: 0;
+    background: none;
+    cursor: pointer;
+    @include text_feedback();
+    font-weight: 500;
+    color: $color-blue;
+    width: 140px;
+    height: 44px;
+}
+
+.button_submit[disabled] {
+    border: 1px solid $color-placeholder;
+    cursor: default;
+    color: $color-placeholder;
+}
