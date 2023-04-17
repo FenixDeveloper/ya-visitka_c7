@@ -9,7 +9,7 @@ export interface UserData {
 }
 
 export interface IButtonProps {
-  size?: 'large' | 'medium' | 'small',
+  size?: 'large' | 'medium' | 'small';
   onClick?: () => void | ((e: SyntheticEvent) => void);
   children?: React.ReactNode;
   disabled?: boolean;
@@ -26,16 +26,24 @@ export interface IInputProps {
   value?: string;
   errorMessage?: string;
   caption?: string;
+  isMainPage?: boolean;
+}
+
+export interface IBlogProps {
+  typeComponent: 'серьезный' | 'романтичный' | 'дерзкий';
+  index: number;
+  title: string;
+  urlImage: string;
+  text: string;
+}
+
+export interface ICommunicationProps {
+  arrСomments: { message: string }[];
 }
 
 export interface IUserRequest {
   email: string;
-  cohort?: string;
-}
-
-export interface ITokens {
-  accessToken: string,
-  refreshToken: string
+  cohort: string;
 }
 
 export interface IProfile {
@@ -55,21 +63,29 @@ export interface IProfile {
   info: {
     hobby: {
       text: string;
-      image: null;
+      image: null | string;
     };
     status: {
       text: string;
-      image: null;
+      image: null | string;
     };
     job: {
       text: string;
-      image: null;
+      image: null | string;
     };
     edu: {
       text: string;
-      image: null;
+      image: null | string;
     };
   };
+}
+
+export interface IFile {
+  hobby: string;
+  status: string;
+  job: string;
+  education: string;
+  avatar: string;
 }
 
 export enum UserStatus {

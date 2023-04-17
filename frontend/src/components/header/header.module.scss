@@ -1,0 +1,30 @@
+@use '../../modules/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 112px;
+  flex: 0 0 112px;
+
+  &__title {
+    margin: 43.5px 0 43.5px 40px;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 96px;
+
+    &__title {
+      margin: 35px 0 35px 32px;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    height: 80px;
+
+    &__title {
+      margin: 27.5px 0 27.5px 24px;
+    }
+  }
+}

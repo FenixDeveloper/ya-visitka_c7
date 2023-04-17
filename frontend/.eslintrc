@@ -8,8 +8,7 @@
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended"
     ],
-    "overrides": [
-    ],
+    "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -17,11 +16,27 @@
     },
     "plugins": [
         "react",
+        "react-hooks",
         "@typescript-eslint"
     ],
     "rules": {
-        "quotes": [ "error", "single" ],
-        "indent": ["error", 2],
-        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0 }]
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "indent": [
+            "error",
+            2
+        ],
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 2,
+                "maxEOF": 0
+            }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "react-hooks/exhaustive-deps": "warn",
+        "react-hooks/rules-of-hooks": "error"
     }
 }
