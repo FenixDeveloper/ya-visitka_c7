@@ -1,5 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import Roles from '../helpers/roles';
 import User from '../models/User';
 import {
   CLIENT_ID, CLIENT_SECRET, CURATOR_LIST, JWT_SECRET, TOKEN_URL, PROFILE_URL, NODE_ENV,
@@ -61,7 +62,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (user) {
       const student: IUserPayload = {
         _id: user._id,
-        role: 'student',
+        role: Roles.STUDENT,
         email,
       };
       token = getToken(student);
@@ -76,7 +77,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     if (isCurator) {
       const curator: IUserPayload = {
         _id: null,
-        role: 'curator',
+        role: Roles.CURATOR,
         email,
       };
       token = getToken(curator);
@@ -96,7 +97,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
     const token = authorization.replace('Bearer ', '');
 
     const { _id, role, email } = jwt.decode(token) as IUserPayload;
-    if (role === 'student') {
+    if (role === Roles.STUDENT) {
       const student = await User.findById(_id);
       const name = student?.profile.name;
       const photo = student?.profile.photo;
@@ -106,7 +107,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
       });
     }
 
-    if (role === 'curator') {
+    if (role === Roles.CURATOR) {
       res.send({ email, role });
     }
   } catch (error) {
