@@ -149,6 +149,7 @@ export const AdminUsersPage: FC = () => {
     const studentsCopy = [...students];
     const studentToUpdate = studentsCopy.find((user) => user.id === student.id);
     if (studentToUpdate) {
+      studentToUpdate.validationError = false;
       if (student.fromFile) {
         studentToUpdate.email = student.email;
         studentToUpdate.cohort = student.cohort;
@@ -223,6 +224,16 @@ export const AdminUsersPage: FC = () => {
       });  
   }
 
+  const setStudentEmailValidation = (id: string, validation: boolean) => {
+    const studentsCopy = [...students];
+    const studentToUpdate = studentsCopy.find((student) => student.id === id);
+    if (studentToUpdate) {
+      studentToUpdate.validationError = validation;
+    }
+    setStudents(studentsCopy);
+    setFilteredStudents(studentsCopy);
+  }
+
   const virtualStudentsToRender = filteredStudents.map((student) => {
     if (student.fromFile) {
       return (<Student 
@@ -235,6 +246,7 @@ export const AdminUsersPage: FC = () => {
         validationError={student.validationError}
         handleUpdate={handleUpdate}
         handleDelete={() => handleStudentDeleteClick(student.id)}
+        updateValidation={(validation: boolean) => setStudentEmailValidation(student.id, validation)}
       />)
     }
   });
@@ -250,6 +262,7 @@ export const AdminUsersPage: FC = () => {
         fromFile={student.fromFile}
         validationError={student.validationError}
         handleUpdate={handleUpdate}
+        updateValidation={(validation: boolean) => setStudentEmailValidation(student.id, validation)}
       />)
     }
   });

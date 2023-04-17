@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styles from './Student.module.scss';
 import { NavLink } from 'react-router-dom';
 import { TStudentProps, UpdateField } from '../../services/types/data';
@@ -7,7 +7,16 @@ import trash from '../../assets/icons/trash.svg';
 import { validation } from '../../utils/validation';
 
 
-export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, validationError, handleDelete, handleUpdate }) => {
+export const Student: FC<TStudentProps> = ({ 
+  cohort,
+  email,
+  name,
+  id,
+  fromFile,
+  validationError,
+  handleDelete,
+  handleUpdate,
+  updateValidation }) => {
 
   const [inputReadOnlyState, setInputReadOnlyState] = useState({ 
     cohort: true,
@@ -17,6 +26,15 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
     cohort: cohort,
     email: email
   });
+
+  useEffect(() => {
+    const validationMessage = validation.isEmail(inputValue.email);
+    if (validationMessage !== '') {
+      updateValidation(true);
+    } else {
+      updateValidation(false);
+    }
+  }, [inputValue.email])
 
   const previousCohort = usePrevious(inputValue.cohort);
   const previousEmail = usePrevious(inputValue.email);
@@ -48,6 +66,8 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
         if (validationError !== '') {
           console.log(validationError);
           return;
+        } else {
+          updateValidation(false);
         }
         if (previousEmail && target.value.toLowerCase() === previousEmail.toLowerCase()) {
           setInputReadOnlyState({...inputReadOnlyState, email: true});

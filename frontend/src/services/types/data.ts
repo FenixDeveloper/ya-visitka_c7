@@ -106,4 +106,5 @@ export type TStudent = {
 export type TStudentProps = TStudent & {
   handleDelete?: () => void;
   handleUpdate: (student: TStudent) => void;
+  updateValidation: (validation: boolean) => void;
 }; 
