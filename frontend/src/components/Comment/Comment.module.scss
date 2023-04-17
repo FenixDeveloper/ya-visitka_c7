@@ -1,0 +1,26 @@
+@import '../../modules/variables.scss';
+@import '../../modules/mixins.scss';
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 70px 100px 190px 190px 160px 442px 24px;
+  column-gap: 24px;
+  border-bottom: 1px solid $color-blue;
+}
+
+.tableData {
+  min-height: 24px;
+  @include text();
+  color: $color-text-dark;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.deleteButton {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
