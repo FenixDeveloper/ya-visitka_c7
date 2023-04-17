@@ -5,6 +5,7 @@ import api from '../../utils/api-config';
 import { TStudent, TStudentProps, UpdateField } from '../../services/types/data';
 import { usePrevious } from '../../utils/utils';
 import trash from '../../assets/icons/trash.svg';
+import { validation } from '../../utils/validation';
 
 
 export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, handleDelete, handleUpdate }) => {
@@ -42,6 +43,11 @@ export const Student: FC<TStudentProps> = ({ cohort, email, name, id, fromFile, 
 
   const handleUpdateOnEnter = (e: React.KeyboardEvent<HTMLInputElement>, updateField: UpdateField) => {
     const target = e.target as HTMLInputElement;
+    const validationError = validation.isEmail(target.value);
+    if (validationError !== '') {
+      console.log(validationError);
+      return;
+    }
     if (e.key === 'Enter') {
       if (updateField === UpdateField.EMAIL) {
         if (previousEmail && target.value.toLowerCase() === previousEmail.toLowerCase()) {

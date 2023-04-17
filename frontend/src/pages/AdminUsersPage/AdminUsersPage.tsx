@@ -286,7 +286,8 @@ export const AdminUsersPage: FC = () => {
             ref={inputFile} 
             type="file" 
             className={styles.file_input}
-            onChange={handleFileAsync} />
+            onChange={handleFileAsync}
+            accept=".csv,.xlsx" />
           <Button size='small' onClick={onUploadFileButtonClick} >Выберите файл</Button>
           {confirmationIsOpen && 
           <>
