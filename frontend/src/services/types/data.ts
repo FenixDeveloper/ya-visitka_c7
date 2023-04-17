@@ -92,3 +92,35 @@ export enum UserStatus {
   Student = 'STUDENT',
   Curator = 'CURATOR',
 }
+
+export type TStudentsDataFull = TStudentsData & { 
+  createdAt: number,
+  updatedAt: number,
+}
+
+export type TStudentsData = {
+  _id: string,
+  email: string,
+  cohort: string,
+  name?: string,
+}
+
+export enum UpdateField {
+  COHORT = 'cohort',
+  EMAIL = 'email',
+}
+
+export type TStudent = {
+  cohort: string;
+  email: string;
+  name: string;
+  id: string;
+  fromFile: boolean;
+  validationError: boolean;
+}
+
+export type TStudentProps = TStudent & {
+  handleDelete?: () => void;
+  handleUpdate: (student: TStudent) => void;
+  updateValidation: (validation: boolean) => void;
+}; 

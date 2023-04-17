@@ -116,7 +116,7 @@ export const EXAMPLE_CURRENT_USER: {
   _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
-  status: UserStatus.Student,
+  status: UserStatus.Curator,
   pattern: 'серьезный'
 };
 
@@ -126,6 +126,10 @@ export const EXAMPLE_DEFAUT_ARR = [
   'Петрозаводск (Республика Карелия)',
   'Петропавловск-Камчатский (Камчатский край)',
 ];
+
+export const DEFAULT_PAGE = 'DEFAULT_PAGE';
+export const ROMANTIC_PAGE = 'ROMANTIC_PAGE';
+export const COCKY_PAGE = 'COCKY_PAGE';
 
 export const MONTHS = [
   'Январь',
@@ -174,6 +178,33 @@ export const EMOJI = [
   { symbol: '😱️', alt: 'в ужасе', acitve: false, counter: 8 },
   { symbol: '😍️', alt: 'улыбающееся лицо с глазами-сердечками', acitve: false, counter: 9 },
   { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
+]
+
+export const EXAMPLE_USER_ARRAY: {id: string, cohort: string, name: string, email: string}[] = [
+  {
+    id: '1',
+    cohort: '1234',
+    name: 'Vasya Pupkin',
+    email: 'vasyap@yandex.ru'
+  },
+  {
+    id: '2',
+    cohort: '1234',
+    name: 'Petya Petkin',
+    email: 'petyap@yandex.ru'
+  },
+  {
+    id: '3',
+    cohort: '4321',
+    name: 'Ivan Ivanov',
+    email: 'ivani@yandex.ru'
+  },
+  {
+    id: '4',
+    cohort: '4321',
+    name: 'Konstantin Konstantinov',
+    email: 'kostyak@yandex.ru'
+  }
 ];
 
 export const EXAMPLE_USER_BLOGS = [
