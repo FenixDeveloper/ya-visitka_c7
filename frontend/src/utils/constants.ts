@@ -7,6 +7,12 @@ export const GITHUB_URL = 'https://api.github.com';
 export const TELEGRAM_URL = 'https://tlgg.ru/test';
 export const CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556';
 
+export const DATA_REDIRECT_URI = {
+  localhost: 'http://localhost:3000',
+  visitkiDev: 'https://visitki-dev.team-7.practicum-team.ru/',
+  visitki: 'https://visitki.team-7.practicum-team.ru/',
+}
+
 export const EXAMPLE_VISITKAS = [
   {
     id: '1',
