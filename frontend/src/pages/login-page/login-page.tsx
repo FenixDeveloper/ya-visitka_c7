@@ -3,7 +3,11 @@ import { Button } from '../../components/button/button';
 import LoginPageStyles from './login-page.module.scss';
 import { CLIENT_ID } from '../../utils/constants';
 
-export const LoginPage: FC = () => {
+interface IProps {
+  redirectUri: string
+}
+
+export const LoginPage: FC<IProps> = ({ redirectUri }) => {
 
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
   const [errorActive, setErrorActive] = useState<boolean>(false);
@@ -24,7 +28,7 @@ export const LoginPage: FC = () => {
         С кем я учусь?
       </h1>
       <a className={LoginPageStyles.loginPage__buttonBox}
-        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=http://localhost:3000`}
+        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${redirectUri}`}
       >
         <Button size={windowWidth <= 576 ? 'medium' : 'large'}
           htmlType='button'

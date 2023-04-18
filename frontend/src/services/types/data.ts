@@ -124,3 +124,9 @@ export type TStudentProps = TStudent & {
   handleUpdate: (student: TStudent) => void;
   updateValidation: (validation: boolean) => void;
 }; 
+
+export type TRedirectURI = {
+  localhost: string;
+  visitkiDev: string;
+  visitki: string;
+}

@@ -1,11 +1,20 @@
-import { UserStatus } from '../services/types/data';
+import { TRedirectURI, UserStatus } from '../services/types/data';
 import imgOne from '../assets/icons/girl.png'
 import imgTwo from '../assets/icons/guitar.png'
+import { getCurrentRedirectURI } from './utils';
 
 export const BASE_URL = 'https://visitki.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com';
 export const TELEGRAM_URL = 'https://tlgg.ru/test';
 export const CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556';
+
+export const DATA_REDIRECT_URI = {
+  localhost: 'http://localhost:3000',
+  visitkiDev: 'https://visitki-dev.team-7.practicum-team.ru/',
+  visitki: 'https://visitki.team-7.practicum-team.ru/',
+}
+
+export const CURRENT_REDIRECT_URI = getCurrentRedirectURI(DATA_REDIRECT_URI)
 
 export const EXAMPLE_VISITKAS = [
   {
