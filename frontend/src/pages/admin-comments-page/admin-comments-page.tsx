@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import styles from './AdminCommentsPage.module.scss';
+import styles from './admin-comments-page.module.scss';
 import { NavLink } from 'react-router-dom';
 import { Comment } from '../../components/comment/comment';
 import { TComment } from '../../services/types/data';
