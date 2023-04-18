@@ -28,7 +28,7 @@ export const LoginPage: FC<IProps> = ({ redirectUri }) => {
             С кем я учусь?
       </h1>
       <a className={LoginPageStyles.loginPage__buttonBox}
-        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}${redirectUri.length > 0 ? `&redirect_uri=${redirectUri}` : ''}`}
+        href={`https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${redirectUri}`}
       >
         <Button size={windowWidth <= 576 ? 'medium' : 'large'} 
           htmlType='button'
