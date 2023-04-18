@@ -116,7 +116,7 @@ export const EXAMPLE_CURRENT_USER: {
   _id: '11111',
   name: 'Константин Константинович',
   avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
-  status: UserStatus.Student,
+  status: UserStatus.Curator,
   pattern: 'серьезный'
 };
 
@@ -126,6 +126,10 @@ export const EXAMPLE_DEFAUT_ARR = [
   'Петрозаводск (Республика Карелия)',
   'Петропавловск-Камчатский (Камчатский край)',
 ];
+
+export const DEFAULT_PAGE = 'DEFAULT_PAGE';
+export const ROMANTIC_PAGE = 'ROMANTIC_PAGE';
+export const COCKY_PAGE = 'COCKY_PAGE';
 
 export const MONTHS = [
   'Январь',
@@ -146,7 +150,7 @@ export const VALIDATION_ERRORS = {
   FIELD_LENGTH: (minLength: number, maxLength: number) =>
     `Длина поля должна быть не менее ${minLength} и не более ${maxLength} символов`,
   EMAIL_INVALID: 'Ваша почта не подходит',
-  TELEGRAM_INVALID: 'Ник в телеграме должен начинаться с @ и иметь длину от 5 до 32 символов',
+  TELEGRAM_INVALID: 'Ник в телеграме должен иметь длину от 5 до 32 символов',
   GITHUB_USER_NOT_FOUND: 'Пользователя с таким ником не существует',
   IMAGE_TYPE_INVALID: 'Изображение должно быть одного из форматов jpg, jpeg, png, bmp',
   IMAGE_SIZE_INVALID: (maxSize: string) =>
@@ -156,7 +160,7 @@ export const VALIDATION_ERRORS = {
 export const VALIDATION = {
   IMAGE: /^https:\/\/([^\s(["<,>/]*)(\/)[^\s[",><]*\.(png|jpg|jpeg|bmp)(\?[^\s[",><]*)?/,
   EMAIL: /^[^.](?=[a-z\d!#$%&'*+\-\\/=?.^_`{}|~]+@([a-z-.\d]+\.)+[a-z]{2,}$)((?!\.\.).)*$/i,
-  TELEGRAM: /^@[a-zA-Z0-9_]{5,32}$/i,
+  TELEGRAM: /^[a-zA-Z0-9_]{5,32}$/i,
 };
 
 export const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/bmp'];
@@ -174,6 +178,33 @@ export const EMOJI = [
   { symbol: '😱️', alt: 'в ужасе', acitve: false, counter: 8 },
   { symbol: '😍️', alt: 'улыбающееся лицо с глазами-сердечками', acitve: false, counter: 9 },
   { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
+]
+
+export const EXAMPLE_USER_ARRAY: {id: string, cohort: string, name: string, email: string}[] = [
+  {
+    id: '1',
+    cohort: '1234',
+    name: 'Vasya Pupkin',
+    email: 'vasyap@yandex.ru'
+  },
+  {
+    id: '2',
+    cohort: '1234',
+    name: 'Petya Petkin',
+    email: 'petyap@yandex.ru'
+  },
+  {
+    id: '3',
+    cohort: '4321',
+    name: 'Ivan Ivanov',
+    email: 'ivani@yandex.ru'
+  },
+  {
+    id: '4',
+    cohort: '4321',
+    name: 'Konstantin Konstantinov',
+    email: 'kostyak@yandex.ru'
+  }
 ];
 
 export const EXAMPLE_USER_BLOGS = [

@@ -26,6 +26,7 @@ export interface IInputProps {
   value?: string;
   errorMessage?: string;
   caption?: string;
+  isMainPage?: boolean;
 }
 
 export interface IBlogProps {
@@ -42,12 +43,7 @@ export interface ICommunicationProps {
 
 export interface IUserRequest {
   email: string;
-  cohort?: string;
-}
-
-export interface ITokens {
-  accessToken: string;
-  refreshToken: string;
+  cohort: string;
 }
 
 export interface IProfile {
@@ -67,24 +63,64 @@ export interface IProfile {
   info: {
     hobby: {
       text: string;
-      image: null;
+      image: null | string;
     };
     status: {
       text: string;
-      image: null;
+      image: null | string;
     };
     job: {
       text: string;
-      image: null;
+      image: null | string;
     };
     edu: {
       text: string;
-      image: null;
+      image: null | string;
     };
   };
+}
+
+export interface IFile {
+  hobby: string;
+  status: string;
+  job: string;
+  education: string;
+  avatar: string;
 }
 
 export enum UserStatus {
   Student = 'STUDENT',
   Curator = 'CURATOR',
 }
+
+export type TStudentsDataFull = TStudentsData & { 
+  createdAt: number,
+  updatedAt: number,
+}
+
+export type TStudentsData = {
+  _id: string,
+  email: string,
+  cohort: string,
+  name?: string,
+}
+
+export enum UpdateField {
+  COHORT = 'cohort',
+  EMAIL = 'email',
+}
+
+export type TStudent = {
+  cohort: string;
+  email: string;
+  name: string;
+  id: string;
+  fromFile: boolean;
+  validationError: boolean;
+}
+
+export type TStudentProps = TStudent & {
+  handleDelete?: () => void;
+  handleUpdate: (student: TStudent) => void;
+  updateValidation: (validation: boolean) => void;
+}; 
