@@ -93,17 +93,17 @@ export enum UserStatus {
   Curator = 'CURATOR',
 }
 
-export type TStudentsDataFull = TStudentsData & { 
-  createdAt: number,
-  updatedAt: number,
-}
+export type TStudentsDataFull = TStudentsData & {
+  createdAt: number;
+  updatedAt: number;
+};
 
 export type TStudentsData = {
-  _id: string,
-  email: string,
-  cohort: string,
-  name?: string,
-}
+  _id: string;
+  email: string;
+  cohort: string;
+  name?: string;
+};
 
 export enum UpdateField {
   COHORT = 'cohort',
@@ -117,16 +117,23 @@ export type TStudent = {
   id: string;
   fromFile: boolean;
   validationError: boolean;
-}
+};
 
 export type TStudentProps = TStudent & {
   handleDelete?: () => void;
   handleUpdate: (student: TStudent) => void;
   updateValidation: (validation: boolean) => void;
-}; 
+};
 
 export type TRedirectURI = {
   localhost: string;
   visitkiDev: string;
   visitki: string;
-}
+};
+export type TComment = {
+  _id: string;
+  from: TStudentsData;
+  target: string;
+  text: string;
+  to: TStudentsData;
+};
