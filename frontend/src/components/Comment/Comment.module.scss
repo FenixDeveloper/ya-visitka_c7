@@ -12,9 +12,6 @@
   min-height: 24px;
   @include text();
   color: $color-text-dark;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .deleteButton {
