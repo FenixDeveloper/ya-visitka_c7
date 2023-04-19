@@ -50,9 +50,11 @@ export const createUser = (req: Request, res: Response, next: NextFunction) => {
     .catch((err) => {
       if (err.code === StatusCodes.CONFLICT_ERROR_CODE_MONGODB) {
         next(new ConflictError(ErrorMessages.EMAIL_CONFLICT));
+        return;
       }
       if (err.name === ErrorNames.VALIDATION_ERROR) {
         next(new BadRequestError(ErrorMessages.BAD_REQUEST));
+        return;
       }
       next(err);
     });
@@ -80,6 +82,7 @@ export const updateUser = (req: Request, res: Response, next: NextFunction) => {
         || err.name === ErrorNames.CAST_ERROR
       ) {
         next(new BadRequestError(ErrorMessages.BAD_REQUEST));
+        return;
       }
       next(err);
     });

@@ -95,7 +95,7 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
   const { id } = req.params;
 
   if (!id || !isValidObjectId(id)) {
-    next(new BadRequestError(ErrorMessages.BAD_REQUEST));
+    throw new BadRequestError(ErrorMessages.BAD_REQUEST);
   }
 
   try {
@@ -107,7 +107,7 @@ export const deleteComment = async (req: Request, res: Response, next: NextFunct
     if (updateResult.modifiedCount === 1) {
       res.sendStatus(StatusCodes.OK);
     } else {
-      next(new NotFoundError(ErrorMessages.NOT_FOUND));
+      throw new NotFoundError(ErrorMessages.NOT_FOUND);
     }
   } catch (err) {
     next(err);
