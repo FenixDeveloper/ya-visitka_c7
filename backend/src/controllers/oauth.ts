@@ -11,35 +11,32 @@ import ErrorMessages from '../helpers/error-messages';
 import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
 const getUserProfileYandex = async (code: string) => {
-  try {
-    const response = await fetch(TOKEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-      }),
-    });
-    const { access_token: accessToken } = await response.json();
-    if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-    const userResponse = await fetch(PROFILE_URL, {
-      headers: { Authorization: `OAuth${accessToken}` },
-    });
+  if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const response = await fetch(TOKEN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'authorization_code',
+      code,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+    }),
+  });
+  const { access_token: accessToken } = await response.json();
+  if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const userResponse = await fetch(PROFILE_URL, {
+    headers: { Authorization: `OAuth${accessToken}` },
+  });
 
-    const userProfile = await userResponse.json();
-    if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-    const user: IUserProfileYandex = {
-      email: userProfile.default_email,
-      name: userProfile.first_name,
-    };
-    return user;
-  } catch (error) {
-    throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-  }
+  const userProfile = await userResponse.json();
+  if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const user: IUserProfileYandex = {
+    email: userProfile.default_email,
+    name: userProfile.first_name,
+  };
+  return user;
 };
 
 const getToken = (user: IUserPayload) => jwt.sign(
@@ -51,7 +48,6 @@ const getToken = (user: IUserPayload) => jwt.sign(
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.body;
-    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const userProfile = await getUserProfileYandex(code);
 
     const email = userProfile.email.toLowerCase();
@@ -83,7 +79,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       token = getToken(curator);
     }
 
-    if (!token) throw new NotFoundError(ErrorMessages.USER_NOT_FOUND);
+    if (!token) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     res.send({ token });
   } catch (error) {
     next(error);
