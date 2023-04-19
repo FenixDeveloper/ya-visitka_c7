@@ -6,6 +6,7 @@
   flex-direction: column;
   margin: 0 40px;
   max-width: 1360px;
+  height: calc(100vh - 123px - 72px);
 }
 
 .linkSection {
@@ -51,6 +52,7 @@
   column-gap: 24px;
   align-items: center;
   margin-top: 60px;
+  margin-right: 28px;
   min-height: 48px;
   color: $color-placeholder;
   border-bottom: 1px solid $color-placeholder;
@@ -58,5 +60,15 @@
 
 .comments_list {
   margin: 0;
-  padding: 0;
+  padding: 0 24px 0 0;
+  overflow-y: scroll;
+  max-height: calc(70% - 72px);
+}
+
+.comments_list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.comments_list::-webkit-scrollbar-thumb {
+  background-color: $color-placeholder;   
 }
