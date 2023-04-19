@@ -5,6 +5,7 @@ import { Comment } from '../../components/comment/comment';
 import { TComment } from '../../services/types/data';
 import { api } from '../../utils/api-config';
 import { EXAMPLE_COMMENTS } from '../../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const AdminCommentsPage: FC = () => {
@@ -72,7 +73,7 @@ export const AdminCommentsPage: FC = () => {
   const comments = filterResult.map((comment) => {
     return (
       <Comment
-        key={comment._id}
+        key={uuidv4()}
         cohort={comment.from.cohort}
         date={dateFromObjectId(comment._id)}
         sender={comment.from.name!}
