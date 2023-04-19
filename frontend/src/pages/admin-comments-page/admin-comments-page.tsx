@@ -5,6 +5,7 @@ import { Comment } from '../../components/comment/comment';
 import { TComment } from '../../services/types/data';
 import { api } from '../../utils/api-config';
 import { EXAMPLE_COMMENTS } from '../../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const AdminCommentsPage: FC = () => {
@@ -20,7 +21,11 @@ export const AdminCommentsPage: FC = () => {
     });
   };
   useEffect(() => {
-    fetchComments();
+    //закомментировать две следующие строки при запросе данных с сервера
+    setCommentsData(EXAMPLE_COMMENTS);
+    setFilterResult(EXAMPLE_COMMENTS);
+    // раскоментировать при запросе данных с сервера
+    //fetchComments();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,14 +70,14 @@ export const AdminCommentsPage: FC = () => {
     }.${commentDate.getFullYear()}`;
   };
 
-  const comments = EXAMPLE_COMMENTS.map((comment) => {
+  const comments = filterResult.map((comment) => {
     return (
       <Comment
-        key={comment._id}
+        key={uuidv4()}
         cohort={comment.from.cohort}
         date={dateFromObjectId(comment._id)}
-        sender={comment.from.name}
-        recipient={comment.to.name}
+        sender={comment.from.name!}
+        recipient={comment.to.name!}
         from={comment.target}
         text={comment.text}
         handleDelete={() => handleDeleteClick(comment._id)}
@@ -93,7 +98,7 @@ export const AdminCommentsPage: FC = () => {
             студенты
           </NavLink>
           <NavLink
-            to="/admin"
+            to="/admin/comments"
             className={({ isActive }) =>
               isActive ? styles.link + ' ' + styles.link_active : styles.link
             }

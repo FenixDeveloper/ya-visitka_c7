@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './comment.module.scss';
 import trash from '../../assets/icons/trash.svg';
 
@@ -24,7 +25,12 @@ export const Comment: FC<TComments> = ({
   return (
     <>
       <div className={styles.tableRow}>
-        <p className={styles.tableData}>{cohort}</p>
+        <div className={styles.cohort_wrapper}>
+          <NavLink className={styles.cohort_link} to={`/cohort/${cohort}`}>
+            {'>'}
+          </NavLink>
+          <p className={styles.tableData}>{cohort}</p>
+        </div>
         <p className={styles.tableData}>{date}</p>
         <p className={styles.tableData}>{sender}</p>
         <p className={styles.tableData}>{recipient}</p>
