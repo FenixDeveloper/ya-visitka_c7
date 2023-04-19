@@ -49,7 +49,7 @@ export const router = createBrowserRouter(
           <MapPage />
         </ProtectedRoute>} />
       {/* // ? стр. администрации - комментарии */}
-      <Route path='admin' element={
+      <Route path='admin/comments' element={
         <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
           <AdminCommentsPage />
         </ProtectedRoute>} />
