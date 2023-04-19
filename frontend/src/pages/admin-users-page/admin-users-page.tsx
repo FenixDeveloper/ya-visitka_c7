@@ -280,7 +280,7 @@ export const AdminUsersPage: FC = () => {
         >
           студенты
         </NavLink>
-        <NavLink to='/admin' end
+        <NavLink to='/admin/comments' end
           className={({ isActive }) =>
             isActive
               ? styles.link + ' ' + styles.link_active
