@@ -11,6 +11,7 @@ import { AdminCommentsPage } from '../pages/admin-comments-page/admin-comments-p
 import { AdminUsersPage } from '../pages/admin-users-page/admin-users-page';
 import { ProtectedRoute } from '../components/protected-route/protected-route';
 import { UserStatus } from '../services/types/data';
+import { CURRENT_REDIRECT_URI } from '../utils/constants';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,7 +32,7 @@ export const router = createBrowserRouter(
           <MainPage />
         </ProtectedRoute>} />
       {/* // ? стр. авторизации */}
-      <Route path='login' element={<LoginPage />} />
+      <Route path='login' element={<LoginPage redirectUri={CURRENT_REDIRECT_URI} />} />
       {/* // ? стр. профиля студунта */}
       <Route path='profiles/:profileId' element={
         <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
@@ -48,7 +49,7 @@ export const router = createBrowserRouter(
           <MapPage />
         </ProtectedRoute>} />
       {/* // ? стр. администрации - комментарии */}
-      <Route path='admin' element={
+      <Route path='admin/comments' element={
         <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
           <AdminCommentsPage />
         </ProtectedRoute>} />
