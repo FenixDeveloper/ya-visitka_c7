@@ -1,6 +1,6 @@
 import mongoose, { model, Schema } from 'mongoose';
 import isEmail from 'validator/lib/isEmail';
-import { isCohortValid, imageOrTempIdRegex } from '../helpers/validate-url';
+import { isCohortValid, imageOrTempIdRegex } from '../helpers/validation-check';
 import NotFoundError from '../errors/not-found-error';
 import ErrorMessages from '../helpers/error-messages';
 import {

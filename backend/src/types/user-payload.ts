@@ -12,5 +12,5 @@ export interface IUserProfileYandex {
 }
 
 export interface IUserRole {
-  role?: string;
+  role: string;
 }

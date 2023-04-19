@@ -1,5 +1,5 @@
 import { celebrate, Joi } from 'celebrate';
-import { isCohortValid, isEmailValid, isUrlValid } from './validate-url';
+import { isCohortValid, isEmailValid, isUrlValid } from './validation-check';
 
 const joiEmail = Joi.string().email().required().custom(isEmailValid);
 const joiCohort = Joi.string().max(20).custom(isCohortValid);

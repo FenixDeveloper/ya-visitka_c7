@@ -11,32 +11,32 @@ import ErrorMessages from '../helpers/error-messages';
 import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
 const getUserProfileYandex = async (code: string) => {
-    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-    const response = await fetch(TOKEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        code,
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-      }),
-    });
-    const { access_token: accessToken } = await response.json();
-    if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-    const userResponse = await fetch(PROFILE_URL, {
-      headers: { Authorization: `OAuth${accessToken}` },
-    });
+  if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const response = await fetch(TOKEN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'authorization_code',
+      code,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+    }),
+  });
+  const { access_token: accessToken } = await response.json();
+  if (!accessToken) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const userResponse = await fetch(PROFILE_URL, {
+    headers: { Authorization: `OAuth${accessToken}` },
+  });
 
-    const userProfile = await userResponse.json();
-    if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-    const user: IUserProfileYandex = {
-      email: userProfile.default_email,
-      name: userProfile.first_name,
-    };
-    return user;
+  const userProfile = await userResponse.json();
+  if (!userProfile) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
+  const user: IUserProfileYandex = {
+    email: userProfile.default_email,
+    name: userProfile.first_name,
+  };
+  return user;
 };
 
 const getToken = (user: IUserPayload) => jwt.sign(

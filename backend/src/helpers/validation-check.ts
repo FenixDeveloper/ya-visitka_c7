@@ -1,5 +1,3 @@
-/* eslint-disable no-useless-escape */
-
 import { BadRequestError } from '../errors';
 import ErrorMessages from './error-messages';
 
