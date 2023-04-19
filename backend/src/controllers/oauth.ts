@@ -11,7 +11,7 @@ import ErrorMessages from '../helpers/error-messages';
 import { IUserPayload, IUserProfileYandex } from '../types/user-payload';
 
 const getUserProfileYandex = async (code: string) => {
-  try {
+    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const response = await fetch(TOKEN_URL, {
       method: 'POST',
       headers: {
@@ -37,9 +37,6 @@ const getUserProfileYandex = async (code: string) => {
       name: userProfile.first_name,
     };
     return user;
-  } catch (error) {
-    throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
-  }
 };
 
 const getToken = (user: IUserPayload) => jwt.sign(
@@ -51,7 +48,6 @@ const getToken = (user: IUserPayload) => jwt.sign(
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { code } = req.body;
-    if (!code) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     const userProfile = await getUserProfileYandex(code);
 
     const email = userProfile.email.toLowerCase();
@@ -83,7 +79,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       token = getToken(curator);
     }
 
-    if (!token) throw new NotFoundError(ErrorMessages.USER_NOT_FOUND);
+    if (!token) throw new UnauthorizedError(ErrorMessages.UNAUTHORIZED);
     res.send({ token });
   } catch (error) {
     next(error);
