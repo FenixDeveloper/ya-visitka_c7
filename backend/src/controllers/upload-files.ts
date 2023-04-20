@@ -17,7 +17,6 @@ export const uploadFiles = (
     .reduce(
       (acc, key) => {
         const fileDescription = files[key as TInfoTypes][0];
-
         acc[key] = fileDescription.filename;
 
         return acc;
