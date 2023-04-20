@@ -7,6 +7,7 @@ const ErrorMessages = {
   OK: 'success',
   EMAIL_CONFLICT: 'Почта уже зарегистрирована',
   USER_NOT_FOUND: 'Пользователь не найден',
+  CURATOR_FORBIDDEN: "Куратор не может ставить реакции"
 };
 
 export default ErrorMessages;
