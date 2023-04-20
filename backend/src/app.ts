@@ -11,6 +11,7 @@ import rootRouter from './routes';
 import { requestLogger, errorLogger } from './middlwares/logger';
 import { PORT, DB_URL } from './config/config';
 import { jwtStrategy } from './strategy/jwt.strategy';
+import accessControlAllowMiddlware from './middlwares/cors';
 
 const limiter = rateLimit({
   windowMs: 16 * 60 * 1000,
@@ -20,6 +21,8 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+app.use(accessControlAllowMiddlware);
 
 passport.use(jwtStrategy);
 app.use(passport.initialize());
