@@ -130,10 +130,18 @@ export type TRedirectURI = {
   visitkiDev: string;
   visitki: string;
 };
+
+type TCommentAuthor = {
+  _id: string;
+  email: string;
+  cohort: string;
+  name: string;
+}
+
 export type TComment = {
   _id: string;
-  from: TStudentsData;
+  from: TCommentAuthor;
   target: string;
   text: string;
-  to: TStudentsData;
+  to: TCommentAuthor;
 };
