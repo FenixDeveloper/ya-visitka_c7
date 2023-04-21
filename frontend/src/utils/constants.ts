@@ -129,6 +129,36 @@ export const EXAMPLE_CURRENT_USER: {
   pattern: 'серьезный'
 };
 
+export const EXAMPLE_USERS: {
+  _id: string;
+  name: string;
+  avatar: string;
+  token: string;
+  role: string;
+}[] = [
+  {
+    _id: '01',
+    name: 'Мария Ивановна',
+    avatar: 'https://i.pravatar.cc/325',
+    token: '0000',
+    role: 'user',
+  },
+  {
+    _id: '02',
+    name: 'Мишель Севастьянова',
+    avatar: 'https://i.pravatar.cc/326',
+    token: '1111',
+    role: 'user',
+  },
+  {
+    _id: '03',
+    name: 'Андрей Петров',
+    avatar: 'https://i.pravatar.cc/327',
+    token: '2222',
+    role: 'admin',
+  },
+]
+
 export const EXAMPLE_DEFAUT_ARR = [
   'Петровск (Саратовская область)',
   'Петровск-Забайкальский (Забайкальский край)',
