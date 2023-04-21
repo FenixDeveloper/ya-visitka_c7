@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { uploadFiles, getFile } from '../controllers/upload-files';
 
-import { uploadsMiddleware } from '../middlwares/upload-middleware';
+import uploadsMiddleware from '../middlwares/upload-middleware';
 
 const fileRouter = Router();
 
