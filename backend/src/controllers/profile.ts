@@ -93,53 +93,52 @@ export const patchProfile = (
 export const postProfileReaction = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const { id: targetId } = req.params;
   const { id: senderId, role } = req?.user as IReqUser;
-  const reactionBody = req.body; 
+  const reactionBody = req.body;
 
-    const isCurator = role === Roles.CURATOR;
-    if (!isCurator) {
-      const user = await User.findById(senderId)
+  const isCurator = role === Roles.CURATOR;
+  if (!isCurator) {
+    const user = await User.findById(senderId)
       .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
       .then((userData) => userData)
       .catch(next);
 
-      const reactionFrom = {
-        _id: user?._id.toString(),
-        name: user?.profile.name,
-        email: user?.email,
-      };
+    const reactionFrom = {
+      _id: user?._id.toString(),
+      name: user?.profile.name,
+      email: user?.email,
+    };
 
-      const reaction = {
-        from: reactionFrom,
-        type: reactionBody.text ? ReactionType.Text : ReactionType.Emotion,
-        ...reactionBody,
-      };
+    const reaction = {
+      from: reactionFrom,
+      type: reactionBody.text ? ReactionType.Text : ReactionType.Emotion,
+      ...reactionBody,
+    };
 
-      User.findByIdAndUpdate(
-        targetId,
-        { $addToSet: { reactions: reaction } },
-        { new: true, runValidators: true },
-      )
-        .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
-        .then(() => {
-          res.status(StatusCodes.OK).json();
-        })
-        .catch((err) => {
-          if (
-            err.name === ErrorNames.VALIDATION_ERROR
-            || err.name === ErrorNames.CAST_ERROR
-          ) {
-            next(new BadRequestError(ErrorMessages.BAD_REQUEST));
-          }
-          next(err);
-        });
-    }
-    else {
-      next(new ForbiddenError(ErrorMessages.CURATOR_FORBIDDEN));
-    }    
+    User.findByIdAndUpdate(
+      targetId,
+      { $addToSet: { reactions: reaction } },
+      { new: true, runValidators: true }
+    )
+      .orFail(new NotFoundError(ErrorMessages.USER_NOT_FOUND))
+      .then(() => {
+        res.status(StatusCodes.OK).json();
+      })
+      .catch((err) => {
+        if (
+          err.name === ErrorNames.VALIDATION_ERROR ||
+          err.name === ErrorNames.CAST_ERROR
+        ) {
+          next(new BadRequestError(ErrorMessages.BAD_REQUEST));
+        }
+        next(err);
+      });
+  } else {
+    next(new ForbiddenError(ErrorMessages.CURATOR_FORBIDDEN));
+  }
 };
 
 export const getProfileReactions = (
