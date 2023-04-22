@@ -14,14 +14,15 @@ const Login: FC = () => {
   const { user } = profileState;
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (ref.current  && !ref.current.contains(e.target as Node)) {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
       setActive(false);
-    } 
+    }
   }
 
   const logout = () => {
     localStorage.clear();
     navigate('/login');
+    setActive(false);
   }
 
   const handlerClickPopup = (e: KeyboardEvent) => {
