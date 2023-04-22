@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { EXAMPLE_CURRENT_USER } from '../../utils/constants';
 import { router } from '../../router/router';
 import { ProfileContext } from '../../services/profile-context';
+import { api } from '../../utils/api-config';
 
 const App: FC = () => {
   const [profileState, setProfileState] = React.useState({
@@ -11,9 +12,9 @@ const App: FC = () => {
     pattern: 'серьезный',
     birthday: new Date(1990, 0, 7),
     city: 'Петровск (Саратовская область)',
-    telegram: 'devhumor_tg', 
+    telegram: 'devhumor_tg',
     github: 'FenixDeveloper',
-    quote: '', 
+    quote: '',
     fileHobby: null,
     hobby: '',
     fileHome: null,
@@ -26,8 +27,16 @@ const App: FC = () => {
     formFileHome: null,
     formCity: 'Петровск (Саратовская область)',
     formAvatar: 'https://s16.stc.yc.kpcdn.net/share/i/12/12640462/wr-960.webp',
-    cityMain: 'Петровск (Саратовская область)'
+    cityMain: 'Петровск (Саратовская область)',
   });
+
+  useEffect(() => {
+    if (api.accessToken) {
+      api.getUserAuth().then((user) => {
+        setProfileState({ ...profileState, user });
+      });
+    }
+  }, []);
 
   return (
     <ProfileContext.Provider value={[profileState, setProfileState]}>

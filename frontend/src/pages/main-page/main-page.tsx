@@ -8,23 +8,18 @@ import Preloader from '../../components/preloader/preloader';
 import styles from './main-page.module.scss';
 import { ProfileContext } from '../../services/profile-context';
 import { useGetAccessTokenByQueryCode } from './hooks';
-import { log } from 'console';
 
 export const MainPage: React.FC = () => {
   useGetAccessTokenByQueryCode()
 
   const [profileState] = React.useContext(ProfileContext);
-  // const [data, setData] = useState([]);
   const [filteredVisitkas, setFilteredVisitkas] = useState(EXAMPLE_VISITKAS);
   const [loading, setLoading] = useState(true);
 
-
   React.useEffect(() => {
-    // axios.get('/users');
-    // setData 
     if (profileState.cityMain) {
       setTimeout(() => {
-        setFilteredVisitkas(EXAMPLE_VISITKAS.filter((item) => item.city.toLowerCase() === profileState.cityMain.toLowerCase()));
+        setFilteredVisitkas(EXAMPLE_VISITKAS.filter((item) => item.profile.city.toLowerCase() === profileState.cityMain.toLowerCase()));
         setLoading(false);
       }, 1000);
     }
@@ -50,7 +45,7 @@ export const MainPage: React.FC = () => {
       </nav>
       <div className={styles.container}>
         {filteredVisitkas.map((item) => (
-          <Visitka key={item.id} {...item} />
+          <Visitka key={item._id} _id={item._id} {...item.profile} />
         ))}
       </div>
     </section>

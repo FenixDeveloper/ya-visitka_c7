@@ -7,7 +7,7 @@ import { Blogs } from '../../components/blogs/blogs';
 import { Communication } from '../../components/communication/communication';
 
 export const ProfileDetailsPage: FC = () => {
-  const [profileState, setProfileState] = React.useContext(ProfileContext);
+  const [profileState, _] = React.useContext(ProfileContext);
 
   return (
     <section className={styles.profileDetails}>
@@ -31,8 +31,8 @@ export const ProfileDetailsPage: FC = () => {
             `${styles.profileDetails__avatar}
              ${profileState.pattern === 'романтичный' && styles.profileDetails__avatar_romantic}`
           }
-          src={`${profileState.avatar}`} 
-          alt={`Аватар пользователя ${profileState.user.name}`} 
+          src={`${profileState.user.photo}`}
+          alt={`Аватар пользователя ${profileState.user.name}`}
           />
           <div className={`${profileState.pattern === 'дерзкий' && styles.profileDetails__maskAvatar}`}></div>
         </div>

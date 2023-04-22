@@ -21,7 +21,6 @@ class Api {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        'Access-Control-Allow-Origin': 'http://localhost:3000'
       },
       body: JSON.stringify({ code }),
     }).then((res) => this._parseResponse(res));
@@ -29,7 +28,7 @@ class Api {
 
   // Получение данных о авторизованном пользователе
   getUserAuth() {
-    return fetch(`${this._baseUrl}/auth/get-user`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -170,12 +169,13 @@ class Api {
 
   // FILES
   postAddFiles(body: IFile) {
+    const { hobby, status, job, education, avatar } = body;
     const formData = new FormData();
-    formData.append('hobby', body.hobby);
-    formData.append('status', body.status);
-    formData.append('job', body.job);
-    formData.append('education', body.education);
-    formData.append('avatar', body.avatar);
+    formData.append('hobby', hobby);
+    formData.append('status', status);
+    formData.append('job', job);
+    formData.append('education', education);
+    formData.append('avatar', avatar);
 
     return fetch(`${this._baseUrl}/files`, {
       method: 'POST',

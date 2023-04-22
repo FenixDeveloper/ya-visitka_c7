@@ -4,22 +4,21 @@ import { UserStatus } from '../../services/types/data';
 import { ProfileContext } from '../../services/profile-context';
 
 interface IProtectedRoute {
-    requiredStatus: UserStatus[];
-    redirectRoute?: string;
-    children: React.ReactNode;
+  requiredStatus: UserStatus[];
+  redirectRoute?: string;
+  children: React.ReactNode;
 }
 
-export const ProtectedRoute: FC<IProtectedRoute> = ({ 
-  requiredStatus,  
-  redirectRoute = '/login', 
-  children 
+export const ProtectedRoute: FC<IProtectedRoute> = ({
+  requiredStatus,
+  redirectRoute = '/',
+  children,
 }) => {
-  const [profileState, setProfileState] = useContext(ProfileContext);
-  const userStatus = profileState.user.status;
+  const [profileState, _] = useContext(ProfileContext);
+  const userStatus = profileState.user.role;
   if (requiredStatus.includes(userStatus)) {
     return <>
       {children}
     </>;
-  } else 
-    return (<Navigate to={redirectRoute} replace />);
+  } else return <Navigate to={redirectRoute} replace />;
 };
