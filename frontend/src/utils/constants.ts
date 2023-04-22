@@ -3,7 +3,7 @@ import imgOne from '../assets/icons/girl.png'
 import imgTwo from '../assets/icons/guitar.png'
 import { getCurrentRedirectURI } from './utils';
 
-export const BASE_URL = 'https://visitki.practicum-team.ru/api';
+export const BASE_URL = 'https://visitki-dev.team-7.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com';
 export const TELEGRAM_URL = 'https://tlgg.ru/test';
 export const CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556';

@@ -11,7 +11,7 @@ export const useGetAccessTokenByQueryCode = () => {
   useEffect(() => {
     if (queryCode) {
       api.getToken(queryCode).then((data) => {
-        setToken(data);
+        setToken(data.token);
       });
     }
   }, [queryCode]);
