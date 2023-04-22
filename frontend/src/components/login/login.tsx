@@ -1,22 +1,28 @@
 import React, { FC, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import defaulAvatar from '../../assets/icons/default-avatar.svg';
 import styles from './login.module.scss';
 import { ProfileContext } from '../../services/profile-context';
-import { logout } from '../../utils/utils';
 
 const Login: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = React.useState<boolean>(false);
   const closePopupStyle = !active ? styles.popup_open_closed : '';
+  const navigate = useNavigate();
 
   const [profileState, setProfileState] = React.useContext(ProfileContext);
   const { user } = profileState;
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (ref.current  && !ref.current.contains(e.target as Node)) {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
       setActive(false);
-    } 
+    }
+  }
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+    setActive(false);
   }
 
   const handlerClickPopup = (e: KeyboardEvent) => {
