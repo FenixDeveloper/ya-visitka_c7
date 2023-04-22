@@ -5,6 +5,7 @@ import { Comment } from '../../components/comment/comment';
 import { TComment } from '../../services/types/data';
 import { api } from '../../utils/api-config';
 import { EXAMPLE_COMMENTS } from '../../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export const AdminCommentsPage: FC = () => {
@@ -20,21 +21,25 @@ export const AdminCommentsPage: FC = () => {
     });
   };
   useEffect(() => {
-    fetchComments();
+    //закомментировать две следующие строки при запросе данных с сервера
+    setCommentsData(EXAMPLE_COMMENTS);
+    setFilterResult(EXAMPLE_COMMENTS);
+    // раскоментировать при запросе данных с сервера
+    //fetchComments();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const results = commentsData.filter((comment) => {
       if (e.target.value === '') return commentsData;
-      else if (comment.from.name != undefined) {
+      else {
         return (
           comment.from.name
             .toLowerCase()
             .includes(e.target.value.toLowerCase()) ||
-          comment.from.email
+          comment.from.cohort
             ?.toLowerCase()
             .includes(e.target.value.toLowerCase()) ||
-          comment.from.cohort
+          comment.to.name
             ?.toLowerCase()
             .includes(e.target.value.toLowerCase())
         );
@@ -65,10 +70,10 @@ export const AdminCommentsPage: FC = () => {
     }.${commentDate.getFullYear()}`;
   };
 
-  const comments = EXAMPLE_COMMENTS.map((comment) => {
+  const comments = filterResult.map((comment) => {
     return (
       <Comment
-        key={comment._id}
+        key={uuidv4()}
         cohort={comment.from.cohort}
         date={dateFromObjectId(comment._id)}
         sender={comment.from.name}
@@ -93,7 +98,7 @@ export const AdminCommentsPage: FC = () => {
             студенты
           </NavLink>
           <NavLink
-            to="/admin"
+            to="/admin/comments"
             className={({ isActive }) =>
               isActive ? styles.link + ' ' + styles.link_active : styles.link
             }
@@ -107,7 +112,7 @@ export const AdminCommentsPage: FC = () => {
           type="text"
           onChange={handleChange}
           value={query}
-          placeholder="По имени или фамилии или почте или номеру когорты (введите любой из этих параметров)"
+          placeholder="По имени или фамилии или номеру когорты (введите любой из этих параметров)"
         />
         <div className={styles.tableHead}>
           <p className={styles.tableHeadColumn}>Когорта</p>

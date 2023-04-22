@@ -1,9 +1,9 @@
-import { TRedirectURI, UserStatus } from '../services/types/data';
+import { UserStatus } from '../services/types/data';
 import imgOne from '../assets/icons/girl.png'
 import imgTwo from '../assets/icons/guitar.png'
 import { getCurrentRedirectURI } from './utils';
 
-export const BASE_URL = 'https://visitki.practicum-team.ru/api';
+export const BASE_URL = 'https://visitki-dev.team-7.practicum-team.ru/api';
 export const GITHUB_URL = 'https://api.github.com';
 export const TELEGRAM_URL = 'https://tlgg.ru/test';
 export const CLIENT_ID = '6588f39ea0274d599d3c60fb10c53556';
@@ -18,114 +18,49 @@ export const CURRENT_REDIRECT_URI = getCurrentRedirectURI(DATA_REDIRECT_URI)
 
 export const EXAMPLE_VISITKAS = [
   {
-    id: '1',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
+    _id: '1',
+    profile: {
+      name: 'Qwerty',
+      photo: 'https://i.pravatar.cc/325',
+      city: 'Петровск (Саратовская область)',
+    }
   },
   {
-    id: '2',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск-Забайкальский (Забайкальский край)',
+    _id: '2',
+    profile: {
+      name: 'Qwerty',
+      photo: 'https://i.pravatar.cc/325',
+      city: 'Петровск (Саратовская область)',
+    }
   },
   {
-    id: '3',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петрозаводск (Республика Карелия)',
+    _id: '3',
+    profile: {
+      name: 'Qwerty',
+      photo: 'https://i.pravatar.cc/325',
+      city: 'Петровск (Саратовская область)',
+    }
   },
   {
-    id: '4',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петропавловск-Камчатский (Камчатский край)',
-  },
-  {
-    id: '5',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '6',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск-Забайкальский (Забайкальский край)',
-  },
-  {
-    id: '7',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петрозаводск (Республика Карелия)',
-  },
-  {
-    id: '8',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петропавловск-Камчатский (Камчатский край)',
-  },
-  {
-    id: '9',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '10',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '11',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '12',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '13',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '14',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '15',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
-  },
-  {
-    id: '16',
-    name: 'Qwerty',
-    photo: 'https://i.pravatar.cc/325',
-    city: 'Петровск (Саратовская область)',
+    _id: '4',
+    profile: {
+      name: 'Qwerty',
+      photo: 'https://i.pravatar.cc/325',
+      city: 'Петровск (Саратовская область)',
+    }
   },
 ];
 
 export const EXAMPLE_CURRENT_USER: {
   _id: string;
   name: string;
-  avatar?: string;
-  status?: UserStatus;
+  photo?: string;
+  role?: UserStatus;
   pattern?: 'серьезный' | 'романтичный' | 'дерзкий';
 } = {
   _id: '11111',
   name: 'Константин Константинович',
-  avatar: 'https://avatars.githubusercontent.com/u/85547727?v=4',
-  status: UserStatus.Curator,
+  photo: 'https://avatars.githubusercontent.com/u/85547727?v=4',
   pattern: 'серьезный'
 };
 
@@ -189,7 +124,7 @@ export const EMOJI = [
   { symbol: '🖤', alt: 'сердце', acitve: false, counter: 10 },
 ]
 
-export const EXAMPLE_USER_ARRAY: {id: string, cohort: string, name: string, email: string}[] = [
+export const EXAMPLE_USER_ARRAY: { id: string, cohort: string, name: string, email: string }[] = [
   {
     id: '1',
     cohort: '1234',
@@ -253,151 +188,15 @@ export const EXAMPLE_COMMENTS = [
     _id: '81ffe58b6fe8dac5328b4f5e',
     from: {
       _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
+      name: 'Name Lastname',
       email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
+      cohort: '444',
     },
     target: 'hobby',
     text: 'Fugit sint occaecati dicta unde eaque.',
     to: {
       _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
-      email: 'Kayli72@hotmail.com',
-      cohort: 'web+16',
-    },
-  },
-  {
-    _id: '81ffe58b6fe8dac5328b4f5e',
-    from: {
-      _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
-      email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
-    },
-    target: 'hobby',
-    text: 'Fugit sint occaecati dicta unde eaque.',
-    to: {
-      _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
+      name: 'Gordon A',
       email: 'Kayli72@hotmail.com',
       cohort: 'web+16',
     },
@@ -406,15 +205,15 @@ export const EXAMPLE_COMMENTS = [
     _id: '0c742efe72f6bc7a140863d6',
     from: {
       _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
+      name: 'Alex Alex',
       email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
+      cohort: '333',
     },
     target: 'edu',
     text: 'Quas recusandae illo temporibus saepe repudiandae optio eligendi quas pariatur.',
     to: {
       _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
+      name: 'Bob Bob',
       email: 'Kayli72@hotmail.com',
       cohort: 'web+16',
     },
@@ -423,15 +222,15 @@ export const EXAMPLE_COMMENTS = [
     _id: '47addcbfe138dbdfbecefcd5',
     from: {
       _id: '88fd917fb9ce1ebbacf35dcb',
-      name: 'Brendan Fadel',
+      name: 'Ivan Ivanov',
       email: 'Buster_Murphy@hotmail.com',
-      cohort: 'web+16',
+      cohort: '1234',
     },
     target: 'status',
     text: 'Классные у тебя увлечения, я тоже играю в настолки, любимая игра — Эволюция. Люблю еще слушать музыку, ходить в кино, общаться с друзьями. Ну и учиться в Практикуме.',
     to: {
       _id: 'a67fdbbc9e4a2f7d962c795c',
-      name: 'Gordon Anderson',
+      name: 'Max Max',
       email: 'Kayli72@hotmail.com',
       cohort: 'web+16',
     },

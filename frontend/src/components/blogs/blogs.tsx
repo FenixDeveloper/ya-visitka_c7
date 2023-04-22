@@ -5,7 +5,7 @@ import { Blog } from '../blog/blog';
 import { ProfileContext } from '../../services/profile-context';
 
 export const Blogs: FC = () => {
-  const [profileState, setProfileState] = React.useContext(ProfileContext);
+  const [profileState, _] = React.useContext(ProfileContext);
 
   return (
     <div className={styles.blogs}>
@@ -13,13 +13,13 @@ export const Blogs: FC = () => {
         return (
           <Blog typeComponent={profileState.pattern}
             index={index}
-            title={item.title.toUpperCase()} 
-            urlImage={item.urlImage} 
-            text={item.text} 
+            title={item.title.toUpperCase()}
+            urlImage={item.urlImage}
+            text={item.text}
             key={index}
           />
         )
-      })}   
+      })}
     </div>
   )
 }

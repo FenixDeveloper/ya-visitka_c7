@@ -6,6 +6,14 @@
   grid-template-columns: 70px 100px 190px 190px 160px 442px 24px;
   column-gap: 24px;
   border-bottom: 1px solid $color-blue;
+  align-items: center;
+}
+
+.cohort_wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
 }
 
 .tableData {
@@ -20,4 +28,9 @@
   background: none;
   border: 0;
   cursor: pointer;
+}
+
+.cohort_link {
+  text-decoration: none;
+  color: inherit;
 }
