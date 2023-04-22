@@ -15,9 +15,6 @@ export const setToken = (accessToken: string) => {
   localStorage.setItem('accessToken', accessToken)
 }
 
-export const logout = () => {
-  localStorage.clear()
-}
 
 export function usePrevious<Type>(value: Type): Type | undefined {
   const ref = useRef<Type | undefined>();
