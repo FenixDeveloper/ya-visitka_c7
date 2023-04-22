@@ -23,7 +23,7 @@ export const Input: FC<IInputProps> = ({
   const [valueSelectCityProfile, setValueSelectCityProfile] = React.useState(value ? value : arrValues[0]);
   const [valueSelectCityMain, setValueSelectCityMain] = React.useState(value ? value : arrValues[0]);
   const [valueSelectPattern, setValueSelectPattern] = React.useState(value ? value : arrValues[0]);
-  const [avatar, setAvatar] = React.useState(profileState.avatar);
+  const [avatar, setAvatar] = React.useState(profileState.photo);
   const [isVisible, setIsVisible] = React.useState(false);
   const years = getListYears(1920);
 

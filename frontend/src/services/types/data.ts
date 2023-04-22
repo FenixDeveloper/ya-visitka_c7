@@ -89,8 +89,8 @@ export interface IFile {
 }
 
 export enum UserStatus {
-  Student = 'STUDENT',
-  Curator = 'CURATOR',
+  STUDENT = 'student',
+  CURATOR = 'curator',
 }
 
 export type TStudentsDataFull = TStudentsData & {
