@@ -15,7 +15,7 @@ export const useGetAccessTokenByQueryCode = () => {
       const fetchGetToken = async () => {
         await api.getToken(queryCode).then((data) => {
           setToken(data.token);
-          api.accessToken = `Bearer ${data.token}`;
+          //api.accessToken = `Bearer ${data.token}`;
         });
         await api.getUserAuth().then(user => {
           setProfileState({ ...profileState, user })

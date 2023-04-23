@@ -9,8 +9,8 @@ import { NavLink } from 'react-router-dom';
 type TVisitka = {
   _id: string;
   name: string;
-  photo: string;
-  city: string;
+  photo?: string;
+  city?: string;
 };
 
 export const Visitka: FC<TVisitka> = ({ _id, name, photo, city }) => {

@@ -145,3 +145,22 @@ export type TComment = {
   text: string;
   to: TCommentAuthor;
 };
+
+export type TVisitka = {
+  _id: string,
+      createdAt: string,
+      updatedAt: string,
+      email: string,
+      cohort: string,
+      profile?: {
+        name: string,
+        photo: string,
+        city: {
+          name: string,
+          geocode: [
+            number, number
+          ]
+        }
+      },
+      reactions?: number
+}

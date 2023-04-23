@@ -28,11 +28,12 @@ class Api {
 
   // Получение данных о авторизованном пользователе
   getUserAuth() {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
     }).then((res) => this._parseResponse(res));
   }
@@ -40,11 +41,12 @@ class Api {
   // USERS FOR CURATOR
   // Отправка данных пользователя - POST - {{baseUrl}}/users
   postUsers(body: IUserRequest) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
       body: JSON.stringify(body),
     }).then((res) => this._parseResponse(res));
@@ -52,13 +54,14 @@ class Api {
 
   // Запрос пользователей - GET - {{baseUrl}}/users?offset=<integer>&limit=20&search=<string>
   getUsers(offset: number, limit: number, search: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(
       `${this._baseUrl}/users?offset=${offset}&limit=${limit}&search=${search}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          authorization: this.accessToken,
+          authorization: token,
         },
       }
     ).then((res) => this._parseResponse(res));
@@ -66,11 +69,12 @@ class Api {
 
   // Создание/замена данных пользователя - PUT - {{baseUrl}}/users/:id
   putUsers(body: IUserRequest, id: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/users/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
       body: JSON.stringify(body),
     }).then((res) => this._parseResponse(res));
@@ -79,13 +83,14 @@ class Api {
   // COMMENTS
   // Запрос комментариев - GET - {{baseUrl}}/comments?offset=<integer>&limit=20&search=<string>
   getComments(offset: number, limit: number, search: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(
       `${this._baseUrl}/comments?offset=${offset}&limit=${limit}&search=${search}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          authorization: this.accessToken,
+          authorization: token,
         },
       }
     ).then((res) => this._parseResponse(res));
@@ -93,11 +98,12 @@ class Api {
 
   // Удаление данных комментариев по id - DELETE - {{baseUrl}}/comments/:id
   deleteComments(id: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/comments/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
     }).then((res) => this._parseResponse(res));
   }
@@ -105,13 +111,14 @@ class Api {
   // PROFILE FOR USERS
   // Запрос профиля - GET - {{baseUrl}}/profiles?offset=<integer>&limit=20&cohort=<string>
   getProfile(offset: number, limit: number, cohort: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(
       `${this._baseUrl}/profiles?offset=${offset}&limit=${limit}&cohort=${cohort}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          authorization: this.accessToken,
+          authorization: token,
         },
       }
     ).then((res) => this._parseResponse(res));
@@ -119,22 +126,24 @@ class Api {
 
   // Запрос профиля - GET - {{baseUrl}}/profiles/:id
   getProfileById(id: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/profiles/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
     }).then((res) => this._parseResponse(res));
   }
 
   // Частичная замена данных профиля - PATCH - {{baseUrl}}/profiles/:id
   patchProfile(body: IProfile, id: string) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/profiles/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
       body: JSON.stringify(body),
     }).then((res) => this._parseResponse(res));
@@ -143,13 +152,14 @@ class Api {
   // REACTIONS
   // Запрос реакций - GET - {{baseUrl}}/profiles/:id/reactions?offset=<integer>&limit=20
   getReactions(id: string, offset: number, limit: number) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(
       `${this._baseUrl}/profiles/${id}/reactions?offset=${offset}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          authorization: this.accessToken,
+          authorization: token,
         },
       }
     ).then((res) => this._parseResponse(res));
@@ -157,11 +167,12 @@ class Api {
 
   // Отправка реакций - POST - {{baseUrl}}/profiles/:id/reactions
   postReactions(id: string, body: { target: string; text: string }) {
+    const token = localStorage.getItem('accessToken') ? `Bearer ${localStorage.getItem('accessToken')}` : '';
     return fetch(`${this._baseUrl}/profiles/${id}/reactions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: this.accessToken,
+        authorization: token,
       },
       body: JSON.stringify(body),
     }).then((res) => this._parseResponse(res));
