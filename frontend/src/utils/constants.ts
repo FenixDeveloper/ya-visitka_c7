@@ -89,7 +89,7 @@ export const EXAMPLE_USERS: {
     _id: '03',
     name: 'Андрей Петров',
     avatar: 'https://i.pravatar.cc/327',
-    token: '2222',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOm51bGwsInJvbGUiOiJjdXJhdG9yIiwiZW1haWwiOiJkai5pY2UtaG91c2VAeWFuZGV4LnJ1IiwiaWF0IjoxNjgxNzUwMTE4LCJleHAiOjE2ODIzNTQ5MTh9.ea8GOErYavwO7PoIeRe9GbOaSq_631Ce2Nb__0eqBTE',
     role: 'admin',
   },
 ]
