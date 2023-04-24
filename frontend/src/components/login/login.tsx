@@ -9,7 +9,6 @@ const Login: FC = () => {
   const navigate = useNavigate();
   const [active, setActive] = React.useState<boolean>(false);
   const closePopupStyle = !active ? styles.popup_open_closed : '';
-  const navigate = useNavigate();
 
   const [profileState, _] = React.useContext(ProfileContext);
   const { user } = profileState;
