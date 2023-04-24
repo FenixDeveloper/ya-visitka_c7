@@ -5,7 +5,7 @@ import { EXAMPLE_USERS } from '../../utils/constants';
 export const AdminPage: FC = () => {
 
   const changeToken = (token: string): void => {
-    console.log(token)
+    localStorage.setItem('accessToken', token);
   }
     
   const arrayUsers = EXAMPLE_USERS.map(item => {
