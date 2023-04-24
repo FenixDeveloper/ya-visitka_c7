@@ -9,9 +9,11 @@ import { MapPage } from '../pages/map-page/map-page';
 import { ProfileEditPage } from '../pages/profile-edit-page/profile-edit-page';
 import { AdminCommentsPage } from '../pages/admin-comments-page/admin-comments-page';
 import { AdminUsersPage } from '../pages/admin-users-page/admin-users-page';
+import { AdminPage } from '../pages/admin-page/admin-page';
 import { ProtectedRoute } from '../components/protected-route/protected-route';
 import { UserStatus } from '../services/types/data';
 import { CURRENT_REDIRECT_URI } from '../utils/constants';
+
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,5 +58,11 @@ export const router = createBrowserRouter(
           <AdminUsersPage />
         </ProtectedRoute>}
       />
+      {/* // ? стр. администрации - для смены токена */}
+      <Route path='admin/' element={
+        <ProtectedRoute requiredStatus={[UserStatus.CURATOR]}>
+          <AdminPage />
+        </ProtectedRoute>}
+      />  
     </Route>
   ));
