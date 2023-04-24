@@ -60,7 +60,7 @@ export const router = createBrowserRouter(
       />
       {/* // ? стр. администрации - для смены токена */}
       <Route path='admin/' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.CURATOR]}>
           <AdminPage />
         </ProtectedRoute>}
       />  
