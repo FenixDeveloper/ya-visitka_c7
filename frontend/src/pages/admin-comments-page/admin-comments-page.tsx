@@ -31,15 +31,15 @@ export const AdminCommentsPage: FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const results = commentsData.filter((comment) => {
       if (e.target.value === '') return commentsData;
-      else if (comment.from.name != undefined) {
+      else {
         return (
           comment.from.name
             .toLowerCase()
             .includes(e.target.value.toLowerCase()) ||
-          comment.from.email
+          comment.from.cohort
             ?.toLowerCase()
             .includes(e.target.value.toLowerCase()) ||
-          comment.from.cohort
+          comment.to.name
             ?.toLowerCase()
             .includes(e.target.value.toLowerCase())
         );
@@ -76,8 +76,8 @@ export const AdminCommentsPage: FC = () => {
         key={uuidv4()}
         cohort={comment.from.cohort}
         date={dateFromObjectId(comment._id)}
-        sender={comment.from.name!}
-        recipient={comment.to.name!}
+        sender={comment.from.name}
+        recipient={comment.to.name}
         from={comment.target}
         text={comment.text}
         handleDelete={() => handleDeleteClick(comment._id)}
@@ -112,7 +112,7 @@ export const AdminCommentsPage: FC = () => {
           type="text"
           onChange={handleChange}
           value={query}
-          placeholder="По имени или фамилии или почте или номеру когорты (введите любой из этих параметров)"
+          placeholder="По имени или фамилии или номеру когорты (введите любой из этих параметров)"
         />
         <div className={styles.tableHead}>
           <p className={styles.tableHeadColumn}>Когорта</p>

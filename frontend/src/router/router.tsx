@@ -19,45 +19,42 @@ export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootPage />}>
       {/* // ? стр. визиток (главная) */}
-      <Route index element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
-          <MainPage />
-        </ProtectedRoute>} />
+      <Route index element={<MainPage />}/>
       {/* // ? все стр. которых нет */}
       <Route path='*' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.STUDENT, UserStatus.CURATOR]}>
           <NotFoundPage />
         </ProtectedRoute>} />
       {/* // ? когорта */}
       <Route path='cohort/:cohortId' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.STUDENT, UserStatus.CURATOR]}>
           <MainPage />
         </ProtectedRoute>} />
       {/* // ? стр. авторизации */}
       <Route path='login' element={<LoginPage redirectUri={CURRENT_REDIRECT_URI} />} />
       {/* // ? стр. профиля студунта */}
       <Route path='profiles/:profileId' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.STUDENT, UserStatus.CURATOR]}>
           <ProfileDetailsPage />
         </ProtectedRoute>} />
       {/* // ? стр. редактирования профиля */}
       <Route path='edit' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.STUDENT, UserStatus.CURATOR]}>
           <ProfileEditPage />
         </ProtectedRoute>} />
       {/* // ? стр. с картой */}
       <Route path='map' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Student, UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.STUDENT, UserStatus.CURATOR]}>
           <MapPage />
         </ProtectedRoute>} />
       {/* // ? стр. администрации - комментарии */}
       <Route path='admin/comments' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.CURATOR]}>
           <AdminCommentsPage />
         </ProtectedRoute>} />
       {/* // ? стр. администрации - студенты */}
       <Route path='admin/users' element={
-        <ProtectedRoute requiredStatus={[UserStatus.Curator]}>
+        <ProtectedRoute requiredStatus={[UserStatus.CURATOR]}>
           <AdminUsersPage />
         </ProtectedRoute>}
       />

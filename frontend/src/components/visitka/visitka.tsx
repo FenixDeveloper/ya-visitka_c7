@@ -7,16 +7,16 @@ import { UserStatus } from '../../services/types/data';
 import { NavLink } from 'react-router-dom';
 
 type TVisitka = {
-  id: string;
+  _id: string;
   name: string;
   photo: string;
   city: string;
 };
 
-export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
+export const Visitka: FC<TVisitka> = ({ _id, name, photo, city }) => {
   const [isFeedbackOpen, setFeedback] = useState(false);
-  const [profileState, setProfileState] = useContext(ProfileContext);
-  const userStatus = profileState.user.status;
+  const [profileState, _] = useContext(ProfileContext);
+  const userStatus = profileState.user.role;
   const feedbackTextArrLength = profileState?.reactions?.length;
 
   const openFeedback = () => {
@@ -25,7 +25,7 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
 
   return (
     <article className={styles.content}>
-      <NavLink className={styles.navlink} to={`/profiles/${id}`}>
+      <NavLink className={styles.navlink} to={`/profiles/${_id}`}>
         <img
           className={styles.photo}
           src={photo}
@@ -34,7 +34,7 @@ export const Visitka: FC<TVisitka> = ({ id, name, photo, city }) => {
         <div className={styles.userInfo}>
           <p className={styles.name}>{name}</p>
           <p className={styles.city}>{city}</p>
-          {userStatus === UserStatus.Curator && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
+          {userStatus === UserStatus.CURATOR && <p className={styles.messageCounter}>{`${feedbackTextArrLength} сообщений`}</p>}
 
         </div>
       </NavLink>
