@@ -1,0 +1,66 @@
+@use '../../modules/mixins.scss';
+@import '../../modules/variables.scss';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .content {
+    text-align: center;
+
+    &__heading {
+      font-size: 150px; 
+      color: $color-text-dark;
+      text-shadow: 1px 1px 1px $color-shadow-dark, 2px 2px 1px $color-shadow-dark, 3px 3px 1px $color-shadow-dark,
+        4px 4px 1px $color-shadow-dark, 5px 5px 1px $color-shadow-dark, 6px 6px 1px $color-shadow-dark,
+        7px 7px 1px $color-shadow-dark, 8px 8px 1px $color-shadow-dark, 25px 25px 8px $color-shadow-dark;
+      border-bottom: 2mm ridge $color-shadow-dark;
+      margin: 0;
+
+      @media screen and (max-width: 576px) {
+        font-size: 100px; 
+      }
+
+      #digit1 {
+        animation-delay: 200ms;
+      }
+      #digit2 {
+        animation-delay: 300ms;
+      }
+      #digit3 {
+        animation-delay: 400ms;
+      }
+      .fade {
+        animation: faded 1.2s ease-in-out infinite;
+      }
+    }
+
+    &__paragraph {
+      font-size: 2.4rem;
+      text-shadow: 1px 1px 1px $color-shadow-dark, 2px 2px 1px $color-shadow-dark, 3px 3px 1px $color-shadow-dark,
+        4px 4px 1px $color-shadow-dark, 5px 5px 1px $color-shadow-dark, 6px 6px 1px $color-shadow-dark,
+        7px 7px 1px $color-shadow-dark, 8px 8px 1px $color-shadow-dark, 25px 25px 8px $color-shadow-dark;
+
+      @media screen and (max-width: 576px) {
+        font-size: 1.7rem; 
+      }
+    }
+    &__button {
+      text-decoration: none;
+    }
+  }
+}
+
+@keyframes faded {
+  0% {
+    opacity: 0.5;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
